@@ -1,13 +1,28 @@
-// Load the http module to create an http server.
-var http = require('http');
- 
-// Configure the HTTP server to print Hello World! to all requests.
-var server = http.createServer(function (request, response) {
-  response.writeHead(200, {"Content-Type": "text/plain"});
-  response.end("Hello World!\n");
+const express = require('express');
+const app = express();
+const path = require('path');
+const router = express.Router();
+
+router.get('/',function(req,res){
+  res.sendFile(path.join(__dirname+'/index.html'));
+  //__dirname : It will resolve to your project folder.
 });
- 
-// Listen on port 8080
-server.listen(8080);
- 
-console.log('Server available at http://localhost:8080/');
+
+router.get('/darkTheme.css',function(req,res){
+  res.sendFile(path.join(__dirname+'/darkTheme.css'));
+  //__dirname : It will resolve to your project folder.
+});
+
+router.get('/about',function(req,res){
+  res.sendFile(path.join(__dirname+'/about.html'));
+});
+
+router.get('/sitemap',function(req,res){
+  res.sendFile(path.join(__dirname+'/sitemap.html'));
+});
+
+//add the router
+app.use('/', router);
+app.listen(process.env.port || 8080);
+
+console.log('Running at Port 8080');
