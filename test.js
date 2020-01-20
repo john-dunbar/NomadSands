@@ -8,6 +8,11 @@ router.get('/',function(req,res){
   //__dirname : It will resolve to your project folder.
 });
 
+router.get('/darkTheme.css',function(req,res){
+  res.sendFile(path.join(__dirname+'/darkTheme.css'));
+  //__dirname : It will resolve to your project folder.
+});
+
 router.get('/about',function(req,res){
   res.sendFile(path.join(__dirname+'/about.html'));
 });
