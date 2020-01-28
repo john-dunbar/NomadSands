@@ -1,0 +1,23 @@
+{
+  "name": "nomadsands",
+  "version": "1.0.0",
+  "description": "Nomad Sands is an application for connecting gamers in the same geographic location.",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dun08015/NomadSands.git"
+  },
+  "author": "John Dunbar <dun08015@gmail.com> (http://dunbarjohn.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dun08015/NomadSands/issues"
+  },
+  "homepage": "https://github.com/dun08015/NomadSands#readme"
+}
