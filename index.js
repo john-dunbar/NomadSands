@@ -29,13 +29,13 @@ app.route('/login')
 
     // show the form (GET http://localhost:8080/login)
     .get(function(req, res) {
-        res.send(__dirname+'/login.html');
+        res.sendFile(path.join(__dirname+'/login.html'));
     })
 
     // process the form (POST http://localhost:8080/login)
     .post(function(req, res) {
         
-        res.send(__dirname+'/index.html');
+        res.sendFile(path.join(__dirname+'/index.html'));
     });
 
 //add the router
