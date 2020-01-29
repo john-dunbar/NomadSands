@@ -25,6 +25,19 @@ router.get('/Javascript/menuClick.js',function(req,res){
   res.sendFile(path.join(__dirname+'/Javascript/menuClick.js'));
 });
 
+app.route('/login')
+
+    // show the form (GET http://localhost:8080/login)
+    .get(function(req, res) {
+        res.send('this is the login form');
+    })
+
+    // process the form (POST http://localhost:8080/login)
+    .post(function(req, res) {
+        console.log('processing');
+        res.send('processing the login form!');
+    });
+
 //add the router
 app.use('/', router);
 app.listen(process.env.port || 8080);
