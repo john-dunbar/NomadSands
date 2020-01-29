@@ -40,6 +40,6 @@ app.route('/login')
 
 //add the router
 app.use('/', router);
-app.listen(process.env.port || 8080);
+app.listen(process.env.port || 80);
 
-console.log('Running at Port 8080');
+console.log('Running at Port 80');
