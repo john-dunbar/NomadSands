@@ -21,6 +21,10 @@ router.get('/sitemap',function(req,res){
   res.sendFile(path.join(__dirname+'/sitemap.html'));
 });
 
+router.get('/Javascript/menuClick.js',function(req,res){
+  res.sendFile(path.join(__dirname+'/Javascript/menuClick.js'));
+});
+
 //add the router
 app.use('/', router);
 app.listen(process.env.port || 8080);
