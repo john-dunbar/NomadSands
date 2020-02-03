@@ -1,6 +1,8 @@
 const express = require('express');
+
 const app = express();
 const path = require('path');
+
 const router = express.Router();
 
 router.get('/',function(req,res){
@@ -40,6 +42,6 @@ app.route('/login')
 
 //add the router
 app.use('/', router);
-app.listen(process.env.port || 80);
+app.listen(3000,"localhost");
 
-console.log('Running at Port 80');
+console.log('Running at Port 3000');
