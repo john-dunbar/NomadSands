@@ -1,17 +1,8 @@
-const https = require('https');
 const express = require('express');
 
 const app = express();
-
-const httpsOptions = {
-    cert: fs.readFileSync('www_nomadsands_com.crt'),
-    ca: fs.readFileSync('www_nomadsands_com.ca-bundle'),
-    key: fs.readFileSync('private-key.pem')
-};
-
-const httpsServer = https.createServer(httpsOptions, app);
-
 const path = require('path');
+
 const router = express.Router();
 
 router.get('/',function(req,res){
@@ -51,6 +42,6 @@ app.route('/login')
 
 //add the router
 app.use('/', router);
-httpsServer.listen(443, 'nomadsands.com');
+app.listen(3000,"localhost");
 
-console.log('Running at Port 443');
+console.log('Running at Port 3000');
