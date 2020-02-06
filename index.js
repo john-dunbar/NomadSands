@@ -1,9 +1,24 @@
 const express = require('express');
-
-const app = express();
+const fetch = require('node-fetch');
+const session = require("express-session");
+const FormData = require('form-data');
 const path = require('path');
 
+const app = express();
+
+app.use(session({
+  secret: '***REMOVED***',
+}));
+
 const router = express.Router();
+
+const data = new FormData();
+data.append('client_id', '***REMOVED***');
+data.append('client_secret', '***REMOVED***');
+data.append('grant_type', 'authorization_code');
+data.append('scope', 'identify');
+data.append('redirect_uri', 'https://www.nomadsands.com/oauth/redirect');
+
 
 router.get('/',function(req,res){
   res.sendFile(path.join(__dirname+'/index.html'));
@@ -27,18 +42,37 @@ router.get('/Javascript/menuClick.js',function(req,res){
   res.sendFile(path.join(__dirname+'/Javascript/menuClick.js'));
 });
 
-app.route('/login')
+router.get('/welcome.html',function(req,res){
+  res.sendFile(path.join(__dirname+'/welcome.html'));
+  console.log(req.session.bugyba);
+  //console.log(req.sessionID);
+});
 
-    // show the form (GET http://localhost:8080/login)
-    .get(function(req, res) {
-        res.sendFile(path.join(__dirname+'/login.html'));
-    })
-
-    // process the form (POST http://localhost:8080/login)
-    .post(function(req, res) {
-        
-        res.sendFile(path.join(__dirname+'/index.html'));
-    });
+// Declare the redirect route
+router.get('/oauth/redirect', function (req, res) {
+  // The req.query object has the query params that
+  // were sent to this route. We want the `code` param
+  const requestToken = req.query.code
+  data.append('code',requestToken);
+  console.log('before fetch');
+  fetch('https://discordapp.com/api/oauth2/token', {
+	method: 'POST',
+	body: data,
+  })
+    
+ .then(fetchResp => fetchResp.json())
+ .then(tokenData => fetch('https://discordapp.com/api/users/@me', {
+	headers: {
+			authorization: `${tokenData.token_type} ${tokenData.access_token}`,
+		},
+	}))
+  .then(userData => userData.json())
+  .then(data => {
+    console.log(data.username)
+    req.session.user_id = data.username
+    res.redirect('/welcome.html?username='+data.username)
+  });
+});
 
 //add the router
 app.use('/', router);
