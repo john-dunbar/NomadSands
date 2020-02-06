@@ -1,14 +1,23 @@
 const express = require('express');
-const axios = require('axios');
+const fetch = require('node-fetch');
+const session = require("express-session");
+const FormData = require('form-data');
 const path = require('path');
 
 const app = express();
+
+app.use(session({
+  secret: '***REMOVED***',
+}));
+
 const router = express.Router();
 
-const clientID = '***REMOVED***';
-const clientSecret = '***REMOVED***';
-const grantType = 'authorization_code';
-const scope = 'identify';
+const data = new FormData();
+data.append('client_id', '***REMOVED***');
+data.append('client_secret', '***REMOVED***');
+data.append('grant_type', 'authorization_code');
+data.append('scope', 'identify');
+data.append('redirect_uri', 'https://www.nomadsands.com/oauth/redirect');
 
 
 router.get('/',function(req,res){
@@ -33,33 +42,37 @@ router.get('/Javascript/menuClick.js',function(req,res){
   res.sendFile(path.join(__dirname+'/Javascript/menuClick.js'));
 });
 
-router.get('/welcome',function(req,res){
-  res.sendFile(path.join(__dirname+'/welcom.html'));
+router.get('/welcome.html',function(req,res){
+  res.sendFile(path.join(__dirname+'/welcome.html'));
+  console.log(req.session.bugyba);
+  //console.log(req.sessionID);
 });
 
 // Declare the redirect route
-app.get('/oauth/redirect', (req, res) => {
+router.get('/oauth/redirect', function (req, res) {
   // The req.query object has the query params that
   // were sent to this route. We want the `code` param
   const requestToken = req.query.code
-  axios({
-    // make a POST request
-    method: 'post',
-    // to the Discord authentication API, with the client ID, client secret
-    // and request token
-    url: `https://discordapp.com/api/oauth2/token?client_id=${clientID}&client_secret=${clientSecret}&grant_type=${grantType}&code=${requestToken}&scope=${scope}`,
-    // Set the content type header, so that we get the response in JSOn
-    headers: {
-         accept: 'application/json'
-    }
-  }).then((response) => {
-    // Once we get the response, extract the access token from
-    // the response body
-    const accessToken = response.data.access_token
-    // redirect the user to the welcome page, along with the access token
-    res.redirect(`/welcome.html?access_token=${accessToken}`)
+  data.append('code',requestToken);
+  console.log('before fetch');
+  fetch('https://discordapp.com/api/oauth2/token', {
+	method: 'POST',
+	body: data,
   })
-})
+    
+ .then(fetchResp => fetchResp.json())
+ .then(tokenData => fetch('https://discordapp.com/api/users/@me', {
+	headers: {
+			authorization: `${tokenData.token_type} ${tokenData.access_token}`,
+		},
+	}))
+  .then(userData => userData.json())
+  .then(data => {
+    console.log(data.username)
+    req.session.user_id = data.username
+    res.redirect('/welcome.html?username='+data.username)
+  });
+});
 
 //add the router
 app.use('/', router);
