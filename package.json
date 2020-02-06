@@ -4,7 +4,11 @@
   "description": "Nomad Sands is an application for connecting gamers in the same geographic location.",
   "main": "index.js",
   "dependencies": {
-    "express": "^4.17.1"
+    "axios": "^0.19.2",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "form-data": "^3.0.0",
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {},
   "scripts": {
