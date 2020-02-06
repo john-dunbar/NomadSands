@@ -1,0 +1,22 @@
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Hello</title>
+</head>
+
+<body>
+	<p>Welcome!<p>
+	<p id="user"></p>
+</body>
+<script>
+
+        var urlParams = new URLSearchParams(window.location.search);
+	const user = urlParams.get('username');
+        document.getElementById("user").innerHTML=user;
+
+</script>
+
+</html>
