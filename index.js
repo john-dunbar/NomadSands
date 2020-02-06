@@ -19,27 +19,61 @@ data.append('grant_type', 'authorization_code');
 data.append('scope', 'identify');
 data.append('redirect_uri', 'https://www.nomadsands.com/oauth/redirect');
 
+//check if users are logged in before routing
 
-router.get('/',function(req,res){
-  res.sendFile(path.join(__dirname+'/index.html'));
+function checkAuth(req, res, next) {
+  if (!req.session.user_id) {
+    res.send('You are not authorized to view this page');
+  } else {
+    next();
+  }
+}
+
+router.get('/darkTheme.css',function(req,res){
+  res.sendFile(path.join(__dirname+'/css/darkTheme.css'));
   //__dirname : It will resolve to your project folder.
 });
 
-router.get('/darkTheme.css',function(req,res){
-  res.sendFile(path.join(__dirname+'/darkTheme.css'));
-  //__dirname : It will resolve to your project folder.
+router.get('/javascript/menuClick.js',function(req,res){
+  res.sendFile(path.join(__dirname+'/javascript/menuClick.js'));
+});
+
+router.get('/',function(req,res){
+  
+  if (!req.session.user_id) {
+    res.sendFile(path.join(__dirname+'/html/non-authenticated/home.html'));
+  } else {
+    res.sendFile(path.join(__dirname+'/html/authenticated/home_auth.html'));
+  }
+    
 });
 
 router.get('/about',function(req,res){
-  res.sendFile(path.join(__dirname+'/about.html'));
+    
+  if (!req.session.user_id) {
+    res.sendFile(path.join(__dirname+'/html/non-authenticated/about.html'));
+  } else {
+    res.sendFile(path.join(__dirname+'/html/authenticated/about_auth.html'));
+  }
+    
 });
 
-router.get('/sitemap',function(req,res){
-  res.sendFile(path.join(__dirname+'/sitemap.html'));
+router.get('/createTeam', checkAuth, function(req,res){
+    
+    res.sendFile(path.join(__dirname+'/html/authenticated/createTeam.html'));
+    
 });
 
-router.get('/Javascript/menuClick.js',function(req,res){
-  res.sendFile(path.join(__dirname+'/Javascript/menuClick.js'));
+router.get('/createMatch', checkAuth, function(req,res){
+    
+    res.sendFile(path.join(__dirname+'/html/authenticated/createMatch.html'));
+    
+});
+
+router.get('/account', checkAuth, function(req,res){
+    
+    res.sendFile(path.join(__dirname+'/html/authenticated/account.html'));
+    
 });
 
 router.get('/welcome.html',function(req,res){
@@ -70,7 +104,7 @@ router.get('/oauth/redirect', function (req, res) {
   .then(data => {
     console.log(data.username)
     req.session.user_id = data.username
-    res.redirect('/welcome.html?username='+data.username)
+    res.redirect('/?username='+data.username)
   });
 });
 
