@@ -6,44 +6,31 @@ const path = require('path');
 
 const app = express();
 
+app.use(express.static(__dirname + '/public'));
+
 app.use(session({
   secret: 'myPassword',
 }));
 
 const router = express.Router();
-
-const data = new FormData();
-data.append('client_id', '671913842263195650');
-data.append('client_secret', 'YyDzblJUL24U7XRL--vEFgs1QQkRhW7g');
-data.append('grant_type', 'authorization_code');
-data.append('scope', 'identify');
-data.append('redirect_uri', 'https://www.nomadsands.com/oauth/redirect');
-
 //check if users are logged in before routing
 
-function checkAuth(req, res, next) {
+app.use(['/createTeam','/createMatch','/account','/logout'],function checkAuth(req, res, next) {
   if (!req.session.user_id) {
     res.send('You are not authorized to view this page');
   } else {
     next();
   }
-}
-
-router.get('/darkTheme.css',function(req,res){
-  res.sendFile(path.join(__dirname+'/css/darkTheme.css'));
-  //__dirname : It will resolve to your project folder.
-});
-
-router.get('/javascript/menuClick.js',function(req,res){
-  res.sendFile(path.join(__dirname+'/javascript/menuClick.js'));
-});
+})
 
 router.get('/',function(req,res){
   
   if (!req.session.user_id) {
-    res.sendFile(path.join(__dirname+'/html/non-authenticated/home.html'));
+    console.log(req.session.user_id);
+    res.sendFile(path.join(__dirname,'/html/non-authenticated/home.html'));
   } else {
-    res.sendFile(path.join(__dirname+'/html/authenticated/home_auth.html'));
+    console.log(req.session.user_id);
+    res.sendFile(path.join(__dirname,'/html/authenticated/home_auth.html'));
   }
     
 });
@@ -51,33 +38,42 @@ router.get('/',function(req,res){
 router.get('/about',function(req,res){
     
   if (!req.session.user_id) {
-    res.sendFile(path.join(__dirname+'/html/non-authenticated/about.html'));
+    res.sendFile(path.join(__dirname,'/html/non-authenticated/about.html'));
   } else {
-    res.sendFile(path.join(__dirname+'/html/authenticated/about_auth.html'));
+console.log(req.session.user_id);
+
+    res.sendFile(path.join(__dirname,'/html/authenticated/about_auth.html'));
   }
     
 });
 
-router.get('/createTeam', checkAuth, function(req,res){
-    
-    res.sendFile(path.join(__dirname+'/html/authenticated/createTeam.html'));
-    
-});
-
-router.get('/createMatch', checkAuth, function(req,res){
-    
-    res.sendFile(path.join(__dirname+'/html/authenticated/createMatch.html'));
+router.get('/createTeam', function(req,res){
+console.log('create team');    
+    res.sendFile(path.join(__dirname,'/html/authenticated/createTeam.html'));
     
 });
 
-router.get('/account', checkAuth, function(req,res){
+router.get('/createMatch', function(req,res){
     
-    res.sendFile(path.join(__dirname+'/html/authenticated/account.html'));
+    res.sendFile(path.join(__dirname,'/html/authenticated/createMatch.html'));
+    
+});
+
+router.get('/account', function(req,res){
+    
+    res.sendFile(path.join(__dirname,'/html/authenticated/account.html'));
+    
+});
+
+router.get('/logout', function(req,res){
+    req.session.destroy();
+    res.redirect('/');
+    //res.sendFile(path.join(__dirname,'/html/non-authenticated/home.html'));
     
 });
 
 router.get('/welcome.html',function(req,res){
-  res.sendFile(path.join(__dirname+'/welcome.html'));
+  res.sendFile(path.join(__dirname,'/welcome.html'));
   console.log(req.session.bugyba);
   //console.log(req.sessionID);
 });
@@ -87,7 +83,15 @@ router.get('/oauth/redirect', function (req, res) {
   // The req.query object has the query params that
   // were sent to this route. We want the `code` param
   const requestToken = req.query.code
+
+  const data = new FormData();
+  data.append('client_id', '671913842263195650');
+  data.append('client_secret', 'YyDzblJUL24U7XRL--vEFgs1QQkRhW7g');
+  data.append('grant_type', 'authorization_code');
+  data.append('scope', 'identify');
+  data.append('redirect_uri', 'https://www.nomadsands.com/oauth/redirect');
   data.append('code',requestToken);
+
   console.log('before fetch');
   fetch('https://discordapp.com/api/oauth2/token', {
 	method: 'POST',
