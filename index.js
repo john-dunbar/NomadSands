@@ -6,44 +6,74 @@ const path = require('path');
 
 const app = express();
 
+app.use(express.static(__dirname + '/public'));
+
 app.use(session({
   secret: 'myPassword',
 }));
 
 const router = express.Router();
+//check if users are logged in before routing
 
-const data = new FormData();
-data.append('client_id', '671913842263195650');
-data.append('client_secret', 'YyDzblJUL24U7XRL--vEFgs1QQkRhW7g');
-data.append('grant_type', 'authorization_code');
-data.append('scope', 'identify');
-data.append('redirect_uri', 'https://www.nomadsands.com/oauth/redirect');
-
+app.use(['/createTeam','/createMatch','/account','/logout'],function checkAuth(req, res, next) {
+  if (!req.session.user_id) {
+    res.send('You are not authorized to view this page');
+  } else {
+    next();
+  }
+})
 
 router.get('/',function(req,res){
-  res.sendFile(path.join(__dirname+'/index.html'));
-  //__dirname : It will resolve to your project folder.
-});
-
-router.get('/darkTheme.css',function(req,res){
-  res.sendFile(path.join(__dirname+'/darkTheme.css'));
-  //__dirname : It will resolve to your project folder.
+  
+  if (!req.session.user_id) {
+    console.log(req.session.user_id);
+    res.sendFile(path.join(__dirname,'/html/non-authenticated/home.html'));
+  } else {
+    console.log(req.session.user_id);
+    res.sendFile(path.join(__dirname,'/html/authenticated/home_auth.html'));
+  }
+    
 });
 
 router.get('/about',function(req,res){
-  res.sendFile(path.join(__dirname+'/about.html'));
+    
+  if (!req.session.user_id) {
+    res.sendFile(path.join(__dirname,'/html/non-authenticated/about.html'));
+  } else {
+console.log(req.session.user_id);
+
+    res.sendFile(path.join(__dirname,'/html/authenticated/about_auth.html'));
+  }
+    
 });
 
-router.get('/sitemap',function(req,res){
-  res.sendFile(path.join(__dirname+'/sitemap.html'));
+router.get('/createTeam', function(req,res){
+console.log('create team');    
+    res.sendFile(path.join(__dirname,'/html/authenticated/createTeam.html'));
+    
 });
 
-router.get('/Javascript/menuClick.js',function(req,res){
-  res.sendFile(path.join(__dirname+'/Javascript/menuClick.js'));
+router.get('/createMatch', function(req,res){
+    
+    res.sendFile(path.join(__dirname,'/html/authenticated/createMatch.html'));
+    
+});
+
+router.get('/account', function(req,res){
+    
+    res.sendFile(path.join(__dirname,'/html/authenticated/account.html'));
+    
+});
+
+router.get('/logout', function(req,res){
+    req.session.destroy();
+    res.redirect('/');
+    //res.sendFile(path.join(__dirname,'/html/non-authenticated/home.html'));
+    
 });
 
 router.get('/welcome.html',function(req,res){
-  res.sendFile(path.join(__dirname+'/welcome.html'));
+  res.sendFile(path.join(__dirname,'/welcome.html'));
   console.log(req.session.bugyba);
   //console.log(req.sessionID);
 });
@@ -53,7 +83,15 @@ router.get('/oauth/redirect', function (req, res) {
   // The req.query object has the query params that
   // were sent to this route. We want the `code` param
   const requestToken = req.query.code
+
+  const data = new FormData();
+  data.append('client_id', '671913842263195650');
+  data.append('client_secret', 'YyDzblJUL24U7XRL--vEFgs1QQkRhW7g');
+  data.append('grant_type', 'authorization_code');
+  data.append('scope', 'identify');
+  data.append('redirect_uri', 'https://www.nomadsands.com/oauth/redirect');
   data.append('code',requestToken);
+
   console.log('before fetch');
   fetch('https://discordapp.com/api/oauth2/token', {
 	method: 'POST',
@@ -70,7 +108,7 @@ router.get('/oauth/redirect', function (req, res) {
   .then(data => {
     console.log(data.username)
     req.session.user_id = data.username
-    res.redirect('/welcome.html?username='+data.username)
+    res.redirect('/?username='+data.username)
   });
 });
 
