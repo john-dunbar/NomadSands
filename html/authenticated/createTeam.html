@@ -1,43 +1,89 @@
 <!DOCTYPE html>
 <html>
-    
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Nomad Sands</title>
-        <meta name="description" content="An interactive getting started guide for Brackets.">
-        <link rel="stylesheet" href="css/darkTheme.css">
-        <script type="text/javascript" src="javascript/menuClick.js"></script> 
-    </head>
-    <body>
-        <div class="content">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Nomad Sands</title>
+    <meta name="description" content="An interactive getting started guide for Brackets.">
+    <link rel="stylesheet" href="css/darkTheme.css">
+    <script type="text/javascript" src="javascript/menuClick.js"></script>
+</head>
+
+<body>
+    <div class="content">
         <h1>Nomad Sands</h1>
         <div class="dropdown">
             <a href=# id="dropbtn" class="dropbtn">Menu</a>
-                <div id="dropdown-content" class="dropdown-content">
-                    <a href="https://www.nomadsands.com/logout" id="dropdown-item-1">Logout</a>
-                    <a href="https://www.nomadsands.com/createTeam" id="dropdown-item-2">Create a Team</a>
-                    <a href="https://www.nomadsands.com/createMatch" id="dropdown-item-3">Create a Match</a>
-                    <a href="https://www.nomadsands.com/account" id="dropdown-item-4">Account</a>
-                </div>
+            <div id="dropdown-content" class="dropdown-content">
+                <a href="https://www.nomadsands.com/logout" id="dropdown-item-1">Logout</a>
+                <a href="https://www.nomadsands.com/createTeam" id="dropdown-item-2">Create a Team</a>
+                <a href="https://www.nomadsands.com/createMatch" id="dropdown-item-3">Create a Match</a>
+                <a href="https://www.nomadsands.com/account" id="dropdown-item-4">Account</a>
+            </div>
         </div>
-        
+
         <h2>Create A Team Form!</h2>
-        
-       
-       
-        <ul>
-            <li><a href="http://brackets.io">Brackets.io</a></li>
-            <li><a href="http://blog.brackets.io">Brackets Team Blog</a></li>
-            <li><a href="https://github.com/adobe/brackets">Brackets on GitHub</a></li>
-            <li><a href="https://brackets-registry.aboutweb.com">Brackets Extension Registry</a></li>
-            <li><a href="https://github.com/adobe/brackets/wiki">Brackets Wiki</a></li>
-            <li><a href="https://groups.google.com/forum/#!forum/brackets-dev">Brackets Developer Mailing List</a></li>
-            <li><a href="https://twitter.com/brackets">@brackets on Twitter</a></li>
-            <li>Chat with Brackets developers on IRC in <a href="http://webchat.freenode.net/?channels=brackets&uio=d4">#brackets on Freenode</a></li>
-        </ul>
-        </div>
-    </body>
+        <form action="/action_page.php">
+            <div>
+                <table style="width:50%; float:left">
+                    <tr>
+                        <td>Team Name:</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="teamName"></td>
+                    </tr>
+                    <tr>
+                        <td>Team Captain:</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="teamCaptain"></td>
+                    </tr>
+                    <tr>
+                        <td>Age Group:</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="teamAgeGroup"></td>
+                    </tr>
+                </table>
+                <table style="width:50%; float:right">
+                    <tr>
+                        <td>Thumbnail:</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2"><img src="https://www.w3schools.com/images/w3schools_green.jpg" alt="W3Schools.com" style="width:104px;height:142px;"></td>
+                    </tr>
+                    <tr>
+                    </tr>
+                    <tr>
+                        <td><input type="file" accept=".jpg,.jpeg.,.gif,.png" /></td>
+                    </tr>
+                    <tr>
+                        <td>Location:</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="teamLocation"></td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+        <footer style="position: absolute; bottom: 0;">
+            <ul>
+                <li><a href="http://brackets.io">Brackets.io</a></li>
+                <li><a href="http://blog.brackets.io">Brackets Team Blog</a></li>
+                <li><a href="https://github.com/adobe/brackets">Brackets on GitHub</a></li>
+                <li><a href="https://brackets-registry.aboutweb.com">Brackets Extension Registry</a></li>
+                <li><a href="https://github.com/adobe/brackets/wiki">Brackets Wiki</a></li>
+                <li><a href="https://groups.google.com/forum/#!forum/brackets-dev">Brackets Developer Mailing List</a></li>
+                <li><a href="https://twitter.com/brackets">@brackets on Twitter</a></li>
+                <li>Chat with Brackets developers on IRC in <a href="http://webchat.freenode.net/?channels=brackets&uio=d4">#brackets on Freenode</a></li>
+            </ul>
+
+        </footer>
+
+    </div>
+</body>
+
 </html>
 <!--
 
