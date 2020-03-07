@@ -35,7 +35,7 @@ const FormData = require('form-data');
 
 //database initialization
 const mongo = require('mongodb').MongoClient;
-const url = 'mongodb://localhost:27017';
+const url = 'mongodb://***REMOVED***:***REMOVED***@***REMOVED***';
 
 
 // Declare the redirect route
