@@ -1,5 +1,6 @@
 //express routing initialization
 const express = require('express');
+require('dotenv').config();
 
 const router = express.Router();
 const app = express();
@@ -35,7 +36,7 @@ const FormData = require('form-data');
 
 //database initialization
 const mongo = require('mongodb').MongoClient;
-const url = 'mongodb://***REMOVED***:***REMOVED***@***REMOVED***';
+const url = 'mongodb://'+process.env.DB_USER+':'+process.env.DB_PASSWORD+'@'+process.env.DB_HOST;
 
 
 // Declare the redirect route
@@ -45,8 +46,8 @@ router.get('/oauth/redirect', function (req, res) {
     const requestToken = req.query.code
 
     const data = new FormData();
-    data.append('client_id', '***REMOVED***');
-    data.append('client_secret', '***REMOVED***');
+    data.append('client_id', process.env.DISCORD_ID);
+    data.append('client_secret', process.env.DISCORD_PASSWORD);
     data.append('grant_type', 'authorization_code');
     data.append('scope', 'identify');
     data.append('redirect_uri', 'https://www.nomadsands.com/oauth/redirect');
