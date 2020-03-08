@@ -119,6 +119,14 @@ router.get('/logout', function (req, res) {
 
 });
 
+router.get('/discordLogin', function (req, res) {
+    
+    res.redirect('https://discordapp.com/api/oauth2/authorize?client_id='+process.env.DISCORD_ID+'&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect&response_type=code&scope=identify');
+
+});
+
+
+
 router.post('/newMatchWithThumbnail', upload.single('matchThumbnail'), function (req, res) {
     //console.error(req.body);
     //console.error(req.file.filename);
