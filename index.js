@@ -90,7 +90,7 @@ app.use(['/createMatch', '/myMatches', '/logout'], function checkAuth(req, res, 
 
 router.get('/', function (req, res) {
 
-    if (!req.session.user_id) {
+    if (!req.session.username) {
         console.log(req.session.user_id);
         res.sendFile(path.join(__dirname, '/html/non-authenticated/home.html'));
     } else {
