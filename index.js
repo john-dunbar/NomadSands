@@ -67,11 +67,10 @@ router.get('/oauth/redirect', function (req, res) {
         }))
         .then(userData => userData.json())
         .then(data => {
-            console.log(data.username)
             req.session.username = data.username
             req.session.avatar = data.avatar
             req.session.userId = data.id
-            res.redirect('/?username=' + data.username)
+            res.redirect('/')
         });
 });
 
@@ -91,7 +90,7 @@ app.use(['/createMatch', '/myMatches', '/logout'], function checkAuth(req, res, 
 router.get('/', function (req, res) {
 
     if (!req.session.username) {
-        console.log(req.session.user_id);
+        console.log(req.session.username);
         res.sendFile(path.join(__dirname, '/html/non-authenticated/home.html'));
     } else {
         console.log(req.session.user_id);
