@@ -144,13 +144,25 @@
                     "<div class=\"card\">" +
                     "<img src=\"" + matchRecord.matchThumbnail + "\" class=\"card-img-top\" alt=\"uploads/altImg.png\" style=\"width:104px;height:142px; margin:auto;\">" +
                     "<div class=\"card-body\">" +
+                    "<div class=\"row justify-content-left\">" +
                     "<h5 class=\"card-title\">" + matchRecord.matchTitle + "</h5>" +
+                    "</div>" +
+                    "<div class=\"row justify-content-left\">" +
                     "<p class=\"card-text\">" + matchRecord.gameName + "</p>" +
-                    "<p class=\"card-text\" style=\"display:inline; margin-left:10px;\">Created by:" + matchRecord.matchOrganizer + "</p>" +
-                    "<img src=\"https://cdn.discordapp.com/avatars/" + matchRecord.organizerUserId + "/" + matchRecord.organizerAvatar + ".png\"class=\"img-thumbnail\" style=\"float:left;\">" +
+                    "</div>" +
+                    "<div class=\"row justify-content-left\">" +
+                    "<p class=\"card-text\">Creator: " + "<img src=\"https://cdn.discordapp.com/avatars/" + matchRecord.organizerUserId + "/" + matchRecord.organizerAvatar + ".png\"style=\"margin-left:10px; margin-right:5px; width:32px; height:32px;\">" +
+matchRecord.matchOrganizer + "</p>" +
+                                        "</div>" +
+                    "<div class=\"row justify-content-left\">" +
                     "<p class=\"card-text\">" + matchRecord.playerCount + "/" + matchRecord.maxPlayers + " players</p>" +
+                    "</div>" +
+                    "<div class=\"row justify-content-left\">" +
                     "<p class=\"card-text\">" + matchRecord.matchDate + "</p>" +
+                    "</div>" +
+                    "<div class=\"row justify-content-left\">" +
                     "<p class=\"card-text\">" + matchRecord.matchTime + "</p>" +
+                    "</div>" +
                     "</div>" +
                     "</div>" +
                     "</div>";
