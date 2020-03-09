@@ -68,7 +68,7 @@ router.get('/oauth/redirect', function (req, res) {
         .then(userData => userData.json())
         .then(data => {
             console.log(data.username)
-            req.session.user_id = data.username
+            req.session.username = data.username
             req.session.avatar = data.avatar
             req.session.userId = data.id
             res.redirect('/?username=' + data.username)
