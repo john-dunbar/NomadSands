@@ -36,7 +36,7 @@ const FormData = require('form-data');
 
 //database initialization
 const mongo = require('mongodb').MongoClient;
-const url = 'mongodb://'+process.env.DB_USER+':'+process.env.DB_PASSWORD+'@'+process.env.DB_HOST;
+const url = 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@' + process.env.DB_HOST;
 
 
 // Declare the redirect route
@@ -69,6 +69,8 @@ router.get('/oauth/redirect', function (req, res) {
         .then(data => {
             console.log(data.username)
             req.session.user_id = data.username
+            req.session.avatar = data.avatar
+            req.session.userId = data.id
             res.redirect('/?username=' + data.username)
         });
 });
@@ -120,8 +122,8 @@ router.get('/logout', function (req, res) {
 });
 
 router.get('/discordLogin', function (req, res) {
-    
-    res.redirect('https://discordapp.com/api/oauth2/authorize?client_id='+process.env.DISCORD_ID+'&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect&response_type=code&scope=identify');
+
+    res.redirect('https://discordapp.com/api/oauth2/authorize?client_id=' + process.env.DISCORD_ID + '&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect&response_type=code&scope=identify');
 
 });
 
@@ -133,7 +135,7 @@ router.post('/newMatchWithThumbnail', upload.single('matchThumbnail'), function 
     var jsonDoc = {
         matchThumbnail: "uploads/" + req.file.filename,
         gameName: req.body.gameName,
-        matchOrganizer: "session user",
+        matchOrganizer: req.session.username,
         maxPlayers: req.body.maxPlayers,
         playerCount: 0,
         matchTitle: req.body.matchTitle,
@@ -154,7 +156,9 @@ router.post('/newMatch', upload.none(), function (req, res) {
     var jsonDoc = {
         matchThumbnail: req.body.matchThumbnail,
         gameName: req.body.gameName,
-        matchOrganizer: "session user",
+        matchOrganizer: req.session.username,
+        organizerAvatar: req.session.avatar,
+        organizerUserId: req.session.userId,
         maxPlayers: req.body.maxPlayers,
         playerCount: 0,
         matchTitle: req.body.matchTitle,
