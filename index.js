@@ -9,7 +9,7 @@ const app = express();
 const session = require("express-session");
 
 app.use(session({
-    secret: 'myPassword',
+    secret: process.env.SESSION_PASSWORD,
 }));
 
 //path for public files
