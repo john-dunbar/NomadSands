@@ -70,6 +70,7 @@ router.get('/oauth/redirect', function (req, res) {
             console.log(data.username)
             req.session.user_id = data.username
             req.session.avatar = data.avatar
+            req.session.userId = data.id
             res.redirect('/?username=' + data.username)
         });
 });
@@ -157,6 +158,7 @@ router.post('/newMatch', upload.none(), function (req, res) {
         gameName: req.body.gameName,
         matchOrganizer: req.session.username,
         organizerAvatar: req.session.avatar,
+        organizerUserId: req.session.userId,
         maxPlayers: req.body.maxPlayers,
         playerCount: 0,
         matchTitle: req.body.matchTitle,
