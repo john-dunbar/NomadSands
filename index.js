@@ -356,7 +356,9 @@ async function createGuild(sessionId, matchName) {
     const data = new FormData();
     data.append('name', matchName);
 
-    console.log('before fetch');
+    console.log('before guild create');
+
+    console.log('token: ' + user.tokenType);
 
     fetch('https://discordapp.com/api/guilds', {
             headers: {
