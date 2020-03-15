@@ -351,7 +351,7 @@ async function insertDocument(destination, document) {
 
 async function createGuild(sessionId, matchName) {
 
-    let user = findUser(sessionId);
+    let user = await findUser(sessionId);
 
     const data = new FormData();
     data.append('name', matchName);
