@@ -308,7 +308,7 @@ async function findUser(sessionId) {
             userName: 'CMDR_Hufflepuff'
         }).toArray();
 
-        console.error("result of userFind: " + res[0].userName);
+        console.error("result of userFind: " + res[0].userToken);
 
         return res[0];
 
