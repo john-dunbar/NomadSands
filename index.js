@@ -310,7 +310,7 @@ async function findUser(sessionId) {
 
         console.error("result of userFind: " + res[0].userName);
 
-        return res;
+        return res[0];
 
     } catch (err) {
 
