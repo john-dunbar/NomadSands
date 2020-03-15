@@ -44,6 +44,7 @@ router.get('/oauth/redirect', function (req, res) {
     // user has given permission, time to use the returned code
     // from Discord to get the auth token for the user
     const requestToken = req.query.code
+    const token;
 
     const data = new FormData();
     data.append('client_id', process.env.DISCORD_ID);
@@ -68,13 +69,14 @@ router.get('/oauth/redirect', function (req, res) {
                         authorization: `${tokenData.token_type} ${tokenData.access_token}`,
                     },
                 });
+                token = tokenData;
                 return fetchedUser;
             }
 
         )
         .then(userData => userData.json())
         .then(data => {
-            //console.error("token type: " + tokenData.token_type);
+            console.error("token type: " + token.token_type);
             req.session.username = data.username;
             req.session.avatar = data.avatar;
             req.session.userId = data.id;
