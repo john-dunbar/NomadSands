@@ -50,6 +50,7 @@ router.get('/oauth/redirect', function (req, res) {
     data.append('client_secret', process.env.DISCORD_PASSWORD);
     data.append('grant_type', 'authorization_code');
     data.append('scope', 'identify');
+    data.append('scope', 'guild.join');
     data.append('redirect_uri', 'https://www.nomadsands.com/oauth/redirect');
     data.append('code', requestToken);
 
