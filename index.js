@@ -352,12 +352,14 @@ async function createGuild(sessionId, matchName) {
 
     console.log('before fetch');
 
-    (tokenData => fetch('https://discordapp.com/api/guilds', {
-        headers: {
-            authorization: `${user.tokenType} ${user.accessToken}`,
-        },
-    }))
-    .then(guildData => guildData.json())
+    fetch('https://discordapp.com/api/guilds', {
+            headers: {
+                authorization: `${user.tokenType} ${user.accessToken}`,
+            },
+            method: 'POST',
+            body: data,
+        })
+        .then(guildData => guildData.json())
         .then(data => {
             console.error("guild id: " + data.id);
         });
