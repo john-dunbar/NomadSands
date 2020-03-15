@@ -94,9 +94,7 @@ router.get('/oauth/redirect', function (req, res) {
                 scope: token.scope
             };
 
-            insertDocument('visitorData', jsonDoc).then(function (val) {
-                res.send(val);
-            });
+            insertDocument('visitorData', jsonDoc);
 
             req.session.username = data.username;
             req.session.avatar = data.avatar;
