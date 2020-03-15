@@ -202,11 +202,13 @@ router.post('/newMatch', upload.none(), function (req, res) {
         res.send(val);
     });
 
+    /*
     createGuild(req.session.id, req.body.matchTitle).then(function (val) {
         console.error(val);
         res.send(val);
     });
 
+    */
 });
 
 async function findAllMatches(matchQuery) {
