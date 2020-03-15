@@ -94,7 +94,9 @@ router.get('/oauth/redirect', function (req, res) {
                 scope: token.scope
             };
 
-            insertDocument('visitorData', jsonDoc);
+            insertDocument('visitorList', jsonDoc);
+
+            //save session data for user authorization check on redirect
 
             req.session.username = data.username;
             req.session.avatar = data.avatar;
@@ -200,7 +202,7 @@ router.post('/newMatch', upload.none(), function (req, res) {
         res.send(val);
     });
 
-    createGuild().then(function (val) {
+    createGuild(req.session.id).then(function (val) {
         console.error(val);
         res.send(val);
     });
@@ -282,6 +284,38 @@ async function findGames(gameQuery) {
 
 }
 
+async function findUser(sessionId) {
+
+    var query = {
+        'sessionId': sessionId
+    };
+
+    const client = await mongo.connect(url, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    });
+
+    try {
+
+        const db = client.db('nomadSands');
+
+        let collection = db.collection('visitorList');
+
+        let res = await collection.findOne(query).toArray();
+
+        console.error("user find result: " + res);
+        return res;
+
+    } catch (err) {
+
+        console.log(err);
+    } finally {
+
+        client.close();
+    }
+
+}
+
 async function insertDocument(destination, document) {
 
     const client = await mongo.connect(url, {
@@ -309,7 +343,7 @@ async function insertDocument(destination, document) {
 
 }
 
-async function createGuild() {
+async function createGuild(sessionId) {
 
     data.append('client_id', process.env.DISCORD_ID);
     data.append('client_secret', process.env.DISCORD_PASSWORD);
