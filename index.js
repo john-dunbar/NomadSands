@@ -202,8 +202,9 @@ router.post('/newMatch', upload.none(), function (req, res) {
 
         createGuild(req.session.id, req.body.matchTitle).then(function (val) {
             console.error(val);
-            res.send(val);
+
         });
+        res.send(val);
 
     });
 
@@ -369,7 +370,7 @@ async function createGuild(sessionId, matchName) {
         })
         .then(guildData => guildData.json())
         .then(data => {
-            console.error("guild id: " + data.id);
+            console.error("guild id: " + data);
         });
 
 }
