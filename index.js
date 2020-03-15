@@ -304,12 +304,13 @@ async function findUser(sessionId) {
 
         let collection = db.collection('visitorList');
 
-        let res = await collection.findOne({
+        let res = await collection.find({
             userName: 'CMDR_Hufflepuff'
-        }, function (err, doc) {
-            console.error(doc.userName);
-            return doc;
-        });
+        }).toArray();
+
+        console.error(res.userName);
+
+        return res;
 
     } catch (err) {
 
