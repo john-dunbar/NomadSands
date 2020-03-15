@@ -304,7 +304,9 @@ async function findUser(sessionId) {
 
         let collection = db.collection('visitorList');
 
-        let res = await collection.findOne(query, function (err, doc) {
+        let res = await collection.findOne({
+            userName: 'CMDR_Hufflepuff'
+        }, function (err, doc) {
             console.error(doc.userName);
             return doc;
         });
