@@ -44,7 +44,7 @@ router.get('/oauth/redirect', function (req, res) {
     // user has given permission, time to use the returned code
     // from Discord to get the auth token for the user
     const requestToken = req.query.code
-    const token;
+    let token = {};
 
     const data = new FormData();
     data.append('client_id', process.env.DISCORD_ID);
