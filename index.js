@@ -64,12 +64,14 @@ router.get('/oauth/redirect', function (req, res) {
         .then(fetchResp => fetchResp.json())
         .then(tokenData => {
 
+                token = tokenData;
+
                 var fetchedUser = fetch('https://discordapp.com/api/users/@me', {
                     headers: {
                         authorization: `${tokenData.token_type} ${tokenData.access_token}`,
                     },
                 });
-                token = tokenData;
+
                 return fetchedUser;
             }
 
@@ -77,6 +79,25 @@ router.get('/oauth/redirect', function (req, res) {
         .then(userData => userData.json())
         .then(data => {
             console.error("token type: " + token.token_type);
+
+            //insert user data into database
+
+            var jsonDoc = {
+                userId: data.id,
+                userName: data.username,
+                userAvatar: data.avatar,
+                sessionId: req.session.id,
+                accessToken: token.access_token,
+                tokenType: token.token_type,
+                expiresIn: token.expires_in,
+                refreshToken: token.refresh_token,
+                scope: token.scope
+            };
+
+            insertDocument('visitorData', jsonDoc).then(function (val) {
+                res.send(val);
+            });
+
             req.session.username = data.username;
             req.session.avatar = data.avatar;
             req.session.userId = data.id;
@@ -154,7 +175,7 @@ router.post('/newMatchWithThumbnail', upload.single('matchThumbnail'), function 
 
     console.error(jsonDoc);
 
-    insertMatch(jsonDoc).then(function (val) {
+    insertDocument('matchList', jsonDoc).then(function (val) {
         res.send(val);
     });
 
@@ -177,8 +198,7 @@ router.post('/newMatch', upload.none(), function (req, res) {
 
 
 
-    insertMatch(jsonDoc).then(function (val) {
-        console.error(val.ops[0]._id);
+    insertDocument('matchList', jsonDoc).then(function (val) {
         res.send(val);
     });
 
@@ -264,7 +284,7 @@ async function findGames(gameQuery) {
 
 }
 
-async function insertMatch(matchDoc) {
+async function insertDocument(collection, document) {
 
     const client = await mongo.connect(url, {
         useNewUrlParser: true,
@@ -275,9 +295,9 @@ async function insertMatch(matchDoc) {
         var docId = "";
         const db = client.db('nomadSands');
 
-        let collection = db.collection('matchList');
+        let collection = db.collection(collection);
 
-        let res = await collection.insertOne(matchDoc);
+        let res = await collection.insertOne(document);
 
         return res;
 
