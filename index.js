@@ -41,8 +41,8 @@ const url = 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD +
 
 // Declare the redirect route
 router.get('/oauth/redirect', function (req, res) {
-    // The req.query object has the query params that
-    // were sent to this route. We want the `code` param
+    // user has given permission, time to use the returned code
+    // from Discord to get the auth token for the user
     const requestToken = req.query.code
 
     const data = new FormData();
@@ -61,17 +61,20 @@ router.get('/oauth/redirect', function (req, res) {
         })
 
         .then(fetchResp => fetchResp.json())
-        .then(tokenData => fetch('https://discordapp.com/api/users/@me', {
-            headers: {
-                authorization: `${tokenData.token_type} ${tokenData.access_token}`,
-            },
-        }))
+        .then(tokenData => {
+            fetch('https://discordapp.com/api/users/@me', {
+                headers: {
+                    authorization: `${tokenData.token_type} ${tokenData.access_token}`,
+                },
+            })
+        })
         .then(userData => userData.json())
         .then(data => {
-            req.session.username = data.username
-            req.session.avatar = data.avatar
-            req.session.userId = data.id
-            res.redirect('/')
+            console.error("token type: " + tokenData.token_type);
+            req.session.username = data.username;
+            req.session.avatar = data.avatar;
+            req.session.userId = data.id;
+            res.redirect('/');
         });
 });
 
@@ -170,6 +173,11 @@ router.post('/newMatch', upload.none(), function (req, res) {
 
     insertMatch(jsonDoc).then(function (val) {
         console.error(val.ops[0]._id);
+        res.send(val);
+    });
+
+    createGuild().then(function (val) {
+        console.error(val);
         res.send(val);
     });
 
@@ -274,6 +282,38 @@ async function insertMatch(matchDoc) {
 
         client.close();
     }
+
+}
+
+async function createGuild() {
+
+    data.append('client_id', process.env.DISCORD_ID);
+    data.append('client_secret', process.env.DISCORD_PASSWORD);
+    data.append('grant_type', 'authorization_code');
+    data.append('scope', 'identify');
+    data.append('scope', 'guild.join');
+    data.append('redirect_uri', 'https://www.nomadsands.com/oauth/redirect');
+    data.append('code', requestToken);
+
+    console.log('before fetch');
+    fetch('https://discordapp.com/api/oauth2/token', {
+            method: 'POST',
+            body: data,
+        })
+
+        .then(fetchResp => fetchResp.json())
+        .then(tokenData => fetch('https://discordapp.com/api/users/@me', {
+            headers: {
+                authorization: `${tokenData.token_type} ${tokenData.access_token}`,
+            },
+        }))
+        .then(userData => userData.json())
+        .then(data => {
+            req.session.username = data.username
+            req.session.avatar = data.avatar
+            req.session.userId = data.id
+            res.redirect('/')
+        });
 
 }
 
