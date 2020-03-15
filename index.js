@@ -61,13 +61,13 @@ router.get('/oauth/redirect', function (req, res) {
         })
 
         .then(fetchResp => fetchResp.json())
-        .then(tokenData => {
+        .then(tokenData =>
             fetch('https://discordapp.com/api/users/@me', {
                 headers: {
                     authorization: `${tokenData.token_type} ${tokenData.access_token}`,
                 },
             })
-        })
+        )
         .then(userData => userData.json())
         .then(data => {
             console.error("token type: " + tokenData.token_type);
