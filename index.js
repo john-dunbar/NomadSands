@@ -202,7 +202,7 @@ router.post('/newMatch', upload.none(), function (req, res) {
         res.send(val);
     });
 
-    createGuild(req.session.id).then(function (val) {
+    createGuild(req.session.id, req.body.matchTitle).then(function (val) {
         console.error(val);
         res.send(val);
     });
@@ -343,34 +343,23 @@ async function insertDocument(destination, document) {
 
 }
 
-async function createGuild(sessionId) {
+async function createGuild(sessionId, matchName) {
 
-    data.append('client_id', process.env.DISCORD_ID);
-    data.append('client_secret', process.env.DISCORD_PASSWORD);
-    data.append('grant_type', 'authorization_code');
-    data.append('scope', 'identify');
-    data.append('scope', 'guild.join');
-    data.append('redirect_uri', 'https://www.nomadsands.com/oauth/redirect');
-    data.append('code', requestToken);
+    let user = findUser(sessionId);
+
+    const data = new FormData();
+    data.append('name', matchName);
 
     console.log('before fetch');
-    fetch('https://discordapp.com/api/oauth2/token', {
-            method: 'POST',
-            body: data,
-        })
 
-        .then(fetchResp => fetchResp.json())
-        .then(tokenData => fetch('https://discordapp.com/api/users/@me', {
-            headers: {
-                authorization: `${tokenData.token_type} ${tokenData.access_token}`,
-            },
-        }))
-        .then(userData => userData.json())
+    (tokenData => fetch('https://discordapp.com/api/guilds', {
+        headers: {
+            authorization: `${user.tokenType} ${user.accessToken}`,
+        },
+    }))
+    .then(guildData => guildData.json())
         .then(data => {
-            req.session.username = data.username
-            req.session.avatar = data.avatar
-            req.session.userId = data.id
-            res.redirect('/')
+            console.error("guild id: " + data.id);
         });
 
 }
