@@ -284,7 +284,7 @@ async function findGames(gameQuery) {
 
 }
 
-async function insertDocument(collection, document) {
+async function insertDocument(destination, document) {
 
     const client = await mongo.connect(url, {
         useNewUrlParser: true,
@@ -295,7 +295,7 @@ async function insertDocument(collection, document) {
         var docId = "";
         const db = client.db('nomadSands');
 
-        let collection = db.collection(collection);
+        let collection = db.collection(destination);
 
         let res = await collection.insertOne(document);
 
