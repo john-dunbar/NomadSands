@@ -21,7 +21,9 @@ var guildManager = new discord.GuildManager(client);
 client.login(process.env.DISCORD_BOT_TOKEN);
 client.once('ready', () => {
     console.log('Ready!');
-    console.log("bot guilds: " + client.guilds.cache.last(2));
+    console.log("bot guilds: " + client.guilds.cache.each(guild => {
+        console.log(guild.id);
+    }));
 
 });
 
