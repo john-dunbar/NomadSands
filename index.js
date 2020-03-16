@@ -372,11 +372,13 @@ async function createGuild(sessionId, matchName) {
     console.log('token: ' + user.tokenType);
 
     guildManager.create("Test")
-        .then(guildData => guildData.data)
+        .then(guildData => guildData.name)
         .then(data => {
+            /*
             console.error("guild id: " + client.generateInvite(['SEND_MESSAGES', 'MANAGE_GUILD', 'MENTION_EVERYONE'])
                 .then(link => console.log(`Generated bot invite link: ${link}`))
                 .catch(console.error));
+            */
             /*
                 const guildJoinData = new FormData();
 
