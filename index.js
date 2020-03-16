@@ -16,16 +16,16 @@ app.use(session({
 const discord = require('discord.js');
 const client = new discord.Client();
 
-console.log("bot token: " + process.env.DISCORD_BOT_TOKEN);
 var guildManager = new discord.GuildManager(client);
+
 client.login(process.env.DISCORD_BOT_TOKEN);
 client.once('ready', () => {
-    console.log('Ready!');
-    console.log("bot guilds: " + client.guilds.cache.each(guild => {
+    console.log('Nomad Sands bot ready!');
+    console.log("Nomad Sands bot in " + client.guilds.cache.size + " guilds");
+    console.log("Bot guild IDs: " + client.guilds.cache.each(guild => {
         console.log(guild.id);
-        // guild.delete()
     }));
-    console.log(client.guilds.cache.size);
+
 
 });
 
@@ -372,26 +372,14 @@ async function createGuild(sessionId, matchName) {
 
     let user = await findUser(sessionId);
 
-    let botRole = 'bot';
-
-    const guildCreateData = new FormData();
-    guildCreateData.append('name', matchName);
-
-    console.log('before guild create');
-
-    console.log('token: ' + user.tokenType);
-
     guildManager.create(matchName)
         .then(guildData => {
             let data = guildManager.resolve(guildData);
             data.addMember(user.userId, {
                     'accessToken': user.accessToken,
                 })
-                .then(() => data.setOwner(user.userId));
-            //.then(() => data.leave());
-            console.log("guild data: " + data.name);
-            console.log("guild data: " + data.id);
-            console.log("guild data: " + data.maximumMembers);
+                .then(() => data.setOwner(user.userId))
+                .then(() => data.leave());
         });
 
 }

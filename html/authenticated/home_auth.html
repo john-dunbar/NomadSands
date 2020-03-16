@@ -142,26 +142,80 @@
                 var matchCard =
                     "<div class=\"col-3\">" +
                     "<div class=\"card\">" +
+
                     "<img src=\"" + matchRecord.matchThumbnail + "\" class=\"card-img-top\" alt=\"uploads/altImg.png\" style=\"width:104px;height:142px; margin:auto;\">" +
+
                     "<div class=\"card-body\">" +
+                    "<div class=\"container\">" +
+
                     "<div class=\"row justify-content-left\">" +
-                    "<h5 class=\"card-title\">" + matchRecord.matchTitle + "</h5>" +
+                    "<div class=\"col\">" +
+
+                    "<h5 class=\"card-title\">" +
+                    matchRecord.matchTitle + "</h5>" +
+
                     "</div>" +
+                    "</div>" +
+
                     "<div class=\"row justify-content-left\">" +
+                    "<div class=\"col\">" +
+
                     "<p class=\"card-text\">" + matchRecord.gameName + "</p>" +
+
                     "</div>" +
+                    "</div>" +
+
                     "<div class=\"row justify-content-left\">" +
-                    "<p class=\"card-text\">Creator: " + "<img src=\"https://cdn.discordapp.com/avatars/" + matchRecord.organizerUserId + "/" + matchRecord.organizerAvatar + ".png\"style=\"margin-left:10px; margin-right:5px; width:32px; height:32px;\">" +
-matchRecord.matchOrganizer + "</p>" +
-                                        "</div>" +
+                    "<div class=\"col\">" +
+
+                    "<p class=\"card-text\">Creator: " +
+
+                    "</div>" +
+                    "<div class=\"col\">" +
+
+                    "<img src=\"https://cdn.discordapp.com/avatars/" + matchRecord.organizerUserId + "/" + matchRecord.organizerAvatar + ".png\"style=\"margin-left:10px; margin-right:5px; width:32px; height:32px;\">" +
+                    matchRecord.matchOrganizer + "</p>" +
+
+                    "</div>" +
+                    "</div>" +
+
                     "<div class=\"row justify-content-left\">" +
+                    "<div class=\"col\">" +
+
                     "<p class=\"card-text\">" + matchRecord.playerCount + "/" + matchRecord.maxPlayers + " players</p>" +
+
                     "</div>" +
+                    "</div>" +
+
                     "<div class=\"row justify-content-left\">" +
+                    "<div class=\"col\">" +
+
                     "<p class=\"card-text\">" + matchRecord.matchDate + "</p>" +
+
                     "</div>" +
+                    "</div>" +
+
                     "<div class=\"row justify-content-left\">" +
+                    "<div class=\"col\">" +
+
                     "<p class=\"card-text\">" + matchRecord.matchTime + "</p>" +
+
+                    "</div>" +
+                    "</div>" +
+
+                    "<div class=\"row justify-content-left\">" +
+                    "<div class=\"col\">" +
+
+                    "<button type=\"button\" class=\"btn btn-danger btn-sm\">Delete</button>" +
+
+                    "</div>" +
+                    "<div class=\"col\">" +
+
+                    "<button type=\"button\" class=\"btn btn-success btn-sm\">Join</button>" + +
+
+                    "</div>" +
+                    "</div>" +
+
                     "</div>" +
                     "</div>" +
                     "</div>" +
