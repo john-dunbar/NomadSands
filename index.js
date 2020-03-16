@@ -21,7 +21,8 @@ var guildManager = new discord.GuildManager(client);
 client.login(process.env.DISCORD_BOT_TOKEN);
 client.once('ready', () => {
     console.log('Ready!');
-    console.log("bot guilds: " + client.guilds.cache[0]);
+    console.log("bot guilds: " + client.guilds.cache.last().guild.leave()
+        .then(g => console.log('left the guild' + g.name)));
 });
 
 
