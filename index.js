@@ -12,6 +12,10 @@ app.use(session({
     secret: process.env.SESSION_PASSWORD,
 }));
 
+//Discord bot integration
+const eris = require('eris');
+var bot = new Eris.Client(process.env.DISCORD_BOT_TOKEN);
+
 //path for public files
 const path = require('path');
 app.use(express.static(__dirname + '/public'));
@@ -363,45 +367,40 @@ async function createGuild(sessionId, matchName) {
 
     console.log('token: ' + user.tokenType);
 
-    fetch('https://discordapp.com/api/guilds', {
-            headers: {
-                authorization: `${botRole} ${process.env.DISCORD_BOT_TOKEN}`,
-            },
-            method: 'POST',
-            body: guildCreateData,
-        })
+    bot.createGuild("Test", "US West")
         .then(guildData => guildData.json())
         .then(data => {
             console.error("guild id: " + data.id);
+            /*
+                const guildJoinData = new FormData();
 
-            const guildJoinData = new FormData();
-
-            guildJoinData.append('access_token', user.accessToken);
-            guildJoinData.append('nick', user.userName);
-            guildJoinData.append('roles', {
-                "id": "41771983423143936",
-                "name": "WE DEM BOYZZ!!!!!!",
-                "color": 3447003,
-                "hoist": true,
-                "position": 1,
-                "permissions": 'ADMINISTRATOR',
-                "managed": false,
-                "mentionable": false
-            });
-            guildJoinData.append('mute', false);
-            guildJoinData.append('deaf', false);
-
-            fetch('https://discordapp.com/api/guilds/' + data.id + '/members/' + user.userId, {
-                    headers: {
-                        authorization: `${botRole} ${process.env.DISCORD_BOT_TOKEN}`,
-                    },
-                    method: 'PUT',
-                    body: guildJoinData,
-                })
-                .then(guildData => guildData.json())
-                .then(data => {
-                    console.error("guild id: " + data);
+                guildJoinData.append('access_token', user.accessToken);
+                guildJoinData.append('nick', user.userName);
+                guildJoinData.append('roles', {
+                    "id": "41771983423143936",
+                    "name": "WE DEM BOYZZ!!!!!!",
+                    "color": 3447003,
+                    "hoist": true,
+                    "position": 1,
+                    "permissions": 'ADMINISTRATOR',
+                    "managed": false,
+                    "mentionable": false
                 });
+                guildJoinData.append('mute', false);
+                guildJoinData.append('deaf', false);
+
+                fetch('https://discordapp.com/api/guilds/' + data.id + '/members/' + user.userId, {
+                        headers: {
+                            authorization: `${botRole} ${process.env.DISCORD_BOT_TOKEN}`,
+                        },
+                        method: 'PUT',
+                        body: guildJoinData,
+                    })
+                    .then(guildData => guildData.json())
+                    .then(data => {
+                        console.error("guild id: " + data);
+                    });
+            */
         });
 
 }
