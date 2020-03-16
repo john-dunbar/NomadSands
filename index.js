@@ -374,7 +374,7 @@ async function createGuild(sessionId, matchName) {
     guildManager.create("Test")
         .then(guildData => guildData.data)
         .then(data => {
-            console.error("guild id: " + data.id);
+            console.error("guild id: " + client.uptime);
             /*
                 const guildJoinData = new FormData();
 
