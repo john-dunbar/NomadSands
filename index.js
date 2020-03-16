@@ -13,9 +13,9 @@ app.use(session({
 }));
 
 //Discord bot integration
-const eris = require('eris');
+const discord = require('discord.js');
 console.log("bot token: " + process.env.DISCORD_BOT_TOKEN);
-var bot = new eris.Client(process.env.DISCORD_BOT_TOKEN, {});
+var guildManager = new discord.GuildManager();
 
 //path for public files
 const path = require('path');
@@ -368,7 +368,7 @@ async function createGuild(sessionId, matchName) {
 
     console.log('token: ' + user.tokenType);
 
-    bot.createGuild("Test", "us_west")
+    guildManager.create("Test")
         .then(guildData => guildData.json())
         .then(data => {
             console.error("guild id: " + data.id);
