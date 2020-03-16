@@ -385,9 +385,9 @@ async function createGuild(sessionId, matchName) {
         .then(guildData => {
             let data = guildManager.resolve(guildData);
             data.addMember(user.userId, {
-                'accessToken': user.accessToken,
-            });
-            data.setOwner(user.userId);
+                    'accessToken': user.accessToken,
+                })
+                .then(() => data.setOwner(user.userId));
             console.log("guild data: " + data.name);
             console.log("guild data: " + data.id);
             console.log("guild data: " + data.maximumMembers);
