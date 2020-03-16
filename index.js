@@ -19,7 +19,7 @@ const client = new discord.Client();
 console.log("bot token: " + process.env.DISCORD_BOT_TOKEN);
 var guildManager = new discord.GuildManager(client);
 client.login(process.env.DISCORD_BOT_TOKEN);
-console.log("bot guilds: " + guildManager.cache);
+console.log("bot guilds: " + guildManager.cache.size);
 
 //path for public files
 const path = require('path');
