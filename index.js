@@ -14,7 +14,7 @@ app.use(session({
 
 //Discord bot integration
 const eris = require('eris');
-var bot = new eris.Client(process.env.DISCORD_BOT_TOKEN);
+var bot = new eris.Client(process.env.DISCORD_BOT_TOKEN, {});
 
 //path for public files
 const path = require('path');
@@ -367,7 +367,7 @@ async function createGuild(sessionId, matchName) {
 
     console.log('token: ' + user.tokenType);
 
-    bot.createGuild("Test", "US West")
+    bot.createGuild("Test", "US-West")
         .then(guildData => guildData.json())
         .then(data => {
             console.error("guild id: " + data.id);
