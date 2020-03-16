@@ -14,8 +14,9 @@ app.use(session({
 
 //Discord bot integration
 const discord = require('discord.js');
+const client = new discord.Client();
 console.log("bot token: " + process.env.DISCORD_BOT_TOKEN);
-var guildManager = new discord.GuildManager();
+var guildManager = new discord.GuildManager(client);
 client.login(process.env.DISCORD_BOT_TOKEN);
 
 //path for public files
