@@ -23,7 +23,7 @@ client.once('ready', () => {
     console.log('Ready!');
     console.log("bot guilds: " + client.guilds.cache.each(guild => {
         console.log(guild.id);
-        guild.leave()
+        guild.delete()
     }));
     console.log(client.guilds.cache.size);
 
