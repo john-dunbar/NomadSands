@@ -372,44 +372,9 @@ async function createGuild(sessionId, matchName) {
     console.log('token: ' + user.tokenType);
 
     guildManager.create("Test")
-        .then(guildData => guildData.name)
-        .then(data => {
-            console.log("guilds total: " + client.guilds.length)
-            /*
-            console.error("guild id: " + client.generateInvite(['SEND_MESSAGES', 'MANAGE_GUILD', 'MENTION_EVERYONE'])
-                .then(link => console.log(`Generated bot invite link: ${link}`))
-                .catch(console.error));
-            */
-            /*
-                const guildJoinData = new FormData();
-
-                guildJoinData.append('access_token', user.accessToken);
-                guildJoinData.append('nick', user.userName);
-                guildJoinData.append('roles', {
-                    "id": "41771983423143936",
-                    "name": "WE DEM BOYZZ!!!!!!",
-                    "color": 3447003,
-                    "hoist": true,
-                    "position": 1,
-                    "permissions": 'ADMINISTRATOR',
-                    "managed": false,
-                    "mentionable": false
-                });
-                guildJoinData.append('mute', false);
-                guildJoinData.append('deaf', false);
-
-                fetch('https://discordapp.com/api/guilds/' + data.id + '/members/' + user.userId, {
-                        headers: {
-                            authorization: `${botRole} ${process.env.DISCORD_BOT_TOKEN}`,
-                        },
-                        method: 'PUT',
-                        body: guildJoinData,
-                    })
-                    .then(guildData => guildData.json())
-                    .then(data => {
-                        console.error("guild id: " + data);
-                    });
-            */
+        .then(guildData => {
+            let data = guildManager.resolve(guildData);
+            console.log("guild data: " + data.name);
         });
 
 }
