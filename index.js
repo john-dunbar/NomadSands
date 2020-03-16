@@ -363,7 +363,7 @@ async function createGuild(sessionId, matchName) {
 
     fetch('https://discordapp.com/api/guilds', {
             headers: {
-                authorization: `${user.tokenType} ${user.accessToken}`,
+                authorization: `${'bot'} ${process.env.DISCORD_BOT_TOKEN}`,
             },
             method: 'POST',
             body: data,
