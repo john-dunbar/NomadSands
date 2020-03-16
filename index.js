@@ -385,7 +385,7 @@ async function createGuild(sessionId, matchName) {
         .then(guildData => {
             let data = guildManager.resolve(guildData);
             data.addMember(user.userId, {
-                'options.accessToken': user.accessToken
+                'accessToken': user.accessToken,
             });
             console.log("guild data: " + data.name);
             console.log("guild data: " + data.id);
