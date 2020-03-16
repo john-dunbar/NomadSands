@@ -15,6 +15,7 @@ app.use(session({
 //Discord bot integration
 const discord = require('discord.js');
 const client = new discord.Client();
+console.log("bot guilds: " + client.guilds);
 console.log("bot token: " + process.env.DISCORD_BOT_TOKEN);
 var guildManager = new discord.GuildManager(client);
 client.login(process.env.DISCORD_BOT_TOKEN);
@@ -373,7 +374,7 @@ async function createGuild(sessionId, matchName) {
     guildManager.create("Test")
         .then(guildData => guildData.data)
         .then(data => {
-            console.error("guild id: " + data);
+            console.error("guild id: " + data.id);
             /*
                 const guildJoinData = new FormData();
 
