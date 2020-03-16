@@ -367,7 +367,7 @@ async function createGuild(sessionId, matchName) {
 
     console.log('token: ' + user.tokenType);
 
-    bot.createGuild("Test", "US-West")
+    bot.createGuild("Test", "us_west")
         .then(guildData => guildData.json())
         .then(data => {
             console.error("guild id: " + data.id);
