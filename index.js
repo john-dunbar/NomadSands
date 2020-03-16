@@ -384,7 +384,7 @@ async function createGuild(sessionId, matchName) {
                 "color": 3447003,
                 "hoist": true,
                 "position": 1,
-                "permissions": ADDMINISTRATOR,
+                "permissions": 'ADMINISTRATOR',
                 "managed": false,
                 "mentionable": false
             });
