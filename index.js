@@ -375,6 +375,8 @@ async function createGuild(sessionId, matchName) {
         .then(guildData => {
             let data = guildManager.resolve(guildData);
             console.log("guild data: " + data.name);
+            console.log("guild data: " + data.id);
+            console.log("guild data: " + data.maximumMembers);
         });
 
 }
