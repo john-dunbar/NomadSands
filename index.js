@@ -354,8 +354,10 @@ async function createGuild(sessionId, matchName) {
 
     let user = await findUser(sessionId);
 
-    const data = new FormData();
-    data.append('name', matchName);
+    let botRole = 'bot';
+
+    const guildCreateData = new FormData();
+    guildCreateData.append('name', matchName);
 
     console.log('before guild create');
 
@@ -363,14 +365,43 @@ async function createGuild(sessionId, matchName) {
 
     fetch('https://discordapp.com/api/guilds', {
             headers: {
-                authorization: `${'bot'} ${process.env.DISCORD_BOT_TOKEN}`,
+                authorization: `${botRole} ${process.env.DISCORD_BOT_TOKEN}`,
             },
             method: 'POST',
-            body: data,
+            body: guildCreateData,
         })
         .then(guildData => guildData.json())
         .then(data => {
-            console.error("guild id: " + data);
+            console.error("guild id: " + data.id);
+
+            const guildJoinData = new FormData();
+
+            guildJoinData.append('access_token', user.accessToken);
+            guildJoinData.append('nick', user.userName);
+            guildJoinData.append('roles', {
+                "id": "41771983423143936",
+                "name": "WE DEM BOYZZ!!!!!!",
+                "color": 3447003,
+                "hoist": true,
+                "position": 1,
+                "permissions": ADDMINISTRATOR,
+                "managed": false,
+                "mentionable": false
+            });
+            guildJoinData.append('mute', false);
+            guildJoinData.append('deaf', false);
+
+            fetch('https://discordapp.com/api/guilds/' + data.id + '/members/' + user.userId, {
+                    headers: {
+                        authorization: `${botRole} ${process.env.DISCORD_BOT_TOKEN}`,
+                    },
+                    method: 'PUT',
+                    body: guildJoinData,
+                })
+                .then(guildData => guildData.json())
+                .then(data => {
+                    console.error("guild id: " + data);
+                });
         });
 
 }
