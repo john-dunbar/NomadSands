@@ -14,7 +14,7 @@ app.use(session({
 
 //Discord bot integration
 const eris = require('eris');
-var bot = new Eris.Client(process.env.DISCORD_BOT_TOKEN);
+var bot = new eris.Client(process.env.DISCORD_BOT_TOKEN);
 
 //path for public files
 const path = require('path');
