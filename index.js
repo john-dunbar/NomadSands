@@ -200,31 +200,36 @@ router.post('/newMatchWithThumbnail', upload.single('matchThumbnail'), function 
 });
 
 router.post('/newMatch', upload.none(), function (req, res) {
-    //console.error(req.body);
-    var jsonDoc = {
-        matchThumbnail: req.body.matchThumbnail,
-        gameName: req.body.gameName,
-        matchOrganizer: req.session.username,
-        organizerAvatar: req.session.avatar,
-        organizerUserId: req.session.userId,
-        maxPlayers: req.body.maxPlayers,
-        playerCount: 0,
-        matchTitle: req.body.matchTitle,
-        matchDate: req.body.matchDate,
-        matchTime: req.body.matchTime
-    };
 
+    createGuild(req.session.id, req.body.matchTitle)
+        .then(guild => {
 
+            var jsonDoc = {
+                matchThumbnail: req.body.matchThumbnail,
+                gameName: req.body.gameName,
+                guildId: guild.id,
+                matchOrganizer: req.session.username,
+                organizerAvatar: req.session.avatar,
+                organizerUserId: req.session.userId,
+                maxPlayers: req.body.maxPlayers,
+                playerCount: 0,
+                matchTitle: req.body.matchTitle,
+                matchDate: req.body.matchDate,
+                matchTime: req.body.matchTime
+            };
 
-    insertDocument('matchList', jsonDoc).then(function (val) {
+            insertDocument('matchList', jsonDoc).then(function (val) {
 
-        createGuild(req.session.id, req.body.matchTitle).then(function (val) {
-            console.error(val);
+                res.send(val);
+
+            });
 
         });
-        res.send(val);
 
-    });
+
+
+
+
 
 
 
@@ -324,7 +329,7 @@ async function findUser(sessionId) {
         let collection = db.collection('visitorList');
 
         let res = await collection.find({
-            userName: 'CMDR_Hufflepuff'
+            'sessionId': sessionId
         }).toArray();
 
         console.error("result of userFind: " + res[0].accessToken);
@@ -374,13 +379,17 @@ async function createGuild(sessionId, matchName) {
 
     guildManager.create(matchName)
         .then(guildData => {
-            let data = guildManager.resolve(guildData);
-            data.addMember(user.userId, {
+            let guild = guildManager.resolve(guildData);
+            guild.addMember(user.userId, {
                     'accessToken': user.accessToken,
                 })
-                .then(() => data.setOwner(user.userId))
-                .then(() => data.leave());
+                .then(() => guild.setOwner(user.userId))
+                .then(() => guild.leave());
         });
+
+    console.log("guild created about to insert: " + guild.id);
+
+    return guild;
 
 }
 
