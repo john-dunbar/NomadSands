@@ -376,10 +376,11 @@ async function insertDocument(destination, document) {
 async function createGuild(sessionId, matchName) {
 
     let user = await findUser(sessionId);
+    var guild = new Object();
 
     guildManager.create(matchName)
         .then(guildData => {
-            let guild = guildManager.resolve(guildData);
+            guild = guildManager.resolve(guildData);
             guild.addMember(user.userId, {
                     'accessToken': user.accessToken,
                 })
