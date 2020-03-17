@@ -368,13 +368,19 @@ async function createGuild(sessionId, matchName) {
 
     let user = await findUser(sessionId);
 
+    //need guild for database insertion in calling function, so await.
+
     let guildData = await guildManager.create(matchName);
     let guild = await guildManager.resolve(guildData);
+
+    //dont need these just yet and they cause some delay in ajax, so promise.
     guild.addMember(user.userId, {
-        'accessToken': user.accessToken,
-    });
-    guild.setOwner(user.userId);
-    guild.leave();
+            'accessToken': user.accessToken,
+        })
+        .then(() => guild.setOwner(user.userId))
+        .then(() => guild.leave())
+
+    //show that the guildId has been retrieved before moving on
     console.log("guild created about to insert: " + guild.id);
     return guild;
 
