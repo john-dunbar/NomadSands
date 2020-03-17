@@ -376,21 +376,20 @@ async function insertDocument(destination, document) {
 async function createGuild(sessionId, matchName) {
 
     let user = await findUser(sessionId);
-    var guild = new Object();
 
     guildManager.create(matchName)
         .then(guildData => {
-            guild = guildManager.resolve(guildData);
+            let guild = guildManager.resolve(guildData);
             guild.addMember(user.userId, {
                     'accessToken': user.accessToken,
                 })
                 .then(() => guild.setOwner(user.userId))
-                .then(() => guild.leave());
+                .then(() => guild.leave())
+                .then(() => {
+                    console.log("guild created about to insert: " + guild.id);
+                    return guild;
+                });
         });
-
-    console.log("guild created about to insert: " + guild.id);
-
-    return guild;
 
 }
 
