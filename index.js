@@ -368,7 +368,7 @@ async function createGuild(sessionId, matchName) {
 
     let user = await findUser(sessionId);
 
-    guildManager.create(matchName)
+    await guildManager.create(matchName)
         .then(guildData => {
             let guild = guildManager.resolve(guildData);
             guild.addMember(user.userId, {
