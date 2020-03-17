@@ -370,11 +370,11 @@ async function createGuild(sessionId, matchName) {
 
     let guildData = await guildManager.create(matchName);
     let guild = await guildManager.resolve(guildData);
-    await guild.addMember(user.userId, {
+    guild.addMember(user.userId, {
         'accessToken': user.accessToken,
     });
-    await guild.setOwner(user.userId);
-    await guild.leave();
+    guild.setOwner(user.userId);
+    guild.leave();
     console.log("guild created about to insert: " + guild.id);
     return guild;
 
