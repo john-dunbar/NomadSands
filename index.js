@@ -368,19 +368,15 @@ async function createGuild(sessionId, matchName) {
 
     let user = await findUser(sessionId);
 
-    await guildManager.create(matchName)
-        .then(guildData => {
-            let guild = guildManager.resolve(guildData);
-            guild.addMember(user.userId, {
-                    'accessToken': user.accessToken,
-                })
-                .then(() => guild.setOwner(user.userId))
-                .then(() => guild.leave())
-                .then(() => {
-                    console.log("guild created about to insert: " + guild.id);
-                    return guild;
-                });
-        });
+    let guildData = await guildManager.create(matchName);
+    let guild = await guildManager.resolve(guildData);
+    await guild.addMember(user.userId, {
+        'accessToken': user.accessToken,
+    });
+    await guild.setOwner(user.userId);
+    await guild.leave();
+    console.log("guild created about to insert: " + guild.id);
+    return guild;
 
 }
 
