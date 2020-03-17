@@ -201,38 +201,27 @@ router.post('/newMatchWithThumbnail', upload.single('matchThumbnail'), function 
 
 router.post('/newMatch', upload.none(), function (req, res) {
 
-    createGuild(req.session.id, req.body.matchTitle)
-        .then(guild => {
+    var guild = await createGuild(req.session.id, req.body.matchTitle);
 
-            var jsonDoc = {
-                matchThumbnail: req.body.matchThumbnail,
-                gameName: req.body.gameName,
-                guildId: guild.id,
-                matchOrganizer: req.session.username,
-                organizerAvatar: req.session.avatar,
-                organizerUserId: req.session.userId,
-                maxPlayers: req.body.maxPlayers,
-                playerCount: 0,
-                matchTitle: req.body.matchTitle,
-                matchDate: req.body.matchDate,
-                matchTime: req.body.matchTime
-            };
+    var jsonDoc = {
+        matchThumbnail: req.body.matchThumbnail,
+        gameName: req.body.gameName,
+        guildId: guild.id,
+        matchOrganizer: req.session.username,
+        organizerAvatar: req.session.avatar,
+        organizerUserId: req.session.userId,
+        maxPlayers: req.body.maxPlayers,
+        playerCount: 0,
+        matchTitle: req.body.matchTitle,
+        matchDate: req.body.matchDate,
+        matchTime: req.body.matchTime
+    };
 
-            insertDocument('matchList', jsonDoc).then(function (val) {
+    insertDocument('matchList', jsonDoc).then(function (val) {
 
-                res.send(val);
+        res.send(val);
 
-            });
-
-        });
-
-
-
-
-
-
-
-
+    });
 
 });
 
