@@ -33,7 +33,7 @@
                         <a href=# id="dropbtn" class="dropbtn">Menu</a>
                         <div id="dropdown-content" class="dropdown-content">
                             <a href="https://www.nomadsands.com/logout" id="dropdown-item-1">Logout</a>
-                            <a href="#" id="dropdown-item" data-toggle="modal" data-target="#myForm">Create a Match</a>
+                            <a href="#" id="createMatch" data-toggle="modal" data-target="#myForm">Create a Match</a>
                             <a href="https://www.nomadsands.com/myMatches" id="dropdown-item-4">My Matches</a>
                         </div>
                     </div>
@@ -410,6 +410,16 @@
 
 
 
+
+        });
+
+        $("#createMatch").click(function(event) {
+            // "13:45:00"
+            // "2011-08-19"
+            var currentDateTime = new Date()
+            var formattedDate = current_datetime.getDate() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getFullYear();
+
+            console.log(formattedDate);
 
         });
 
