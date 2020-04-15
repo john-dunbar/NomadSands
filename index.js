@@ -148,6 +148,23 @@ router.get('/', function (req, res) {
 
 });
 
+router.get('/viewMatches', function (req, res) {
+
+    //for some reason at this point after logging out, it still loads the authenticated version
+    /*
+    if (!req.session.username) {
+        console.log(req.session.username);
+        res.sendFile(path.join(__dirname, '/html/non-authenticated/matchList.html'));
+    } else {
+        console.log(req.session.user_id);
+        res.sendFile(path.join(__dirname, '/html/authenticated/home_auth.html'));
+    }*/
+
+    res.sendFile(path.join(__dirname, '/html/non-authenticated/matchList.html'));
+
+});
+
+
 router.get('/autocomplete', function (req, res) {
     findGames(req.query.term).then(function (val) {
         res.send(val);
@@ -164,8 +181,13 @@ router.get('/allMatches', function (req, res) {
 });
 
 router.get('/logout', function (req, res) {
-    req.session.destroy();
-    res.redirect('/');
+    req.session.destroy((err) => {
+        if (err) {
+            return console.log(err);
+        }
+        req.logout();
+        res.redirect('/');
+    });
 
 });
 
