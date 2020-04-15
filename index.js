@@ -177,8 +177,12 @@ router.get('/allMatches', function (req, res) {
 });
 
 router.get('/logout', function (req, res) {
-    req.session.destroy();
-    res.redirect('/');
+    req.session.destroy((err) => {
+        if (err) {
+            return console.log(err);
+        }
+        res.redirect('/');
+    });
 
 });
 
