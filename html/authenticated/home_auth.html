@@ -416,10 +416,13 @@
         $("#mainMenuCreateMatch").click(function(event) {
             // "13:45:00"
             // "2011-08-19"
-            var currentDateTime = new Date()
-            var formattedDate = currentDateTime.getDate() + "-" + (currentDateTime.getMonth() + 1) + "-" + currentDateTime.getFullYear();
+            var currentDateTime = new Date();
+            var formattedDate = (currentDateTime.getMonth() + 1) + "-" + currentDateTime.getDate() + "-" + currentDateTime.getFullYear();
+            
+            var formattedTime = currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":" + currentDateTime.getSeconds();
 
             console.log(formattedDate);
+            console.log(formattedTime);
 
         });
 
