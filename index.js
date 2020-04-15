@@ -148,6 +148,19 @@ router.get('/', function (req, res) {
 
 });
 
+router.get('/viewMatches', function (req, res) {
+
+    if (!req.session.username) {
+        console.log(req.session.username);
+        res.sendFile(path.join(__dirname, '/html/non-authenticated/matchList.html'));
+    } else {
+        console.log(req.session.user_id);
+        res.sendFile(path.join(__dirname, '/html/authenticated/home_auth.html'));
+    }
+
+});
+
+
 router.get('/autocomplete', function (req, res) {
     findGames(req.query.term).then(function (val) {
         res.send(val);

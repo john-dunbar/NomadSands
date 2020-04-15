@@ -38,24 +38,24 @@
                 </header>
                 <h2>Log in to find matches!</h2>
                 <div class="mt-5">
-                        <h5>Find Local Matches!</h5>
+                    <h5>Find Local Matches!</h5>
 
-                        <p>
-                            Reach out to other players in your area who are organizing private matches. Or advertise a match of your own for other players to join.
-                        </p>
+                    <p>
+                        Reach out to other players in your area who are organizing private matches. Or advertise a match of your own for other players to join.
+                    </p>
 
-                        <h5>Join a team!</h5>
+                    <h5>Join a team!</h5>
 
-                        <p>
-                            Need a healer? A tank? A maige? Create a team so that other players can join forces and help win the game.
-                        </p>
+                    <p>
+                        Need a healer? A tank? A maige? Create a team so that other players can join forces and help win the game.
+                    </p>
 
-                        <h5>Organize a tournament!</h5>
+                    <h5>Organize a tournament!</h5>
 
-                        <p>
-                            Find other teams that are playing the same game and set up a tournament schedule.
-                        </p>
-			<button type="button" class="btn btn-primary btn-lg">View Matches</button>
+                    <p>
+                        Find other teams that are playing the same game and set up a tournament schedule.
+                    </p>
+                    <button type="button" class="btn btn-primary btn-lg" id="viewMatches">View Matches</button>
                 </div>
 
 
@@ -74,6 +74,15 @@
         </div>
 
     </div>
+    <script>
+        //create match code
+        $("#viewMatches").click(function(event) {
+            $.ajax({
+                url: "/viewMatches"
+            });
+        });
+
+    </script>
 
 
     <script type="text/javascript" src="javascript/menuClick.js"></script>
