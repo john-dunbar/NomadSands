@@ -181,6 +181,7 @@ router.get('/logout', function (req, res) {
         if (err) {
             return console.log(err);
         }
+        req.logout();
         res.redirect('/');
     });
 
