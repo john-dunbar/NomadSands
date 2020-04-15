@@ -350,7 +350,7 @@
             // "13:45:00"
             // "2011-08-19"
             var currentDateTime = new Date();
-            var formattedDate = (currentDateTime.getFullYear() + "-" + currentDateTime.getMonth() + 1) + "-" + currentDateTime.getDate();
+            var formattedDate = currentDateTime.getFullYear() + "-" + (currentDateTime.getMonth() + 1) + "-" + currentDateTime.getDate();
 
             var formattedTime = currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":" + currentDateTime.getSeconds();
 
