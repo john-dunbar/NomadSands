@@ -12,6 +12,24 @@ app.use(session({
     secret: process.env.SESSION_PASSWORD,
 }));
 
+//Discord bot integration
+const discord = require('discord.js');
+const client = new discord.Client();
+
+var guildManager = new discord.GuildManager(client);
+
+client.login(process.env.DISCORD_BOT_TOKEN);
+client.once('ready', () => {
+    console.log('Nomad Sands bot ready!');
+    console.log("Nomad Sands bot in " + client.guilds.cache.size + " guilds");
+    console.log("Bot guild IDs: " + client.guilds.cache.each(guild => {
+        console.log(guild.id);
+    }));
+
+
+});
+
+
 //path for public files
 const path = require('path');
 app.use(express.static(__dirname + '/public'));
@@ -41,15 +59,17 @@ const url = 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD +
 
 // Declare the redirect route
 router.get('/oauth/redirect', function (req, res) {
-    // The req.query object has the query params that
-    // were sent to this route. We want the `code` param
+    // user has given permission, time to use the returned code
+    // from Discord to get the auth token for the user
     const requestToken = req.query.code
+    let token = {};
 
     const data = new FormData();
     data.append('client_id', process.env.DISCORD_ID);
     data.append('client_secret', process.env.DISCORD_PASSWORD);
     data.append('grant_type', 'authorization_code');
     data.append('scope', 'identify');
+    data.append('scope', 'guild.join');
     data.append('redirect_uri', 'https://www.nomadsands.com/oauth/redirect');
     data.append('code', requestToken);
 
@@ -60,17 +80,46 @@ router.get('/oauth/redirect', function (req, res) {
         })
 
         .then(fetchResp => fetchResp.json())
-        .then(tokenData => fetch('https://discordapp.com/api/users/@me', {
-            headers: {
-                authorization: `${tokenData.token_type} ${tokenData.access_token}`,
-            },
-        }))
+        .then(tokenData => {
+
+                token = tokenData;
+
+                var fetchedUser = fetch('https://discordapp.com/api/users/@me', {
+                    headers: {
+                        authorization: `${tokenData.token_type} ${tokenData.access_token}`,
+                    },
+                });
+
+                return fetchedUser;
+            }
+
+        )
         .then(userData => userData.json())
         .then(data => {
-            req.session.username = data.username
-            req.session.avatar = data.avatar
-            req.session.userId = data.id
-            res.redirect('/')
+            console.error("token type: " + token.token_type);
+
+            //insert user data into database
+
+            var jsonDoc = {
+                userId: data.id,
+                userName: data.username,
+                userAvatar: data.avatar,
+                sessionId: req.session.id,
+                accessToken: token.access_token,
+                tokenType: token.token_type,
+                expiresIn: token.expires_in,
+                refreshToken: token.refresh_token,
+                scope: token.scope
+            };
+
+            insertDocument('visitorList', jsonDoc);
+
+            //save session data for user authorization check on redirect
+
+            req.session.username = data.username;
+            req.session.avatar = data.avatar;
+            req.session.userId = data.id;
+            res.redirect('/');
         });
 });
 
@@ -122,7 +171,7 @@ router.get('/logout', function (req, res) {
 
 router.get('/discordLogin', function (req, res) {
 
-    res.redirect('https://discordapp.com/api/oauth2/authorize?client_id=' + process.env.DISCORD_ID + '&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect&response_type=code&scope=identify');
+    res.redirect('https://discordapp.com/api/oauth2/authorize?client_id=' + process.env.DISCORD_ID + '&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect&response_type=code&scope=identify%20guilds.join');
 
 });
 
@@ -144,33 +193,37 @@ router.post('/newMatchWithThumbnail', upload.single('matchThumbnail'), function 
 
     console.error(jsonDoc);
 
-    insertMatch(jsonDoc).then(function (val) {
+    insertDocument('matchList', jsonDoc).then(function (val) {
         res.send(val);
     });
 
 });
 
 router.post('/newMatch', upload.none(), function (req, res) {
-    //console.error(req.body);
-    var jsonDoc = {
-        matchThumbnail: req.body.matchThumbnail,
-        gameName: req.body.gameName,
-        matchOrganizer: req.session.username,
-        organizerAvatar: req.session.avatar,
-        organizerUserId: req.session.userId,
-        maxPlayers: req.body.maxPlayers,
-        playerCount: 0,
-        matchTitle: req.body.matchTitle,
-        matchDate: req.body.matchDate,
-        matchTime: req.body.matchTime
-    };
 
+    createGuild(req.session.id, req.body.matchTitle).then(guild => {
+        var jsonDoc = {
+            matchThumbnail: req.body.matchThumbnail,
+            gameName: req.body.gameName,
+            guildId: guild.id,
+            matchOrganizer: req.session.username,
+            organizerAvatar: req.session.avatar,
+            organizerUserId: req.session.userId,
+            maxPlayers: req.body.maxPlayers,
+            playerCount: 0,
+            matchTitle: req.body.matchTitle,
+            matchDate: req.body.matchDate,
+            matchTime: req.body.matchTime
+        };
 
+        insertDocument('matchList', jsonDoc).then(function (val) {
 
-    insertMatch(jsonDoc).then(function (val) {
-        console.error(val.ops[0]._id);
-        res.send(val);
+            res.send(val);
+
+        });
     });
+
+
 
 });
 
@@ -249,7 +302,42 @@ async function findGames(gameQuery) {
 
 }
 
-async function insertMatch(matchDoc) {
+async function findUser(sessionId) {
+
+    var query = {
+        'sessionId': sessionId
+    };
+
+    const client = await mongo.connect(url, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    });
+
+    try {
+
+        const db = client.db('nomadSands');
+
+        let collection = db.collection('visitorList');
+
+        let res = await collection.find({
+            'sessionId': sessionId
+        }).toArray();
+
+        console.error("result of userFind: " + res[0].accessToken);
+
+        return res[0];
+
+    } catch (err) {
+
+        console.log(err);
+    } finally {
+
+        client.close();
+    }
+
+}
+
+async function insertDocument(destination, document) {
 
     const client = await mongo.connect(url, {
         useNewUrlParser: true,
@@ -260,9 +348,9 @@ async function insertMatch(matchDoc) {
         var docId = "";
         const db = client.db('nomadSands');
 
-        let collection = db.collection('matchList');
+        let collection = db.collection(destination);
 
-        let res = await collection.insertOne(matchDoc);
+        let res = await collection.insertOne(document);
 
         return res;
 
@@ -273,6 +361,28 @@ async function insertMatch(matchDoc) {
 
         client.close();
     }
+
+}
+
+async function createGuild(sessionId, matchName) {
+
+    let user = await findUser(sessionId);
+
+    //need guild for database insertion in calling function, so await.
+
+    let guildData = await guildManager.create(matchName);
+    let guild = await guildManager.resolve(guildData);
+
+    //dont need these just yet and they cause some delay in ajax, so promise.
+    guild.addMember(user.userId, {
+            'accessToken': user.accessToken,
+        })
+        .then(() => guild.setOwner(user.userId))
+        .then(() => guild.leave())
+
+    //show that the guildId has been retrieved before moving on
+    console.log("guild created about to insert: " + guild.id);
+    return guild;
 
 }
 
