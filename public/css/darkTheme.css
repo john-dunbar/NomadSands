@@ -125,14 +125,14 @@ li {
     overflow-x: hidden;
     font-family: 'Open Sans', sans-serif;
     line-height: 1.75em;
-    /*
     font-size: 16px;
     background-color: #222;
-    color: #aaa;
-    */
+    /*color: #aaa;*/
 }
 
-/* Medium devices (tablets, 768px and up)*/
+/* Medium devices (tablets, 768px and up)
+   - necessary for keeping cards the same height 
+     when accounting for long user titles*/
 @media (min-width: 768px) {
     .card {
         height: 450px;
