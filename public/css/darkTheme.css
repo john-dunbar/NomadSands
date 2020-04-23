@@ -98,10 +98,6 @@ li {
     border-radius: 5px;
 }
 
-.dropdown a {}
-
-.dropdown a:hover {}
-
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {
     background-color: #403347;
