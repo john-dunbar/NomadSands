@@ -53,7 +53,9 @@ li {
 }
 
 .btn-primary,
-.btn-primary:visited {
+.btn-primary:visited,
+.btn-primary:active,
+.btn-primary:focus {
     transition-duration: 0.4s;
     background-color: #8354b8;
     border-color: #8354b8;
