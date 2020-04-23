@@ -5,7 +5,6 @@
     box-sizing: border-box;
 }
 
-/*
 body {
     font-family: 'Open Sans', sans-serif;
     line-height: 1.75em;
@@ -37,7 +36,7 @@ h3 {
     border-bottom: 1px solid #D8D8D8;
     border-top: 1px solid #D8D8D8;
 }
-*/
+
 a[href] {
     color: #8354b8;
 }
