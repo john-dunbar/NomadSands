@@ -52,13 +52,16 @@ li {
     line-height: 1.5em;
 }
 
-.btn-primary {
+.btn-primary,
+.btn-primary:visited {
     transition-duration: 0.4s;
     background-color: #8354b8;
+    border-color: #8354b8;
 }
 
 .btn-primary:hover {
     background-color: #603d87;
+    border-color: #603d87;
 }
 
 .dropbtn {
