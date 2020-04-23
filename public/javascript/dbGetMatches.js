@@ -27,12 +27,12 @@ function pageAppendMatchInfo(matchRecord) {
             "<img src=\"" + matchRecord.matchThumbnail + "\" class=\"card-img-top\" alt=\"uploads/altImg.png\" style=\"width:104px;height:142px; margin:auto;\">" +
 
             "<div class=\"card-body\">" +
-            "<div class=\"container\">" +
+            "<div class=\"container  overflow-hidden\">" +
 
             "<div class=\"row justify-content-left\">" +
             "<div class=\"col\">" +
 
-            "<h5 class=\"card-title overflow-hidden\">" +
+            "<h5 class=\"card-title\">" +
             matchRecord.matchTitle + "</h5>" +
 
             "</div>" +
@@ -41,7 +41,7 @@ function pageAppendMatchInfo(matchRecord) {
             "<div class=\"row justify-content-left\">" +
             "<div class=\"col\">" +
 
-            "<p class=\"card-text overflow-hidden\">" + matchRecord.gameName + "</p>" +
+            "<p class=\"card-text\">" + matchRecord.gameName + "</p>" +
 
             "</div>" +
             "</div>" +
@@ -49,7 +49,7 @@ function pageAppendMatchInfo(matchRecord) {
             "<div class=\"row justify-content-left\">" +
             "<div class=\"col\">" +
 
-            "<p class=\"card-text overflow-hidden\">Creator: " +
+            "<p class=\"card-text\">Creator: " +
 
             "</div>" +
             "<div class=\"col\">" +
@@ -63,7 +63,7 @@ function pageAppendMatchInfo(matchRecord) {
             "<div class=\"row justify-content-left\">" +
             "<div class=\"col\">" +
 
-            "<p class=\"card-text overflow-hidden\">" + matchRecord.playerCount + "/" + matchRecord.maxPlayers + " players</p>" +
+            "<p class=\"card-text\">" + matchRecord.playerCount + "/" + matchRecord.maxPlayers + " players</p>" +
 
             "</div>" +
             "</div>" +
