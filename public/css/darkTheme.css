@@ -125,6 +125,10 @@ li {
     /*color: #aaa;*/
 }
 
+.textOndark {
+    color: #aaa;
+}
+
 /* Medium devices (tablets, 768px and up)
    - necessary for keeping cards the same height 
      when accounting for long user titles*/
