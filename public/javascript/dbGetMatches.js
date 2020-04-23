@@ -93,7 +93,7 @@ function pageAppendMatchInfo(matchRecord) {
             "</div>" +
             "<div class=\"col\">" +
 
-            "<button type=\"button\" class=\"btn btn-success btn-sm\" id=\"joinMatch\">Join</button>" +
+            "<button type=\"button\" class=\"btn btn-primary btn-sm\" id=\"joinMatch\">Join</button>" +
 
             "</div>" +
             "</div>" +
