@@ -54,11 +54,11 @@ li {
 
 .btn-primary {
     transition-duration: 0.4s;
-    background-color: : #8354b8;
+    background-color: #8354b8;
 }
 
 .btn-primary:hover {
-    background-color: : #603d87;
+    background-color: #603d87;
 }
 
 .dropbtn {
