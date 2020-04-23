@@ -20,13 +20,11 @@ h1 {
     display: inline;
     font-size: 30px;
     line-height: 34px;
-    color: #aaa;
 }
 
 h2 {
     font-size: 20px;
     line-height: 25px;
-    color: #aaa;
 }
 
 h3 {
@@ -36,7 +34,6 @@ h3 {
     padding-bottom: 15px;
     border-bottom: 1px solid #D8D8D8;
     border-top: 1px solid #D8D8D8;
-    color: #aaa;
 }
 
 a[href] {
@@ -101,13 +98,9 @@ li {
     border-radius: 5px;
 }
 
-.dropdown a {
-    color: #aaa;
-}
+.dropdown a {}
 
-.dropdown a:hover {
-    color: #aaa;
-}
+.dropdown a:hover {}
 
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {
