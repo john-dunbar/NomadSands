@@ -11,13 +11,13 @@ function getMatches() {
         success: function (data) {
             for (var key in data) {
                 var obj = data[key];
-                insertMatchInfo(obj);
+                pageAppendMatchInfo(obj);
             }
         }
     });
 }
 
-function insertMatchInfo(matchRecord) {
+function pageAppendMatchInfo(matchRecord) {
     console.log("record found");
     if (matchRecord.gameName) {
         var matchCard =
