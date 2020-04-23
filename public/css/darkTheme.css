@@ -132,3 +132,16 @@ li {
     color: #aaa;
     */
 }
+
+/* Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+    .card {
+        height: 570;
+        overflow-y: scroll;
+    }
+}
+
+/* Small devices (landscape phones, less than 768px)*/
+@media (max-width: 768px) {
+    .card {}
+}
