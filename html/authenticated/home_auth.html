@@ -17,14 +17,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
+    <script type="text/javascript" src="javascript/menuClick.js"></script>
+
 </head>
 
 <body>
 
     <div class="container-fluid">
-
-
-
         <div class="row justify-content-center">
             <div class="col-8">
                 <header class="mt-3">
@@ -45,8 +44,6 @@
 
                     </div>
                 </div>
-
-
 
                 <div class="modal fade" tabindex="-1" id="myForm" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -69,14 +66,11 @@
                                     <div class="custom-file">
                                         <label class="custom-file-label" for="customFile" id="customFileLabel">Choose Custom Match Image</label>
                                         <input type="file" class="custom-file-input" onchange="readURL(this);" id="customFile" placeholder="Fortnite">
-
                                     </div>
-
                                     <div class="form-group">
                                         <label for="maxPLayers">Max Players</label>
                                         <input type="text" class="form-control" id="maxPlayers" placeholder="10">
                                     </div>
-
                                     <div class="form-group">
                                         <label for="matchTitle">Match Title</label>
                                         <input type="text" class="form-control" id="matchTitle" placeholder="Hawaii Gamers">
@@ -98,360 +92,24 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
-
-
         </div>
-        <div class="row justify-content-center fixed-bottom">
 
+        <div class="row justify-content-center fixed-bottom">
             <footer>
                 <a href="https://www.facebook.com/Nomad-Sands-110996047179877">Facebook</a>
                 <a href="#">Twitter</a>
                 <a href="#">Android</a>
                 <a href="#">Contact</a>
-
             </footer>
         </div>
-
     </div>
-    <script>
-        //load the matches from database
-        $(window).on('load', function() {
-            console.log("loaded");
-            getMatches();
-        });
 
-        function getMatches() {
-            $.ajax({
-                url: "/allMatches",
-                method: "GET",
-                success: function(data) {
-                    for (var key in data) {
-                        var obj = data[key];
-                        insertMatchInfo(obj);
-                    }
-                }
-            });
-        }
-
-        function insertMatchInfo(matchRecord) {
-            console.log("record found");
-            if (matchRecord.gameName) {
-                var matchCard =
-                    "<div class=\"col-3\">" +
-                    "<div class=\"card pt-3 mt-3\">" +
-
-                    "<img src=\"" + matchRecord.matchThumbnail + "\" class=\"card-img-top\" alt=\"uploads/altImg.png\" style=\"width:104px;height:142px; margin:auto;\">" +
-
-                    "<div class=\"card-body\">" +
-                    "<div class=\"container\">" +
-
-                    "<div class=\"row justify-content-left\">" +
-                    "<div class=\"col\">" +
-
-                    "<h5 class=\"card-title\">" +
-                    matchRecord.matchTitle + "</h5>" +
-
-                    "</div>" +
-                    "</div>" +
-
-                    "<div class=\"row justify-content-left\">" +
-                    "<div class=\"col\">" +
-
-                    "<p class=\"card-text\">" + matchRecord.gameName + "</p>" +
-
-                    "</div>" +
-                    "</div>" +
-
-                    "<div class=\"row justify-content-left\">" +
-                    "<div class=\"col\">" +
-
-                    "<p class=\"card-text\">Creator: " +
-
-                    "</div>" +
-                    "<div class=\"col\">" +
-
-                    "<img src=\"https://cdn.discordapp.com/avatars/" + matchRecord.organizerUserId + "/" + matchRecord.organizerAvatar + ".png\"style=\"margin-left:10px; margin-right:5px; width:32px; height:32px;\">" +
-                    matchRecord.matchOrganizer + "</p>" +
-
-                    "</div>" +
-                    "</div>" +
-
-                    "<div class=\"row justify-content-left\">" +
-                    "<div class=\"col\">" +
-
-                    "<p class=\"card-text\">" + matchRecord.playerCount + "/" + matchRecord.maxPlayers + " players</p>" +
-
-                    "</div>" +
-                    "</div>" +
-
-                    "<div class=\"row justify-content-left\">" +
-                    "<div class=\"col\">" +
-
-                    "<p class=\"card-text\">" + matchRecord.matchDate + "</p>" +
-
-                    "</div>" +
-                    "</div>" +
-
-                    "<div class=\"row justify-content-left\">" +
-                    "<div class=\"col\">" +
-
-                    "<p class=\"card-text\">" + matchRecord.matchTime + "</p>" +
-
-                    "</div>" +
-                    "</div>" +
-
-                    "<div class=\"row justify-content-left\">" +
-                    "<div class=\"col\">" +
-
-                    "<button type=\"button\" class=\"btn btn-danger btn-sm\" id=\"deleteMatch\">Delete</button>" +
-
-                    "</div>" +
-                    "<div class=\"col\">" +
-
-                    "<button type=\"button\" class=\"btn btn-success btn-sm\" id=\"joinMatch\">Join</button>" +
-
-                    "</div>" +
-                    "</div>" +
-
-                    "</div>" +
-                    "</div>" +
-                    "</div>" +
-                    "</div>";
-            }
-            //d = document.createElement("div");
-            //d.innerHTML = matchCard;
-            //document.getElementById("insertMatchesHere").append(d);
-            $('#insertMatchesHere').append(matchCard);
-        }
-
-    </script>
-
-    <script>
-        //reset input fields on close of modal
-        $('.modal').on('hidden.bs.modal', function() {
-            $('#formInputs')[0].reset();
-        });
-
-    </script>
-
-    <script>
-        $(function() {
-            //modal game search autocomplete
-
-            var pic = document.getElementById("matchThumbnail");
-
-            $("#gameName").autocomplete({
-                source: function(request, response) {
-                    console.log("in ajax");
-                    $.ajax({
-                        url: "/autocomplete",
-                        method: "GET",
-                        data: request, // request is the value of search input
-                        success: function(data) {
-                            // Map response values to fiedl label and value
-                            console.log(data[0].box_art_url);
-                            response($.map(data, function(el) {
-                                return {
-                                    label: el.name,
-                                    value: el,
-
-                                };
-                            }));
-                        }
-                    });
-                },
-
-                // The minimum number of characters a user must type before a search is performed.
-                minLength: 3,
-
-                // set an onFocus event to show the result on input field when result is focused
-                focus: function(event, ui) {
-                    this.value = ui.item.label;
-                    // Prevent other event from not being execute
-                    event.preventDefault();
-                },
-                select: function(event, ui) {
-                    // Prevent value from being put in the input:
-                    this.value = ui.item.label;
-                    // Set the id to the next input hidden field
-                    $(this).next("input").val(ui.item.value);
-                    // Prevent other event from not being execute            
-                    event.preventDefault();
-                    // optionnal: submit the form after field has been filled up
-                    //$('#quicksearch').submit();
-
-                    pic.src = ui.item.value.box_art_url.replace('-{width}x{height}', '');
-                }
-            });
-
-        });
-
-    </script>
-
-    <script>
-        //handle custom image selection
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function(e) {
-                    $('#matchThumbnail')
-                        .attr('src', e.target.result);
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        $(function() {
-            $('#customFile').on('change', function() {
-                readURL(input);
-            });
-        });
-
-
-        var input = document.getElementById('customFile');
-        var infoArea = document.getElementById('customFileLabel');
-
-        input.addEventListener('change', showFileName);
-
-        function showFileName(event) {
-            var input = event.srcElement;
-            var fileName = input.files[0].name;
-            infoArea.textContent = 'File name: ' + fileName;
-        }
-
-    </script>
-
-    <script>
-        //create match code
-        $("#createMatch").click(function(event) {
-
-            var gameName = $('#gameName').val();
-            if (gameName == '') {
-                gameName = $('#gameName').attr('placeholder');
-            }
-
-            var maxPlayers = $('#maxPlayers').val();
-            if (maxPlayers == '') {
-                maxPlayers = $('#maxPlayers').attr('placeholder');
-            }
-
-            var matchTitle = $('#matchTitle').val();
-            if (matchTitle == '') {
-                matchTitle = $('#matchTitle').attr('placeholder');
-            }
-
-            var matchDate = $('#matchDate').val();
-            if (matchDate == '') {
-                matchDate = $('#matchDate').attr('placeholder');
-            }
-
-            var matchTime = $('#matchTime').val();
-            if (matchTime == '') {
-                matchTime = $('#matchTime').attr('placeholder');
-            }
-
-
-            var formData = new FormData();
-
-
-            formData.append("gameName", gameName);
-            formData.append('maxPlayers', maxPlayers);
-            formData.append('matchTitle', matchTitle);
-            formData.append('matchDate', matchDate);
-            formData.append('matchTime', matchTime);
-
-            var matchThumbnail = "";
-
-            if ($('#matchThumbnail').attr('src').includes('http')) {
-
-                matchThumbnail = $('#matchThumbnail').attr('src');
-                formData.append("matchThumbnail", matchThumbnail);
-
-                $.ajax({
-                    url: "/newMatch",
-                    method: "POST",
-                    data: formData,
-                    processData: false, // Important!
-                    contentType: false,
-                    cache: false,
-                    success: function(data) {
-                        console.log(data.ops[0]);
-                        insertMatchInfo(data.ops[0]);
-                    }
-                });
-
-
-            } else {
-                matchThumbnail = $('#customFile')[0].files[0];
-                console.log($('#customFile')[0].files[0]);
-                formData.append("matchThumbnail", matchThumbnail);
-
-                $.ajax({
-                    url: "/newMatchWithThumbnail",
-                    method: "POST",
-                    data: formData,
-                    processData: false, // Important!
-                    contentType: false,
-                    cache: false,
-                    success: function(data) {
-                        insertMatchInfo(data.ops[0]);
-                    }
-                });
-            }
-
-
-        });
-
-        $("#joinMatch").click(function(event) {
-
-
-
-
-        });
-
-        $("#mainMenuCreateMatch").click(function(event) {
-            // "13:45:00"
-            // "2011-08-19"
-            var currentDateTime = new Date();
-
-            var month = currentDateTime.getMonth() + 1;
-            var monthString = "";
-
-            if (month < 10) {
-                monthString = "0" + month;
-            } else {
-                monthString += month;
-            }
-
-            var day = currentDateTime.getDate();
-            var dayString = "";
-
-            if (day < 10) {
-                dayString = "0" + day;
-            } else {
-                dayString += day;
-            }
-
-            var formattedDate = currentDateTime.getFullYear() + "-" + monthString + "-" + dayString;
-
-            var formattedTime = currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":00";
-
-            console.log(formattedDate);
-            console.log(formattedTime);
-
-            $("#matchDate").val(formattedDate);
-            $("#matchTime").val(formattedTime);
-
-        });
-
-    </script>
-
-
-    <script type="text/javascript" src="javascript/menuClick.js"></script>
+    <script type="text/javascript" src="javascript/dbGetMatches.js"></script>
+    <script type="text/javascript" src="javascript/dbInsertMatch.js"></script>
+    <script type="text/javascript" src="javascript/modalReset.js"></script>
+    <script type="text/javascript" src="javascript/thumbnailPicker.js"></script>
+    <script type="text/javascript" src="javascript/timeDateFormatter.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 
