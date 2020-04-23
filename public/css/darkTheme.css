@@ -10,8 +10,6 @@ body {
     line-height: 1.75em;
     font-size: 16px;
     background-color: #222;
-    color: #aaa;
-    overflow: hidden;
 }
 
 p {
@@ -128,5 +126,19 @@ li {
     line-height: 1.75em;
     font-size: 16px;
     background-color: #222;
+    /*color: #aaa;*/
+}
+
+.textOnDark {
     color: #aaa;
+}
+
+/* Medium devices (tablets, 768px and up)
+   - necessary for keeping cards the same height 
+     when accounting for long user titles*/
+@media (min-width: 768px) {
+    .card {
+        height: 450px;
+        overflow-y: auto;
+    }
 }

@@ -22,9 +22,27 @@ $("#mainMenuCreateMatch").click(function (event) {
         dayString += day;
     }
 
+    var hour = currentDateTime.getHours();
+    var hourString = "";
+
+    if (hour < 10) {
+        hourString = "0" + hour;
+    } else {
+        hourString += hour;
+    }
+
+    var minute = currentDateTime.getMinutes();
+    var minuteString = "";
+
+    if (minute < 10) {
+        minuteString = "0" + minute;
+    } else {
+        minuteString += minute;
+    }
+
     var formattedDate = currentDateTime.getFullYear() + "-" + monthString + "-" + dayString;
 
-    var formattedTime = currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":00";
+    var formattedTime = hourString + ":" + minuteString + ":00";
 
     console.log(formattedDate);
     console.log(formattedTime);
