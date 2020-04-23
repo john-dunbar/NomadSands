@@ -27,7 +27,7 @@ function pageAppendMatchInfo(matchRecord) {
             "<img src=\"" + matchRecord.matchThumbnail + "\" class=\"card-img-top\" alt=\"uploads/altImg.png\" style=\"width:104px;height:142px; margin:auto;\">" +
 
             "<div class=\"card-body\">" +
-            "<div class=\"container  overflow-hidden\">" +
+            "<div class=\"container\">" +
 
             "<div class=\"row justify-content-left\">" +
             "<div class=\"col\">" +
