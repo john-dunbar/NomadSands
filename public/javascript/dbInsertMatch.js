@@ -52,7 +52,7 @@ $("#createMatch").click(function (event) {
             cache: false,
             success: function (data) {
                 console.log(data.ops[0]);
-                insertMatchInfo(data.ops[0]);
+                pageAppendMatchInfo(data.ops[0]);
             }
         });
 
