@@ -52,6 +52,15 @@ li {
     line-height: 1.5em;
 }
 
+.btn-primary {
+    transition-duration: 0.4s;
+    background-color: : #8354b8;
+}
+
+.btn-primary:hover {
+    background-color: : #603d87;
+}
+
 .dropbtn {
 
     color: #fff;
