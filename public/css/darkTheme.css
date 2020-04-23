@@ -136,8 +136,8 @@ li {
 /* Medium devices (tablets, 768px and up)*/
 @media (min-width: 768px) {
     .card {
-        height: 570px;
-        overflow-y: scroll;
+        height: 500px;
+        overflow-y: auto;
     }
 }
 
