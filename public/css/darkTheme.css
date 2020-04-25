@@ -155,11 +155,19 @@ li {
         height: 450px;
         overflow-y: auto;
     }
+
+    footer {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1030;
+    }
 }
 
 /* Small devices (tablets, 768px and below)*/
 @media (max-width: 767.98px) {
-    .fixed-bottom {
+    footer {
         position: block;
     }
 }
