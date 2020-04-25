@@ -160,6 +160,6 @@ li {
 /* Small devices (tablets, 768px and below)*/
 @media (max-width: 768px) {
     .fixed-bottom {
-        position: inline;
+        position: block;
     }
 }
