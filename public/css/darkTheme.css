@@ -156,7 +156,7 @@ li {
         overflow-y: auto;
     }
 
-    footer {
+    #customFooter {
         position: fixed;
         right: 0;
         bottom: 0;
@@ -167,7 +167,7 @@ li {
 
 /* Small devices (tablets, 768px and below)*/
 @media (max-width: 767.98px) {
-    footer {
+    #customFooter {
         position: block;
     }
 }
