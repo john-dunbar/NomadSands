@@ -129,20 +129,6 @@ li {
     z-index: 5000;
 }
 
-.scroll {
-    margin: 4px, 4px;
-    padding: 4px;
-    height: 85vh;
-    width: 100%;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    font-family: 'Open Sans', sans-serif;
-    line-height: 1.75em;
-    font-size: 16px;
-    background-color: #222;
-    /*color: #aaa;*/
-}
-
 .textOnDark {
     color: #aaa;
 }
@@ -155,4 +141,35 @@ li {
         height: 450px;
         overflow-y: auto;
     }
+
+    #customFooter {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1030;
+    }
+
+    .scroll {
+        margin: 4px, 4px;
+        padding: 4px;
+        height: 85vh;
+        width: 100%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        font-family: 'Open Sans', sans-serif;
+        line-height: 1.75em;
+        font-size: 16px;
+        background-color: #222;
+        /*color: #aaa;*/
+    }
+}
+
+/* Small devices (tablets, 768px and below)*/
+@media (max-width: 767.98px) {
+    #customFooter {
+        position: block;
+    }
+
+    .scroll {}
 }
