@@ -8,10 +8,6 @@ class MongoInterface {
 
     mongoConnection;
 
-    constructor() {
-        connect();
-    }
-
     async connect() {
         mongoConnection = await mongo.connect(url, {
             useNewUrlParser: true,
@@ -111,6 +107,10 @@ class MongoInterface {
             console.log(err);
         }
 
+    }
+
+    constructor() {
+        connect();
     }
 
 }
