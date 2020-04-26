@@ -105,8 +105,7 @@ router.get('/oauth/redirect', function (req, res) {
                     })
                     .then(userGuilds => userGuilds.json())
                     .then(guilds => {
-                        guildsTemp = "test";
-                        console.log(req.session.guilds);
+                        guildsTemp = guilds;
                     });
 
                 return fetchedUser;
@@ -205,7 +204,6 @@ router.get('/getUserGuilds', function (req, res) {
     let result = [];
 
     if (req.session.guilds) {
-        console.log("guilds exist");
         for (let i = 0; i < req.session.guilds.length; i++) {
             if (req.session.guilds[i].owner === true) {
                 result.push(req.session.guilds[i]);
@@ -213,8 +211,6 @@ router.get('/getUserGuilds', function (req, res) {
         }
     } else {
         console.log("no guilds exist");
-        console.log(req.session.guilds);
-        console.log(req.session.username);
     }
 
     res.send(result);
