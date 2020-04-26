@@ -3,15 +3,13 @@ require('dotenv').config();
 class MongoInterface {
 
     //database initialization
-    const mongo = require('mongodb').MongoClient;
-    const url = 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@' + process.env.DB_HOST + '/nomadSands';
+    mongo = require('mongodb').MongoClient;
+    url = 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@' + process.env.DB_HOST + '/nomadSands';
 
     const mongoConnection = await mongo.connect(url, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });
-
-    tests_abc = "hello";
 
     constructor() {
 

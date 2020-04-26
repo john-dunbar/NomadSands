@@ -2,13 +2,11 @@ require('dotenv').config();
 
 class DiscordInterface {
 
-    const discord = require('discord.js');
+    discord = require('discord.js');
 
-    const discordClient = new discord.Client();
+    discordClient = new discord.Client();
 
-    const guildManager = new discord.GuildManager(discordClient);
-
-    tests_abc = "hello";
+    guildManager = new discord.GuildManager(discordClient);
 
     constructor() {
 
