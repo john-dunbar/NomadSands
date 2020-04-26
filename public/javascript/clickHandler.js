@@ -12,6 +12,8 @@ $("#mainMenuCreateMatch").click(function (event) {
 
 });
 
+$("button").on("click", updateRedirect);
+
 function updateRedirect() {
 
     console.log("clicked");
@@ -19,5 +21,3 @@ function updateRedirect() {
     alert("clicked");
 
 }
-
-$("button").on("click", updateRedirect);
