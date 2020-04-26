@@ -20,4 +20,4 @@ function updateRedirect() {
 
 }
 
-$("#userGuildSelect").on("click", updateRedirect);
+$("button").on("click", updateRedirect);
