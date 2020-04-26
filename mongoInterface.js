@@ -38,6 +38,8 @@ class MongoInterface {
 
     async findAllMatches(matchQuery) {
 
+        console.log("finding matches");
+
         try {
 
             const db = client.db('nomadSands');
