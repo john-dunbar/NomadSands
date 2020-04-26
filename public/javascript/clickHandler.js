@@ -24,6 +24,7 @@ function updateRedirect(event) {
     if (event.target.id.includes("userGuildSelect")) {
 
         console.log(event.target.innerText);
+        $("#dropdownMenu").html(event.target.innerText);
 
     }
 
