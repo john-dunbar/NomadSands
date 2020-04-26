@@ -136,6 +136,7 @@ router.get('/oauth/redirect', function (req, res) {
         })
         .then(userGuilds => userGuilds.json())
         .then(guilds => {
+            console.log("guilds: ");
             console.log(guilds);
             console.log(guilds[0]);
 
