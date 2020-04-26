@@ -8,8 +8,10 @@ class MongoInterface {
 
     //database initialization
 
-    constructor() {
-        this.mongoConnection = this.connect();
+    constructor() {}
+
+    get mongoConnection() {
+        return this.connect();
     }
 
     async connect() {
