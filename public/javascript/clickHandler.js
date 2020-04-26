@@ -12,7 +12,7 @@ $("#mainMenuCreateMatch").click(function (event) {
 
 });
 
-$("button").on("click", updateRedirect(event));
+$("button").on("click", $(this).event, updateRedirect);
 
 function updateRedirect(event) {
 
