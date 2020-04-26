@@ -10,11 +10,13 @@ class MongoInterface {
         this.mongoConnection = this.connect();
     }
 
-    async MongoClient connect() {
-        return await mongo.connect(url, {
+    async connect() {
+        let result = await mongo.connect(url, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
+
+        return result;
     }
 
     async insertDocument(destination, document) {
