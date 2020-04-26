@@ -116,7 +116,7 @@ router.get('/oauth/redirect', function (req, res) {
         .then(data => {
             console.error("token type: " + token.token_type);
 
-            for (int i = 0; i < data.guilds.length; i++) {
+            for (var i = 0; i < data.guilds.length; i++) {
                 for (val in data.guilds[i]) {
                     console.log(val);
                 }
