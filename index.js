@@ -209,7 +209,7 @@ router.get('/getUserGuilds', function (req, res) {
     if (req.session.guilds) {
 
         for (let i = 0; i < req.session.guilds.length; i++) {
-
+            console.log(req.session.guilds[i].owner);
             if (req.session.guilds[i].owner === true) {
                 result.push(req.session.guilds[i]);
             }
