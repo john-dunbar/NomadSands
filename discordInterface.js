@@ -3,13 +3,12 @@
 require('dotenv').config();
 const discord = require('discord.js');
 
+const discordClientdiscordClient = new discord.Client();
+const guildManager = new discord.GuildManager(discordClient);
+
 class DiscordInterface {
 
     constructor() {
-
-        this.discordClientdiscordClient = new discord.Client();
-
-        this.guildManager = new discord.GuildManager(discordClient);
 
         discordClient.login(process.env.DISCORD_BOT_TOKEN);
         discordClient.once('ready', () => {
