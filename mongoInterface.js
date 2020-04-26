@@ -10,7 +10,7 @@ class MongoInterface {
 
     constructor() {}
 
-    get mongoConnection() {
+    get async mongoConnection() {
         return await this.connect();
     }
 
