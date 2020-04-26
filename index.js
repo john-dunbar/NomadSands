@@ -103,10 +103,7 @@ router.get('/oauth/redirect', function (req, res) {
                         authorization: `${tokenData.token_type} ${tokenData.access_token}`,
                     },
                 });
-                let userInfo = {
-                    user: fetchedUser,
-                    guilds: fetchedGuilds
-                };
+                let userInfo = fetchedUser.concat(fetchedGuilds);
 
                 return userInfo;
             }
