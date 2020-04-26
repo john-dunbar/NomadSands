@@ -14,6 +14,6 @@ $("#mainMenuCreateMatch").click(function (event) {
 
 $("#userGuildSelect").click(function (event) {
 
-    requestMatchInsert();
+    console.log(event.target.value);
 
 });
