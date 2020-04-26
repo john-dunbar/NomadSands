@@ -5,24 +5,23 @@ const mongo = require('mongodb').MongoClient;
 const url = 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@' + process.env.DB_HOST;
 
 class MongoInterface {
-
     //database initialization
 
     constructor() {}
 
     async connect() {
-        let result = await mongo.connect(url, {
+        this.mongoConnection = await mongo.connect(url, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         })
-        return result;
+        return this.mongoConnection;
     }
 
     async insertDocument(destination, document) {
 
         try {
 
-            const db = client.db('nomadSands');
+            const db = this.mongoConnection.db('nomadSands');
 
             let collection = db.collection(destination);
 
@@ -42,7 +41,7 @@ class MongoInterface {
 
         try {
 
-            const db = client.db('nomadSands');
+            const db = this.mongoConnection.db('nomadSands');
 
             let collection = db.collection('matchList');
 
@@ -61,7 +60,7 @@ class MongoInterface {
 
         try {
 
-            const db = client.db('nomadSands');
+            const db = this.mongoConnection.db('nomadSands');
 
             let collection = db.collection('gameList');
 
@@ -103,7 +102,7 @@ class MongoInterface {
 
         try {
 
-            const db = client.db('nomadSands');
+            const db = this.mongoConnection.db('nomadSands');
 
             let collection = db.collection('visitorList');
 
