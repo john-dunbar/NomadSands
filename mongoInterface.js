@@ -2,7 +2,7 @@
 
 require('dotenv').config();
 const mongo = require('mongodb').MongoClient;
-const url = 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@' + process.env.DB_HOST +'/nomadSands';
+const url = 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@' + process.env.DB_HOST + '/nomadSands';
 
 class MongoInterface {
 
@@ -14,8 +14,8 @@ class MongoInterface {
         return this.connect();
     }
 
-    async connect() {
-        let result = await mongo.connect(url, {
+    connect() {
+        let result = mongo.connect(url, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
