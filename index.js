@@ -17,13 +17,17 @@ const mongoInterface = new MongoInterface();
 const DiscordInterface = require('./discordInterface.js');
 
 const discordInterface = new DiscordInterface();
-console.log(mongoInterface.mongoConnection);
-app.use(session({
-    secret: process.env.SESSION_PASSWORD,
-    store: new MongoStore({
-        client: mongoInterface.mongoConnection
-    })
-}));
+
+mongoInterface.connect().then((connection) => {
+    app.use(session({
+        secret: process.env.SESSION_PASSWORD,
+        store: new MongoStore({
+            client: connection;
+        })
+    }));
+});
+
+
 
 //path for public files
 const path = require('path');

@@ -10,16 +10,11 @@ class MongoInterface {
 
     constructor() {}
 
-    get async mongoConnection() {
-        return await this.connect();
-    }
-
     async connect() {
         let result = await mongo.connect(url, {
             useNewUrlParser: true,
             useUnifiedTopology: true
-        });
-
+        })
         return result;
     }
 
