@@ -5,9 +5,9 @@ class DiscordInterface {
 
     constructor() {
 
-        this.discordClient = new discord.Client();
+        this._discordClientdiscordClient = new discord.Client();
 
-        this.guildManager = new discord.GuildManager(discordClient);
+        this._guildManager = new discord.GuildManager(discordClient);
 
         discordClient.login(process.env.DISCORD_BOT_TOKEN);
         discordClient.once('ready', () => {
