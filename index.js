@@ -21,7 +21,7 @@ const discordInterface = new DiscordInterface();
 app.use(session({
     secret: process.env.SESSION_PASSWORD,
     store: new MongoStore({
-        client: mongoInterface
+        client: mongoInterface.mongoConnection;
     })
 }));
 
