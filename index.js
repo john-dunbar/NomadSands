@@ -131,7 +131,7 @@ router.get('/oauth/redirect', function (req, res) {
 
     fetch('https://discordapp.com/api/users/@me/guilds', {
             headers: {
-                authorization: `${tokenData.token_type} ${tokenData.access_token}`,
+                authorization: `${token.token_type} ${token.access_token}`,
             },
         })
         .then(userGuilds => userGuilds.json())
