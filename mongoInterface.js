@@ -2,7 +2,7 @@
 
 require('dotenv').config();
 const mongo = require('mongodb').MongoClient;
-const url = 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@' + process.env.DB_HOST;
+const url = 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@' + process.env.DB_HOST + '/nomadSands';
 
 class MongoInterface {
 
@@ -22,6 +22,8 @@ class MongoInterface {
 
         try {
 
+            const db = client.db('nomadSands');
+
             let collection = db.collection(destination);
 
             let res = await collection.insertOne(document);
@@ -37,6 +39,8 @@ class MongoInterface {
     async findAllMatches(matchQuery) {
 
         try {
+
+            const db = client.db('nomadSands');
 
             let collection = db.collection('matchList');
 
@@ -54,6 +58,8 @@ class MongoInterface {
     async findGames(gameQuery) {
 
         try {
+
+            const db = client.db('nomadSands');
 
             let collection = db.collection('gameList');
 
@@ -94,6 +100,8 @@ class MongoInterface {
         };
 
         try {
+
+            const db = client.db('nomadSands');
 
             let collection = db.collection('visitorList');
 
