@@ -3,7 +3,7 @@
 require('dotenv').config();
 const discord = require('discord.js');
 
-const discordClientdiscordClient = new discord.Client();
+const discordClient = new discord.Client();
 const guildManager = new discord.GuildManager(discordClient);
 
 class DiscordInterface {
