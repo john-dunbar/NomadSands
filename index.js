@@ -104,7 +104,8 @@ router.get('/oauth/redirect', function (req, res) {
                     })
                     .then(userGuilds => userGuilds.json())
                     .then(guilds => {
-                        req.session.guilds = guilds[0];
+                        req.session.guilds = guilds;
+                        console.log(req.session.guilds);
                     });
 
                 return fetchedUser;
