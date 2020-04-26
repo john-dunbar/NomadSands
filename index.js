@@ -70,6 +70,7 @@ router.get('/oauth/redirect', function (req, res) {
     // from Discord to get the auth token for the user
     const requestToken = req.query.code
     let token = {};
+    let guildsTemp = {};
 
     const data = new FormData();
     data.append('client_id', process.env.DISCORD_ID);
@@ -104,7 +105,7 @@ router.get('/oauth/redirect', function (req, res) {
                     })
                     .then(userGuilds => userGuilds.json())
                     .then(guilds => {
-                        req.session.guilds = "test";
+                        guildsTemp = "test";
                         console.log(req.session.guilds);
                     });
 
@@ -133,6 +134,7 @@ router.get('/oauth/redirect', function (req, res) {
 
             //save session data for user authorization check on redirect
 
+            req.session.guilds = guildsTemp;
             req.session.username = data.username;
             req.session.avatar = data.avatar;
             req.session.userId = data.id;
