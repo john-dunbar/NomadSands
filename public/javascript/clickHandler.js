@@ -12,11 +12,11 @@ $("#mainMenuCreateMatch").click(function (event) {
 
 });
 
-$("button").on("click", updateRedirect);
+$("button").on("click", updateRedirect(event));
 
-function updateRedirect() {
+function updateRedirect(event) {
 
-    console.log("clicked");
+    console.log(event.target.id);
 
     alert("clicked");
 
