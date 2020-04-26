@@ -202,7 +202,7 @@ router.get('/logout', function (req, res) {
 
 router.get('/discordLogin', function (req, res) {
 
-    res.redirect('https://discordapp.com/api/oauth2/authorize?client_id=' + process.env.DISCORD_ID + '&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect&response_type=code&scope=identify%20guilds.join');
+    res.redirect('https://discordapp.com/api/oauth2/authorize?client_id=' + process.env.DISCORD_ID + '&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect&response_type=code&scope=bot%20identify%20guilds%20guilds.join');
 
 });
 
