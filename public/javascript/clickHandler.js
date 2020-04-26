@@ -12,10 +12,10 @@ $("#mainMenuCreateMatch").click(function (event) {
 
 });
 
-$("#userGuildSelect").click(function (event) {
+$("#userGuildSelect").on("click", updateRedirect);
 
-    console.log("clicked");
+function updateRedirtect() {
 
-    console.log(event.target.value);
+    alert("clicked");
 
-});
+}
