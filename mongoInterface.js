@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 class MongoInterface {
+    test = "";
 
     //database initialization
     mongo = require('mongodb').MongoClient;
