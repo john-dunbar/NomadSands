@@ -22,7 +22,7 @@ mongoInterface.connect().then((connection) => {
     app.use(session({
         secret: process.env.SESSION_PASSWORD,
         store: new MongoStore({
-            client: connection;
+            client: connection
         })
     }));
 });
