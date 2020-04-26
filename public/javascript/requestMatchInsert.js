@@ -1,5 +1,5 @@
 //create match code
-$("#createMatch").click(function (event) {
+function requestMatchInsert() {
 
     var gameName = $('#gameName').val();
     if (gameName == '') {
@@ -74,6 +74,4 @@ $("#createMatch").click(function (event) {
             }
         });
     }
-
-
-});
+}

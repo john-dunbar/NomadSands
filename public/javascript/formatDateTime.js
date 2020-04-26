@@ -1,5 +1,6 @@
 //display default match time as time when create match main menu button was clicked
-$("#mainMenuCreateMatch").click(function (event) {
+function formatDateTime() {
+
     // "13:45:00"
     // "2011-08-19"
     var currentDateTime = new Date();
@@ -49,5 +50,4 @@ $("#mainMenuCreateMatch").click(function (event) {
 
     $("#matchDate").val(formattedDate);
     $("#matchTime").val(formattedTime);
-
-});
+}
