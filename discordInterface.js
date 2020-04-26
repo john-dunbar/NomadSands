@@ -3,13 +3,11 @@ const discord = require('discord.js');
 
 class DiscordInterface {
 
-
-
-    discordClient = new discord.Client();
-
-    guildManager = new discord.GuildManager(discordClient);
-
     constructor() {
+
+        this.discordClient = new discord.Client();
+
+        this.guildManager = new discord.GuildManager(discordClient);
 
         discordClient.login(process.env.DISCORD_BOT_TOKEN);
         discordClient.once('ready', () => {

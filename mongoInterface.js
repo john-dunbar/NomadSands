@@ -1,19 +1,17 @@
 require('dotenv').config();
+const mongo = require('mongodb').MongoClient;
+const url = 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@' + process.env.DB_HOST + '/nomadSands';
 
 class MongoInterface {
 
     //database initialization
-    mongo = require('mongodb').MongoClient;
-    url = 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@' + process.env.DB_HOST + '/nomadSands';
-
-    mongoConnection;
 
     constructor() {
-        this.connect();
+        this.mongoConnection = this.connect();
     }
 
-    async connect() {
-        mongoConnection = await mongo.connect(url, {
+    async MongoClient connect() {
+        return await mongo.connect(url, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
