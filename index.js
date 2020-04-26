@@ -8,27 +8,20 @@ const app = express();
 //session initialization
 const session = require("express-session");
 
+const MongoInterface = require('mongoInterface.js');
+
+const mongoInterface = new MongoInterface();
+
+const DiscordInterface = require('discordInterface.js');
+
+const discordInterface = new DiscordInterface();
+
 app.use(session({
     secret: process.env.SESSION_PASSWORD,
+    store: new MongoStore({
+        client: mongoInterface
+    })
 }));
-
-//Discord bot integration
-const discord = require('discord.js');
-const client = new discord.Client();
-
-var guildManager = new discord.GuildManager(client);
-
-client.login(process.env.DISCORD_BOT_TOKEN);
-client.once('ready', () => {
-    console.log('Nomad Sands bot ready!');
-    console.log("Nomad Sands bot in " + client.guilds.cache.size + " guilds");
-    console.log("Bot guild IDs: " + client.guilds.cache.each(guild => {
-        console.log(guild.id);
-    }));
-
-
-});
-
 
 //path for public files
 const path = require('path');
@@ -51,11 +44,6 @@ var upload = multer({
 })
 const fetch = require('node-fetch');
 const FormData = require('form-data');
-
-//database initialization
-const mongo = require('mongodb').MongoClient;
-const url = 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@' + process.env.DB_HOST;
-
 
 // Declare the redirect route
 router.get('/oauth/redirect', function (req, res) {
@@ -112,7 +100,7 @@ router.get('/oauth/redirect', function (req, res) {
                 scope: token.scope
             };
 
-            insertDocument('visitorList', jsonDoc);
+            mongoInterface.insertDocument('visitorList', jsonDoc);
 
             //save session data for user authorization check on redirect
 
@@ -215,7 +203,7 @@ router.post('/newMatchWithThumbnail', upload.single('matchThumbnail'), function 
 
     console.error(jsonDoc);
 
-    insertDocument('matchList', jsonDoc).then(function (val) {
+    mongoInterface.insertDocument('matchList', jsonDoc).then(function (val) {
         res.send(val);
     });
 
@@ -223,7 +211,7 @@ router.post('/newMatchWithThumbnail', upload.single('matchThumbnail'), function 
 
 router.post('/newMatch', upload.none(), function (req, res) {
 
-    createGuild(req.session.id, req.body.matchTitle).then(guild => {
+    discordInterfacce.createGuild(req.session.id, req.body.matchTitle).then(guild => {
         var jsonDoc = {
             matchThumbnail: req.body.matchThumbnail,
             gameName: req.body.gameName,
@@ -238,176 +226,14 @@ router.post('/newMatch', upload.none(), function (req, res) {
             matchTime: req.body.matchTime
         };
 
-        insertDocument('matchList', jsonDoc).then(function (val) {
+        mongoInterface.insertDocument('matchList', jsonDoc).then(function (val) {
 
             res.send(val);
 
         });
     });
 
-
-
 });
-
-async function findAllMatches(matchQuery) {
-
-    const client = await mongo.connect(url, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    });
-
-    try {
-
-        const db = client.db('nomadSands');
-
-        let collection = db.collection('matchList');
-
-        let res = await collection.find().toArray();
-
-
-        return res;
-
-    } catch (err) {
-
-        console.log(err);
-    } finally {
-
-        client.close();
-    }
-
-}
-
-async function findGames(gameQuery) {
-
-    const client = await mongo.connect(url, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    });
-
-    try {
-
-        const db = client.db('nomadSands');
-
-        let collection = db.collection('gameList');
-
-        let res = await collection.aggregate(
-            [
-                {
-                    $unwind: '$data'
-            },
-                {
-                    $replaceRoot: {
-                        newRoot: '$data'
-                    }
-            },
-                {
-                    $match: {
-                        'name': {
-                            $regex: '.*' + gameQuery + '.*',
-                            $options: '-i'
-                        }
-                    }
-            }
-                                              ]
-        ).toArray();
-
-
-        return res;
-
-    } catch (err) {
-
-        console.log(err);
-    } finally {
-
-        client.close();
-    }
-
-}
-
-async function findUser(sessionId) {
-
-    var query = {
-        'sessionId': sessionId
-    };
-
-    const client = await mongo.connect(url, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    });
-
-    try {
-
-        const db = client.db('nomadSands');
-
-        let collection = db.collection('visitorList');
-
-        let res = await collection.find({
-            'sessionId': sessionId
-        }).toArray();
-
-        console.error("result of userFind: " + res[0].accessToken);
-
-        return res[0];
-
-    } catch (err) {
-
-        console.log(err);
-    } finally {
-
-        client.close();
-    }
-
-}
-
-async function insertDocument(destination, document) {
-
-    const client = await mongo.connect(url, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    });
-
-    try {
-        var docId = "";
-        const db = client.db('nomadSands');
-
-        let collection = db.collection(destination);
-
-        let res = await collection.insertOne(document);
-
-        return res;
-
-
-    } catch (err) {
-        console.error(err);
-    } finally {
-
-        client.close();
-    }
-
-}
-
-async function createGuild(sessionId, matchName) {
-
-    let user = await findUser(sessionId);
-
-    //need guild for database insertion in calling function, so await.
-
-    let guildData = await guildManager.create(matchName);
-    let guild = await guildManager.resolve(guildData);
-
-    //dont need these just yet and they cause some delay in ajax, so promise.
-    guild.addMember(user.userId, {
-            'accessToken': user.accessToken,
-        })
-        .then(() => guild.setOwner(user.userId))
-        .then(() => guild.leave())
-
-    //show that the guildId has been retrieved before moving on
-    console.log("guild created about to insert: " + guild.id);
-    return guild;
-
-}
-
 
 //add the router
 app.use('/', router);
