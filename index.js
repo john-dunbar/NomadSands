@@ -8,11 +8,11 @@ const app = express();
 //session initialization
 const session = require("express-session");
 
-const MongoInterface = require('mongoInterface.js');
+const MongoInterface = require('./mongoInterface.js');
 
 const mongoInterface = new MongoInterface();
 
-const DiscordInterface = require('discordInterface.js');
+const DiscordInterface = require('./discordInterface.js');
 
 const discordInterface = new DiscordInterface();
 
