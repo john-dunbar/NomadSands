@@ -16,6 +16,8 @@ $("#userGuildSelect").on("click", updateRedirect);
 
 function updateRedirtect() {
 
+    console.log("clicked");
+
     alert("clicked");
 
 }
