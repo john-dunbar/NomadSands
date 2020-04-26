@@ -138,9 +138,7 @@ router.get('/oauth/redirect', function (req, res) {
         .then(guilds => {
 
             for (var i = 0; i < guilds.length; i++) {
-                for (val in guilds[i]) {
-                    console.log(val);
-                }
+                console.log(guilds[i]);
             }
         });
 
