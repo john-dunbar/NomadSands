@@ -22,7 +22,7 @@ class DiscordInterface {
         });
     }
 
-    async function createGuild(sessionId, matchName) {
+    async createGuild(sessionId, matchName) {
 
         let user = await findUser(sessionId);
 
