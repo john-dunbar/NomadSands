@@ -15,10 +15,16 @@ $("#mainMenuCreateMatch").click(function (event) {
 //this part below took a few hours to figure out
 //should be $(parent element).on(click, dynamically generated child element, event params, function call)
 
-$("#userDiscordServers").on("click", ".dropdown-item", $(this).attr("name"), updateRedirect);
+$("#userDiscordServers").on("click", ".dropdown-item", $(this).event, updateRedirect);
 
-function updateRedirect(name) {
+function updateRedirect(event) {
 
-    console.log(name);
+    console.log("clicked");
+    console.log(event.target.id);
+    if (event.target.id.includes("userGuildSelect")) {
+
+        console.log(event.target.innerText);
+
+    }
 
 }
