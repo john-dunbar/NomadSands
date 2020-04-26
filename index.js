@@ -136,10 +136,9 @@ router.get('/oauth/redirect', function (req, res) {
         })
         .then(userGuilds => userGuilds.json())
         .then(guilds => {
+            console.log(guilds);
+            console.log(guilds[0]);
 
-            for (var i = 0; i < guilds.length; i++) {
-                console.log(guilds[i]);
-            }
         });
 
     res.redirect('/');
