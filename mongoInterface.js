@@ -6,13 +6,17 @@ class MongoInterface {
     mongo = require('mongodb').MongoClient;
     url = 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@' + process.env.DB_HOST + '/nomadSands';
 
-    mongoConnection = await mongo.connect(url, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    });
+    mongoConnection;
 
     constructor() {
+        connect();
+    }
 
+    async function connect() {
+        mongoConnection = await mongo.connect(url, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
     }
 
     async function insertDocument(destination, document) {
