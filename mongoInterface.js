@@ -19,7 +19,7 @@ class MongoInterface {
         });
     }
 
-    async function insertDocument(destination, document) {
+    async insertDocument(destination, document) {
 
         try {
 
@@ -35,7 +35,7 @@ class MongoInterface {
 
     }
 
-    async function findAllMatches(matchQuery) {
+    async findAllMatches(matchQuery) {
 
         try {
 
@@ -52,7 +52,7 @@ class MongoInterface {
 
     }
 
-    async function findGames(gameQuery) {
+    async findGames(gameQuery) {
 
         try {
 
@@ -88,7 +88,7 @@ class MongoInterface {
 
     }
 
-    async function findUser(sessionId) {
+    async findUser(sessionId) {
 
         var query = {
             'sessionId': sessionId
