@@ -19,11 +19,8 @@ $("#userDiscordServers").on("click", ".dropdown-item", $(this).event, updateRedi
 
 function updateRedirect(event) {
 
-    console.log("clicked");
-    console.log(event.target.id);
     if (event.target.id.includes("userGuildSelect")) {
 
-        console.log(event.target.innerText);
         $("#dropdownMenu").html(event.target.innerText);
 
     }

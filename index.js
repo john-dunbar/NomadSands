@@ -266,27 +266,27 @@ router.post('/newMatchWithThumbnail', upload.single('matchThumbnail'), function 
 
 router.post('/newMatch', upload.none(), function (req, res) {
 
-    discordInterface.createGuild(req.session.id, req.body.matchTitle).then(guild => {
-        var jsonDoc = {
-            matchThumbnail: req.body.matchThumbnail,
-            gameName: req.body.gameName,
-            guildId: guild.id,
-            matchOrganizer: req.session.username,
-            organizerAvatar: req.session.avatar,
-            organizerUserId: req.session.userId,
-            maxPlayers: req.body.maxPlayers,
-            playerCount: 0,
-            matchTitle: req.body.matchTitle,
-            matchDate: req.body.matchDate,
-            matchTime: req.body.matchTime
-        };
+    //discordInterface.createGuild(req.session.id, req.body.matchTitle).then(guild => {
+    var jsonDoc = {
+        matchThumbnail: req.body.matchThumbnail,
+        gameName: req.body.gameName,
+        //guildId: guild.id,
+        matchOrganizer: req.session.username,
+        organizerAvatar: req.session.avatar,
+        organizerUserId: req.session.userId,
+        maxPlayers: req.body.maxPlayers,
+        playerCount: 0,
+        matchTitle: req.body.matchTitle,
+        matchDate: req.body.matchDate,
+        matchTime: req.body.matchTime
+    };
 
-        mongoInterface.insertDocument('matchList', jsonDoc).then(function (val) {
+    mongoInterface.insertDocument('matchList', jsonDoc).then(function (val) {
 
-            res.send(val);
+        res.send(val);
 
-        });
     });
+    //});
 
 });
 
