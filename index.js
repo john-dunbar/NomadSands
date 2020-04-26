@@ -20,6 +20,8 @@ const discordInterface = new DiscordInterface();
 console.log("before db connection");
 mongoInterface.connect().then((connection) => {
     console.log("returned from db connection");
+    //session undefined error with below code
+    /*
     app.use(session({
         secret: process.env.SESSION_PASSWORD,
         store: new MongoStore({
@@ -27,7 +29,16 @@ mongoInterface.connect().then((connection) => {
             dbName: 'nomadSands'
         })
     }));
+    */
 });
+
+app.use(session({
+    secret: process.env.SESSION_PASSWORD,
+    store: new MongoStore({
+        url: 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@' + process.env.DB_HOST,
+        dbName: 'nomadSands'
+    })
+}));
 
 
 
