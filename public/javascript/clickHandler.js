@@ -12,8 +12,6 @@ $("#mainMenuCreateMatch").click(function (event) {
 
 });
 
-$("#userGuildSelect").on("click", updateRedirect);
-
 function updateRedirect() {
 
     console.log("clicked");
@@ -21,3 +19,5 @@ function updateRedirect() {
     alert("clicked");
 
 }
+
+$("#userGuildSelect").on("click", updateRedirect);
