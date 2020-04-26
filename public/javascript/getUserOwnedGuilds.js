@@ -5,6 +5,7 @@ function getUserOwnedGuilds() {
         method: "GET",
         success: function (data) {
             console.log("getting guilds success!")
+            console.log(data[0]);
             if (data.length === 0) {
                 let dropDownItem = "<button class=\"dropdown-item\" type=\"button\"> Please create a Discord server </button>";
                 $('#userDiscordServers').append(dropDownItem);
