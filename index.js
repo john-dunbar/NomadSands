@@ -211,7 +211,7 @@ router.get('/getUserGuilds', function (req, res) {
     } else {
         console.log("no guilds exist");
         console.log(req.session.guilds);
-        console.log(req.session.userName);
+        console.log(req.session.username);
     }
 
     res.send(result);
