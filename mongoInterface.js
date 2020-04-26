@@ -1,3 +1,5 @@
+"use strict";
+
 require('dotenv').config();
 const mongo = require('mongodb').MongoClient;
 const url = 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@' + process.env.DB_HOST + '/nomadSands';

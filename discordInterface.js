@@ -1,3 +1,5 @@
+"use strict";
+
 require('dotenv').config();
 const discord = require('discord.js');
 
@@ -5,9 +7,9 @@ class DiscordInterface {
 
     constructor() {
 
-        this._discordClientdiscordClient = new discord.Client();
+        this.discordClientdiscordClient = new discord.Client();
 
-        this._guildManager = new discord.GuildManager(discordClient);
+        this.guildManager = new discord.GuildManager(discordClient);
 
         discordClient.login(process.env.DISCORD_BOT_TOKEN);
         discordClient.once('ready', () => {
