@@ -203,8 +203,10 @@ router.get('/getUserGuilds', function (req, res) {
 
     let result = [];
 
+    console.log("guild list: ");
+    console.log(req.session.guilds);
     if (req.session.guilds) {
-        console.log(req.session.guilds[0])
+
         for (let i = 0; i < req.session.guilds.length; i++) {
 
             if (req.session.guilds[i].owner === true) {
