@@ -6,7 +6,7 @@ class MongoInterface {
     mongo = require('mongodb').MongoClient;
     url = 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@' + process.env.DB_HOST + '/nomadSands';
 
-    const mongoConnection = await mongo.connect(url, {
+    mongoConnection = await mongo.connect(url, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });
