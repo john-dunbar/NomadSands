@@ -97,6 +97,18 @@ router.get('/oauth/redirect', function (req, res) {
                         authorization: `${tokenData.token_type} ${tokenData.access_token}`,
                     },
                 });
+                fetch('https://discordapp.com/api/users/@me/guilds', {
+                        headers: {
+                            authorization: `${token.token_type} ${token.access_token}`,
+                        },
+                    })
+                    .then(userGuilds => userGuilds.json())
+                    .then(guilds => {
+                        console.log("guilds: ");
+                        console.log(guilds);
+                        console.log(guilds[0]);
+
+                    });
 
                 return fetchedUser;
             }
@@ -129,18 +141,7 @@ router.get('/oauth/redirect', function (req, res) {
             //res.redirect('/');
         });
 
-    fetch('https://discordapp.com/api/users/@me/guilds', {
-            headers: {
-                authorization: `${token.token_type} ${token.access_token}`,
-            },
-        })
-        .then(userGuilds => userGuilds.json())
-        .then(guilds => {
-            console.log("guilds: ");
-            console.log(guilds);
-            console.log(guilds[0]);
 
-        });
 
     res.redirect('/');
 });
