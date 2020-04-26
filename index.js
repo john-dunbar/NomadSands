@@ -203,11 +203,14 @@ router.get('/getUserGuilds', function (req, res) {
     let result = [];
 
     if (req.session.guilds) {
+        console.log("guilds exist");
         for (let i = 0; i < req.session.guilds.length; i++) {
             if (req.session.guilds[i].owner === true) {
                 result.push(req.session.guilds[i]);
             }
         }
+    } else {
+        console.log("no guilds exist");
     }
 
     res.send(result);
