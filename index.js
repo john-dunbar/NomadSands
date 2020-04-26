@@ -8,6 +8,8 @@ const app = express();
 //session initialization
 const session = require("express-session");
 
+const MongoStore = require('connect-mongo')(session);
+
 const MongoInterface = require('./mongoInterface.js');
 
 const mongoInterface = new MongoInterface();
