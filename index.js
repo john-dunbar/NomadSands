@@ -94,7 +94,7 @@ router.get('/oauth/redirect', function (req, res) {
 
                 var fetchedUser = fetch('https://discordapp.com/api/users/@me', {
                     headers: {
-                        authorization: `${tokenData.token_type} ${tokenData.access_token}`,
+                        authorization: `${token.token_type} ${token.access_token}`,
                     },
                 });
                 fetch('https://discordapp.com/api/users/@me/guilds', {
@@ -104,9 +104,7 @@ router.get('/oauth/redirect', function (req, res) {
                     })
                     .then(userGuilds => userGuilds.json())
                     .then(guilds => {
-                        console.log("guilds: ");
-                        console.log(guilds);
-                        console.log(guilds[0]);
+                        req.session.guilds = guilds;
 
                     });
 
@@ -138,12 +136,9 @@ router.get('/oauth/redirect', function (req, res) {
             req.session.username = data.username;
             req.session.avatar = data.avatar;
             req.session.userId = data.id;
-            //res.redirect('/');
+            res.redirect('/');
         });
 
-
-
-    res.redirect('/');
 });
 
 
@@ -200,6 +195,22 @@ router.get('/allMatches', function (req, res) {
     mongoInterface.findAllMatches(req.query.term).then(function (val) {
         res.send(val);
     });
+
+});
+
+router.get('/getUserGuilds', function (req, res) {
+
+    let result = [];
+
+    if (req.session.guilds) {
+        for (let i = 0; i < req.session.guilds.length; i++) {
+            if (req.session.guilds[i].owner === true) {
+                result.push(req.session.guilds[i]);
+            }
+        }
+    }
+
+    res.send(result);
 
 });
 

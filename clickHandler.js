@@ -8,4 +8,6 @@ $("#mainMenuCreateMatch").click(function (event) {
 
     formatDateTime();
 
+    getUserOwnedGuilds();
+
 });
