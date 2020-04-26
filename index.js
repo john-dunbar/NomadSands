@@ -17,8 +17,9 @@ const mongoInterface = new MongoInterface();
 const DiscordInterface = require('./discordInterface.js');
 
 const discordInterface = new DiscordInterface();
-
+console.log("before db connection");
 mongoInterface.connect().then((connection) => {
+    console.log("returned from db connection");
     app.use(session({
         secret: process.env.SESSION_PASSWORD,
         store: new MongoStore({
