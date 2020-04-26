@@ -98,15 +98,6 @@ router.get('/oauth/redirect', function (req, res) {
                         authorization: `${token.token_type} ${token.access_token}`,
                     },
                 });
-                fetch('https://discordapp.com/api/users/@me/guilds', {
-                        headers: {
-                            authorization: `${token.token_type} ${token.access_token}`,
-                        },
-                    })
-                    .then(userGuilds => userGuilds.json())
-                    .then(guilds => {
-                        guildsTemp = guilds;
-                    });
 
                 return fetchedUser;
             }
@@ -132,13 +123,23 @@ router.get('/oauth/redirect', function (req, res) {
             mongoInterface.insertDocument('visitorList', jsonDoc);
 
             //save session data for user authorization check on redirect
-
-            req.session.guilds = guildsTemp;
             req.session.username = data.username;
             req.session.avatar = data.avatar;
             req.session.userId = data.id;
-            res.redirect('/');
-        });
+
+        })
+        .then(() => {
+            fetch('https://discordapp.com/api/users/@me/guilds', {
+                    headers: {
+                        authorization: `${token.token_type} ${token.access_token}`,
+                    },
+                })
+                .then(userGuilds => userGuilds.json())
+                .then(guilds => {
+                        req.session.guilds = guilds;
+                        res.redirect('/');
+                    }
+                }););
 
 });
 
