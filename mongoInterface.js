@@ -12,7 +12,7 @@ class MongoInterface {
         connect();
     }
 
-    async function connect() {
+    async connect() {
         mongoConnection = await mongo.connect(url, {
             useNewUrlParser: true,
             useUnifiedTopology: true
