@@ -1,6 +1,6 @@
-class MongoInterface {
+require('dotenv').config();
 
-    require('dotenv').config();
+class MongoInterface {
 
     //database initialization
     const mongo = require('mongodb').MongoClient;
