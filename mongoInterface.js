@@ -12,14 +12,14 @@ class MongoInterface {
         connect();
     }
 
-    async connect() {
+    connect() {
         mongoConnection = await mongo.connect(url, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
     }
 
-    async insertDocument(destination, document) {
+    insertDocument(destination, document) {
 
         try {
 
@@ -35,7 +35,7 @@ class MongoInterface {
 
     }
 
-    async findAllMatches(matchQuery) {
+    findAllMatches(matchQuery) {
 
         try {
 
@@ -52,7 +52,7 @@ class MongoInterface {
 
     }
 
-    async findGames(gameQuery) {
+    findGames(gameQuery) {
 
         try {
 
@@ -88,7 +88,7 @@ class MongoInterface {
 
     }
 
-    async findUser(sessionId) {
+    findUser(sessionId) {
 
         var query = {
             'sessionId': sessionId
