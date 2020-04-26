@@ -10,7 +10,7 @@ function getUserOwnedGuilds() {
                 $('#userDiscordServers').append(dropDownItem);
             } else {
                 for (let i = 0; i < data.length; i++) {
-                    let dropDownItem = "<button class=\"dropdown-item\" type=\"button\">" + data[i].name + "</button>";
+                    let dropDownItem = "<button class=\"dropdown-item\" type=\"button\" id=\"userGuildSelect\">" + data[i].name + "</button>";
                     $('#userDiscordServers').append(dropDownItem);
                 }
             }

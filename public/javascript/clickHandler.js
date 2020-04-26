@@ -11,3 +11,9 @@ $("#mainMenuCreateMatch").click(function (event) {
     getUserOwnedGuilds();
 
 });
+
+$("#userGuildSelect").click(function (event) {
+
+    requestMatchInsert();
+
+});
