@@ -1,9 +1,9 @@
 require('dotenv').config();
+const discord = require('discord.js');
 
 class DiscordInterface {
 
-    test = "";
-    discord = require('discord.js');
+
 
     discordClient = new discord.Client();
 
