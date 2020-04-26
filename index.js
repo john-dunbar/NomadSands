@@ -108,9 +108,9 @@ router.get('/oauth/redirect', function (req, res) {
 
             //insert user data into database
             var jsonDoc = {
-                userId: data.user.id,
-                userName: data.user.username,
-                userAvatar: data.user.avatar,
+                userId: data.id,
+                userName: data.username,
+                userAvatar: data.avatar,
                 sessionId: req.session.id,
                 accessToken: token.access_token,
                 tokenType: token.token_type,
@@ -137,8 +137,8 @@ router.get('/oauth/redirect', function (req, res) {
         .then(userGuilds => userGuilds.json())
         .then(guilds => {
 
-            for (var i = 0; i < data.guilds.length; i++) {
-                for (val in data.guilds[i]) {
+            for (var i = 0; i < guilds.length; i++) {
+                for (val in guilds[i]) {
                     console.log(val);
                 }
             }
