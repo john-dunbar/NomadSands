@@ -17,9 +17,9 @@ const mongoInterface = new MongoInterface();
 const DiscordInterface = require('./discordInterface.js');
 
 const discordInterface = new DiscordInterface();
-console.log("before db connection");
+
 mongoInterface.connect().then((connection) => {
-    console.log("returned from db connection");
+    console.log("db connected " + connection);
     //session undefined error with below code
     /*
     app.use(session({
@@ -173,7 +173,7 @@ router.get('/viewMatches', function (req, res) {
 
 
 router.get('/autocomplete', function (req, res) {
-    findGames(req.query.term).then(function (val) {
+    mongoInterface.findGames(req.query.term).then(function (val) {
         res.send(val);
     });
 
@@ -181,7 +181,7 @@ router.get('/autocomplete', function (req, res) {
 
 router.get('/allMatches', function (req, res) {
     console.error("request for matches");
-    findAllMatches(req.query.term).then(function (val) {
+    mongoInterface.findAllMatches(req.query.term).then(function (val) {
         res.send(val);
     });
 
