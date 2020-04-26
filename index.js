@@ -98,14 +98,7 @@ router.get('/oauth/redirect', function (req, res) {
                     },
                 });
 
-                var fetchedGuilds = fetch('https://discordapp.com/api/users/@me/guilds', {
-                    headers: {
-                        authorization: `${tokenData.token_type} ${tokenData.access_token}`,
-                    },
-                });
-                let userInfo = fetchedUser.concat(fetchedGuilds);
-
-                return userInfo;
+                return fetchedUser;
             }
 
         )
@@ -113,14 +106,7 @@ router.get('/oauth/redirect', function (req, res) {
         .then(data => {
             console.error("token type: " + token.token_type);
 
-            for (var i = 0; i < data.guilds.length; i++) {
-                for (val in data.guilds[i]) {
-                    console.log(val);
-                }
-            }
-
             //insert user data into database
-
             var jsonDoc = {
                 userId: data.user.id,
                 userName: data.user.username,
@@ -140,8 +126,25 @@ router.get('/oauth/redirect', function (req, res) {
             req.session.username = data.username;
             req.session.avatar = data.avatar;
             req.session.userId = data.id;
-            res.redirect('/');
+            //res.redirect('/');
         });
+
+    fetch('https://discordapp.com/api/users/@me/guilds', {
+            headers: {
+                authorization: `${tokenData.token_type} ${tokenData.access_token}`,
+            },
+        })
+        .then(userGuilds => userGuilds.json())
+        .then(guilds => {
+
+            for (var i = 0; i < data.guilds.length; i++) {
+                for (val in data.guilds[i]) {
+                    console.log(val);
+                }
+            }
+        });
+
+    res.redirect('/');
 });
 
 
