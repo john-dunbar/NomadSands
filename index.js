@@ -105,7 +105,6 @@ router.get('/oauth/redirect', function (req, res) {
                     .then(userGuilds => userGuilds.json())
                     .then(guilds => {
                         req.session.guilds = guilds;
-                        console.log(req.session.guilds);
                     });
 
                 return fetchedUser;
@@ -211,6 +210,7 @@ router.get('/getUserGuilds', function (req, res) {
         }
     } else {
         console.log("no guilds exist");
+        console.log(req.session.guilds);
     }
 
     res.send(result);
@@ -260,7 +260,7 @@ router.post('/newMatchWithThumbnail', upload.single('matchThumbnail'), function 
 
 router.post('/newMatch', upload.none(), function (req, res) {
 
-    discordInterfacce.createGuild(req.session.id, req.body.matchTitle).then(guild => {
+    discordInterface.createGuild(req.session.id, req.body.matchTitle).then(guild => {
         var jsonDoc = {
             matchThumbnail: req.body.matchThumbnail,
             gameName: req.body.gameName,
