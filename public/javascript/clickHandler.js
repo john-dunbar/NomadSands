@@ -16,9 +16,9 @@ $("button").on("click", $(this).event, updateRedirect);
 
 function updateRedirect(event) {
 
-    if (event.target.id === "userGuildSelect") {
+    if (event.target.name === "userGuildSelect") {
 
-        console.log(event.target.id);
+        console.log(event.target.value);
 
     }
 
