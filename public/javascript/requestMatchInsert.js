@@ -28,7 +28,7 @@ function requestMatchInsert() {
 
     var discordServerName = $('#dropdownMenu').val();
     if (discordServerName === "Choose Discord Server") {
-        $("#discordNotSelectedNotification").modal();
+        $("#test").modal();
         break;
     } else {
         var targetElementID = discordServerName + "ID";
