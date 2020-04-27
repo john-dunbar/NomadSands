@@ -1,12 +1,10 @@
 $("#createMatch").click(function (event) {
 
     if (discordServerName === "Choose Discord Server") {
-        $("#test").modal();
+        $("#test").modal('toggle');
     } else {
         requestMatchInsert();
     }
-
-
 
 });
 
