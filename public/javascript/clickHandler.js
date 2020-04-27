@@ -4,7 +4,7 @@ $("#createMatch").click(function (event) {
 
     if ($('#dropdownMenu').text() === "Choose Discord Server") {
         console.log("select a server first!");
-        $("#test").modal('show');
+        $("#selectDiscordServerAlert").show();
     } else {
         console.log("match created!");
         //requestMatchInsert();
@@ -30,6 +30,10 @@ function updateRedirect(event) {
     if (event.target.id.includes("userGuildSelect")) {
 
         $("#dropdownMenu").html(event.target.innerText);
+
+        if ($("#selectDiscordServerAlert").is(":visible")) {
+            $("#selectDiscordServerAlert").hide();
+        }
 
     }
 
