@@ -6,6 +6,8 @@ $("#createMatch").click(function (event) {
 
     } else {
 
+        $("#myForm").modal('hide');
+
         requestMatchInsert();
 
     }
@@ -32,8 +34,6 @@ function updateRedirect(event) {
         $("#dropdownMenu").html(event.target.innerText);
 
         $("#selectDiscordServerAlert").collapse('hide');
-
-        $("#myForm").modal('hide');
 
     }
 
