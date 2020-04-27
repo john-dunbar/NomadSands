@@ -33,7 +33,7 @@ function updateRedirect(event) {
 
         $("#selectDiscordServerAlert").collapse('hide');
 
-        $("#myForm").modal();
+        $("#myForm").modal('hide');
 
     }
 
