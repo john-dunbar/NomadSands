@@ -27,7 +27,7 @@ function requestMatchInsert() {
     }
 
     var discordServerName = $('#dropdownMenu').text();
-    var targetElementID = "#" + discordServerName + "ID";
+    var targetElementID = "'#" + discordServerName + "ID'";
     var discordServerID = $(targetElementID).val();
 
     console.log("attempted to jquery: " + targetElementID);
