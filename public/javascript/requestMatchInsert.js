@@ -26,6 +26,14 @@ function requestMatchInsert() {
         matchTime = $('#matchTime').attr('placeholder');
     }
 
+    var discordServerName = $('#dropdownMenu').val();
+    if (discordServerName === "Choose Discord Server") {
+        $("#discordNotSelectedNotification").modal();
+        break;
+    } else {
+        var targetElementID = discordServerName + "ID";
+        var discordServerID = $('#' + targetElementID).val();
+    }
 
     var formData = new FormData();
 
@@ -35,6 +43,7 @@ function requestMatchInsert() {
     formData.append('matchTitle', matchTitle);
     formData.append('matchDate', matchDate);
     formData.append('matchTime', matchTime);
+    formData.append('discordServerID', discordServerID);
 
     var matchThumbnail = "";
 
