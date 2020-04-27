@@ -1,6 +1,12 @@
 $("#createMatch").click(function (event) {
 
-    requestMatchInsert();
+    if (discordServerName === "Choose Discord Server") {
+        $("#test").modal();
+    } else {
+        requestMatchInsert();
+    }
+
+
 
 });
 

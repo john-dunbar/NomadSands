@@ -27,13 +27,8 @@ function requestMatchInsert() {
     }
 
     var discordServerName = $('#dropdownMenu').val();
-    if (discordServerName === "Choose Discord Server") {
-        $("#test").modal();
-        break;
-    } else {
-        var targetElementID = discordServerName + "ID";
-        var discordServerID = $('#' + targetElementID).val();
-    }
+    var targetElementID = discordServerName + "ID";
+    var discordServerID = $('#' + targetElementID).val();
 
     var formData = new FormData();
 
