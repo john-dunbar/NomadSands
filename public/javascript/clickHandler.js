@@ -1,6 +1,6 @@
 $("#createMatch").click(function (event) {
 
-    if (discordServerName === "Choose Discord Server") {
+    if ($('#dropdownMenu').val() === "Choose Discord Server") {
         console.log("select a server first!");
         $("#test").modal('show');
     } else {
