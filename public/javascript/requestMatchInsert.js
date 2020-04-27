@@ -30,7 +30,7 @@ function requestMatchInsert() {
 
     //have to use jquery attribute slector due to white space in
     //dynamically created id's
-    var targetElementID = "id='#" + discordServerName + "ID'";
+    var targetElementID = "[id='#" + discordServerName + "ID']";
     var discordServerID = $(targetElementID).val();
 
     console.log("attempted to jquery: " + targetElementID);
