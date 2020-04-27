@@ -26,9 +26,11 @@ function requestMatchInsert() {
         matchTime = $('#matchTime').attr('placeholder');
     }
 
-    var discordServerName = $('#dropdownMenu').val();
+    var discordServerName = $('#dropdownMenu').text();
     var targetElementID = discordServerName + "ID";
     var discordServerID = $('#' + targetElementID).val();
+
+    console.log("server id: " + discordServerID);
 
     var formData = new FormData();
 
