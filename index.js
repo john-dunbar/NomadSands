@@ -278,7 +278,8 @@ router.post('/newMatch', upload.none(), function (req, res) {
         playerCount: 0,
         matchTitle: req.body.matchTitle,
         matchDate: req.body.matchDate,
-        matchTime: req.body.matchTime
+        matchTime: req.body.matchTime,
+        discordServer: req.body.discordServerID
     };
 
     mongoInterface.insertDocument('matchList', jsonDoc).then(function (val) {
