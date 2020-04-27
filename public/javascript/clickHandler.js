@@ -1,10 +1,13 @@
 $("#createMatch").click(function (event) {
 
+    console.log($('#dropdownMenu').val());
+
     if ($('#dropdownMenu').val() === "Choose Discord Server") {
         console.log("select a server first!");
         $("#test").modal('show');
     } else {
-        requestMatchInsert();
+        console.log("match created!");
+        //requestMatchInsert();
     }
 
 });
