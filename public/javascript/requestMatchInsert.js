@@ -30,6 +30,7 @@ function requestMatchInsert() {
     var targetElementID = discordServerName + "ID";
     var discordServerID = $('#' + targetElementID).val();
 
+    console.log("attempted to jquery: " + '#' + targetElementID);
     console.log("server id: " + discordServerID);
 
     var formData = new FormData();
