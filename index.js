@@ -246,7 +246,7 @@ router.get('/discordLogin', function (req, res) {
 
     let state = req.session.id + "loginRequest";
 
-    bcrypt.hash(myPlaintextPassword, saltRounds)
+    bcrypt.hash(state, saltRounds)
         .next((err, hash) => {
             res.redirect('https://discordapp.com/api/oauth2/authorize?response_type=code&client_id=' + process.env.DISCORD_ID + '&scope=identify%20guilds%20guilds.join&state=' + hash + '&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect');
         })
