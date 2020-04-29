@@ -75,11 +75,11 @@ router.get('/oauth/redirect', function (req, res) {
     console.log("discord login initial response: " + req.hostname);
     console.log("state returned from discord: " + req.query.state);
 
-    bcrypt.compare(req.session.id + "loginRequest", hash, function (err, result) {
+    bcrypt.compare(req.session.id + "loginRequest", req.query.state, function (err, result) {
         console.log("from login? " + result);
     });
 
-    bcrypt.compare(req.session.id + "botRequest", hash, function (err, result) {
+    bcrypt.compare(req.session.id + "botRequest", req.query.state, function (err, result) {
         console.log("from bot auth? " + result);
     });
 
