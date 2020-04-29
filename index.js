@@ -8,6 +8,9 @@ const app = express();
 //session initialization
 const session = require("express-session");
 
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 const MongoStore = require('connect-mongo')(session);
 
 const MongoInterface = require('./mongoInterface.js');
@@ -68,6 +71,9 @@ const FormData = require('form-data');
 router.get('/oauth/redirect', function (req, res) {
     // user has given permission, time to use the returned code
     // from Discord to get the auth token for the user
+
+    console.log("discord login initial response: " + req.hostname);
+
     const requestToken = req.query.code
     let token = {};
     let guildsTemp = {};
@@ -236,7 +242,14 @@ router.get('/logout', function (req, res) {
 
 router.get('/discordLogin', function (req, res) {
 
-    res.redirect('https://discordapp.com/api/oauth2/authorize?client_id=' + process.env.DISCORD_ID + '&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect&response_type=code&scope=identify%20guilds%20guilds.join');
+    console.log("login request");
+
+    let state = req.session.id + "loginRequest";
+
+    bcrypt.hash(myPlaintextPassword, saltRounds)
+        .next((err, hash) => {
+            res.redirect('https://discordapp.com/api/oauth2/authorize?response_type=code&client_id=' + process.env.DISCORD_ID + '&scope=identify%20guilds%20guilds.join&state=' + hash + '&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect');
+        })
 
 });
 
