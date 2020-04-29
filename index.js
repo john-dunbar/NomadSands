@@ -73,6 +73,7 @@ router.get('/oauth/redirect', function (req, res) {
     // from Discord to get the auth token for the user
 
     console.log("discord login initial response: " + req.hostname);
+    conosole.log("state returned from discord: " + req.query.state);
 
     const requestToken = req.query.code
     let token = {};
