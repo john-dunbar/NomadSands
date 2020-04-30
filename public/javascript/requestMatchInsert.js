@@ -89,6 +89,10 @@ function requestMatchInsert() {
 
         $.ajax({
             url: "/discordBotAuth",
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json'
+            },
             method: "GET",
             xhrFields: {
                 withCredentials: true
