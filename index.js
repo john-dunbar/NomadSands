@@ -270,39 +270,13 @@ router.all('/discordRequest', function (req, res) {
     }
 
     if (method === "POST") {
-        var jsonDoc = {
-            matchThumbnail: req.body.matchThumbnail,
-            gameName: req.body.gameName,
-            //guildId: guild.id,
-            matchOrganizer: req.session.username,
-            organizerAvatar: req.session.avatar,
-            organizerUserId: req.session.userId,
-            maxPlayers: req.body.maxPlayers,
-            playerCount: 0,
-            matchTitle: req.body.matchTitle,
-            matchDate: req.body.matchDate,
-            matchTime: req.body.matchTime,
-            discordServer: req.body.discordServerID,
-            botIsMember: false
-        };
+        console.log("login request");
 
-        //insert the record showing bot not yet member
-        //then redirect to discord for bot auth and code grant
-        mongoInterface.insertDocument('matchList', jsonDoc)
-            .then((result) => {
+        let state = req.session.id + "loginRequest";
 
-                let guildID = result.ops[0].discordServer;
-
-                let state = req.session.id + "botAuth";
-
-                bcrypt.hash(state, saltRounds, (err, hash) => {
-
-                });
-
-
-            });
-        res.redirect('https://discordapp.com/api/oauth2/authorize?client_id=' + process.env.DISCORD_ID + '&scope=bot&permissions=1');
-        //});
+        bcrypt.hash(state, saltRounds, (err, hash) => {
+            res.redirect('https://discordapp.com/api/oauth2/authorize?response_type=code&client_id=' + process.env.DISCORD_ID + '&scope=identify%20guilds%20guilds.join&state=' + hash + '&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect');
+        });
     }
 
 });
