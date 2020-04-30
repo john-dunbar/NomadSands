@@ -83,7 +83,7 @@ function requestMatchInsert() {
             success: function (data) {
                 console.log(data.ops[0]);
                 pageAppendMatchInfo(data.ops[0]);
-                window.location.href = "/discordBotAuth";
+                window.location.href = "/discordBotAuth?guildID=" + data.ops[0].discordServerID;
             }
         });
 
