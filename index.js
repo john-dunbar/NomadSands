@@ -4,9 +4,7 @@ require('dotenv').config();
 
 const cors = require('cors');
 
-app.options('*', cors());
 
-app.use(cors());
 
 const router = express.Router();
 const app = express();
@@ -49,7 +47,9 @@ app.use(session({
     })
 }));
 
+app.options('*', cors());
 
+app.use(cors());
 
 //path for public files
 const path = require('path');
