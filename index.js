@@ -311,7 +311,7 @@ router.post('/newMatch', upload.none(), function (req, res) {
     mongoInterface.insertDocument('matchList', jsonDoc)
         .then((result) => {
 
-            console.log(result.ops);
+            console.log(result.ops[0]._id);
 
 
 
