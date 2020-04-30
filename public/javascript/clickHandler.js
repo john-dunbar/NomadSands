@@ -9,7 +9,7 @@ $("#createMatch").click(function (event) {
         $("#myForm").modal('hide');
 
         requestMatchInsert();
-        window.location.href = "https://nomadsands.com/discordBotAuth";
+
     }
 
 });
