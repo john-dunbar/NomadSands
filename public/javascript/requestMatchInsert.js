@@ -1,6 +1,8 @@
 //create match code
 function botAuth() {
 
+    var discordServerName = $('#dropdownMenu').text();
+
     var targetElementID = "[id='" + discordServerName + "ID']";
     var discordServerID = $(targetElementID).val();
 
