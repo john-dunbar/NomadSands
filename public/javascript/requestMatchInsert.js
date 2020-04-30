@@ -10,8 +10,9 @@ function botAuth() {
         url: "/discordBotAuth",
         method: "GET",
         data: discordServerID, // request is the value of search input
-        crossDomain: true,
-        dataType: "jsonp",
+        headers: {
+            'Access-Control-Allow-Origin': '*'
+        },
         success: function (data) {
             // Map response values to fiedl label and value
             console.log(data[0]);
