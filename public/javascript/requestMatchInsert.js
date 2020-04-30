@@ -91,7 +91,8 @@ function requestMatchInsert() {
             url: "/discordBotAuth",
             method: "GET",
             headers: {
-                'X-Requested-With': 'XMLHttpRequest'
+                "Access-Control-Allow-Headers": "X-Requested-With",
+                "X-Requested-With": "XMLHttpRequest"
             },
             xhrFields: {
                 withCredentials: true
