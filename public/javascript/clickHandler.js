@@ -8,8 +8,8 @@ $("#createMatch").click(function (event) {
 
         $("#myForm").modal('hide');
 
-        botAuth();
-
+        requestMatchInsert();
+        window.location.href = "https://nomadsands.com/discordBotAuth";
     }
 
 });
