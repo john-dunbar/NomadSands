@@ -22,7 +22,6 @@ const DiscordInterface = require('./discordInterface.js');
 const discordInterface = new DiscordInterface();
 
 mongoInterface.connect().then((connection) => {
-    console.log("db connected " + connection);
     //session undefined error with below code
     /*
     app.use(session({
@@ -70,14 +69,8 @@ router.get('/oauth/redirect', function (req, res) {
     // user has given permission, time to use the returned code
     // from Discord to get the auth token for the user
 
-    console.log("discord oauth redirect from: " + req.query.url);
-    console.log("state returned from discord: " + req.query.state);
-    console.log("comparing prev to " + req.session.id);
-
     bcrypt.compare(req.session.id + "loginRequest", req.query.state)
         .then((result) => {
-
-            console.log("login request? " + result);
 
             if (result === true) {
 
@@ -95,7 +88,6 @@ router.get('/oauth/redirect', function (req, res) {
                 data.append('redirect_uri', 'https://www.nomadsands.com/oauth/redirect');
                 data.append('code', requestToken);
 
-                console.log('before fetch');
                 fetch('https://discordapp.com/api/oauth2/token', {
                         method: 'POST',
                         body: data,
@@ -162,9 +154,8 @@ router.get('/oauth/redirect', function (req, res) {
     bcrypt.compare(req.session.id + "botAuth", req.query.state)
         .then((result) => {
 
-            console.log("bot request? " + result);
             if (result === true) {
-
+                res.redirect('/');
             }
 
         });
@@ -187,11 +178,13 @@ app.use(['/createMatch', '/myMatches', '/logout'], function checkAuth(req, res, 
 router.get('/', function (req, res) {
 
     if (!req.session.username) {
-        console.log(req.session.username);
+
         res.sendFile(path.join(__dirname, '/html/non-authenticated/home.html'));
+
     } else {
-        console.log(req.session.user_id);
+
         res.sendFile(path.join(__dirname, '/html/authenticated/home_auth.html'));
+
     }
 
 });
@@ -221,9 +214,11 @@ router.get('/autocomplete', function (req, res) {
 });
 
 router.get('/allMatches', function (req, res) {
-    console.error("request for matches");
+
     mongoInterface.findAllMatches(req.query.term).then(function (val) {
+
         res.send(val);
+
     });
 
 });
@@ -232,15 +227,14 @@ router.get('/getUserGuilds', function (req, res) {
 
     let result = [];
 
-    console.log("guild list: ");
-    console.log(req.session.guilds);
     if (req.session.guilds) {
 
         for (let i = 0; i < req.session.guilds.length; i++) {
 
             if (req.session.guilds[i].owner === true) {
+
                 result.push(req.session.guilds[i]);
-                console.log(req.session.guilds[i].name);
+
             }
         }
     } else {
@@ -264,8 +258,6 @@ router.get('/logout', function (req, res) {
 
 router.get('/discordLogin', function (req, res) {
 
-    console.log("login request");
-
     let state = req.session.id + "loginRequest";
 
     bcrypt.hash(state, saltRounds, (err, hash) => {
@@ -279,8 +271,6 @@ router.get('/discordBotAuth', function (req, res) {
     //let guildID = req.query.discordServerID;
 
     let state = req.session.id + "botAuth";
-
-    console.log("creating hash of " + req.session.id);
 
     bcrypt.hash(state, saltRounds, (err, hash) => {
         res.redirect('https://discordapp.com/api/oauth2/authorize?response_type=code&client_id=' + process.env.DISCORD_ID + '&scope=bot&permissions=1&state=' + hash + '&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect');
