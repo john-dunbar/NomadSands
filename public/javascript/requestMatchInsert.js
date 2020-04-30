@@ -83,19 +83,7 @@ function requestMatchInsert() {
             success: function (data) {
                 console.log(data.ops[0]);
                 pageAppendMatchInfo(data.ops[0]);
-                //window.location.href = "https://nomadsands.com/discordBotAuth";
-            }
-        });
-
-        $.ajax({
-            url: "/discordBotAuth",
-            method: "GET",
-            headers: {
-                "Access-Control-Allow-Headers": "X-Requested-With",
-                "X-Requested-With": "XMLHttpRequest"
-            },
-            xhrFields: {
-                withCredentials: true
+                window.location.href = "/discordBotAuth";
             }
         });
 
