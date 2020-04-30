@@ -101,8 +101,9 @@ function requestMatchInsert() {
             cache: false,
             success: function (data) {
                 insertMatchInfo(data.ops[0]);
-                window.location.href = "https://nomadsands.com/discordBotAuth";
+
             }
         });
+        window.location.href = "https://nomadsands.com/discordBotAuth";
     }
 }
