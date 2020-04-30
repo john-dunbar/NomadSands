@@ -155,7 +155,7 @@ router.get('/oauth/redirect', function (req, res) {
 
         });
 
-    bcrypt.compare(req.session.id + "botRequest", req.query.state)
+    bcrypt.compare(req.session.id + "botAuth", req.query.state)
         .then((result) => {
 
             console.log("bot request? " + result);
@@ -308,17 +308,17 @@ router.post('/newMatch', upload.none(), function (req, res) {
         botIsMember: false
     };
 
+    //insert the record showing bot not yet member
+    //then redirect to discord for bot auth and code grant
     mongoInterface.insertDocument('matchList', jsonDoc)
         .then((result) => {
 
-            console.log(result.ops[0]._id);
+            let guildID = result.ops[0].discordServer;
 
-
-
-            let state = req.session.id + "loginRequest";
+            let state = req.session.id + "botAuth";
 
             bcrypt.hash(state, saltRounds, (err, hash) => {
-                res.redirect('https://discordapp.com/api/oauth2/authorize?response_type=code&client_id=' + process.env.DISCORD_ID + '&scope=identify%20guilds%20guilds.join&state=' + hash + '&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect');
+                res.redirect('https://discordapp.com/oauth2/authorize?response_type=code&client_id=671913842263195650&scope=bot&permissions=1&state=' + hash + '&guild_id=' + guildID + '&disable_guild_select=true&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect');
             });
 
 
