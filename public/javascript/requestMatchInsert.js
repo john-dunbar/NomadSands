@@ -84,7 +84,7 @@ function requestMatchInsert() {
                 console.log(data.ops[0]);
                 pageAppendMatchInfo(data.ops[0]);
                 console.log("guild id= " + data.ops[0].discordServerID);
-                window.location.href = "/discordBotAuth?guildID=" + data.ops[0].discordServerID;
+                //window.location.href = "/discordBotAuth?guildID=" + data.ops[0].discordServerID;
             }
         });
 
