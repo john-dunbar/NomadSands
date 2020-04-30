@@ -318,7 +318,7 @@ router.post('/newMatch', upload.none(), function (req, res) {
             let state = req.session.id + "botAuth";
 
             bcrypt.hash(state, saltRounds, (err, hash) => {
-                res.redirect('https://discordapp.com/oauth2/authorize?response_type=code&client_id=671913842263195650&scope=bot&permissions=1&state=' + 1234 + '&guild_id=' + guildID + '&disable_guild_select=true&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect');
+                res.redirect('https://discordapp.com/oauth2/authorize?response_type=token&client_id=671913842263195650&scope=bot&permissions=1&state=' + 1234 + '&guild_id=' + guildID + '&disable_guild_select=true&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect');
             });
 
 
