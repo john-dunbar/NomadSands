@@ -74,84 +74,90 @@ router.get('/oauth/redirect', function (req, res) {
 
     console.log("discord oauth redirect from: " + req.query.url);
     console.log("state returned from discord: " + req.query.state);
+    console.log("comparing prev to " + req.session.id);
 
     bcrypt.compare(req.session.id + "loginRequest", req.query.state)
         .then((result) => {
 
             console.log("login request? " + result);
 
-            const requestToken = req.query.code
-            let token = {};
-            let guildsTemp = {};
+            if (result === true) {
 
-            const data = new FormData();
-            data.append('client_id', process.env.DISCORD_ID);
-            data.append('client_secret', process.env.DISCORD_PASSWORD);
-            data.append('grant_type', 'authorization_code');
-            data.append('scope', 'identify');
-            data.append('scope', 'guilds');
-            data.append('scope', 'guild.join');
-            data.append('redirect_uri', 'https://www.nomadsands.com/oauth/redirect');
-            data.append('code', requestToken);
+                const requestToken = req.query.code
+                let token = {};
+                let guildsTemp = {};
 
-            console.log('before fetch');
-            fetch('https://discordapp.com/api/oauth2/token', {
-                    method: 'POST',
-                    body: data,
-                })
+                const data = new FormData();
+                data.append('client_id', process.env.DISCORD_ID);
+                data.append('client_secret', process.env.DISCORD_PASSWORD);
+                data.append('grant_type', 'authorization_code');
+                data.append('scope', 'identify');
+                data.append('scope', 'guilds');
+                data.append('scope', 'guild.join');
+                data.append('redirect_uri', 'https://www.nomadsands.com/oauth/redirect');
+                data.append('code', requestToken);
 
-                .then(fetchResp => fetchResp.json())
-                .then(tokenData => {
+                console.log('before fetch');
+                fetch('https://discordapp.com/api/oauth2/token', {
+                        method: 'POST',
+                        body: data,
+                    })
 
-                        token = tokenData;
+                    .then(fetchResp => fetchResp.json())
+                    .then(tokenData => {
 
-                        var fetchedUser = fetch('https://discordapp.com/api/users/@me', {
-                            headers: {
-                                authorization: `${token.token_type} ${token.access_token}`,
-                            },
-                        });
+                            token = tokenData;
 
-                        return fetchedUser;
-                    }
+                            var fetchedUser = fetch('https://discordapp.com/api/users/@me', {
+                                headers: {
+                                    authorization: `${token.token_type} ${token.access_token}`,
+                                },
+                            });
 
-                )
-                .then(userData => userData.json())
-                .then(data => {
-                    console.error("token type: " + token.token_type);
+                            return fetchedUser;
+                        }
 
-                    //insert user data into database
-                    var jsonDoc = {
-                        userId: data.id,
-                        userName: data.username,
-                        userAvatar: data.avatar,
-                        sessionId: req.session.id,
-                        accessToken: token.access_token,
-                        tokenType: token.token_type,
-                        expiresIn: token.expires_in,
-                        refreshToken: token.refresh_token,
-                        scope: token.scope
-                    };
+                    )
+                    .then(userData => userData.json())
+                    .then(data => {
+                        console.error("token type: " + token.token_type);
 
-                    mongoInterface.insertDocument('visitorList', jsonDoc);
+                        //insert user data into database
+                        var jsonDoc = {
+                            userId: data.id,
+                            userName: data.username,
+                            userAvatar: data.avatar,
+                            sessionId: req.session.id,
+                            accessToken: token.access_token,
+                            tokenType: token.token_type,
+                            expiresIn: token.expires_in,
+                            refreshToken: token.refresh_token,
+                            scope: token.scope
+                        };
 
-                    //save session data for user authorization check on redirect
-                    req.session.username = data.username;
-                    req.session.avatar = data.avatar;
-                    req.session.userId = data.id;
+                        mongoInterface.insertDocument('visitorList', jsonDoc);
 
-                })
-                .then(() => {
-                    fetch('https://discordapp.com/api/users/@me/guilds', {
-                            headers: {
-                                authorization: `${token.token_type} ${token.access_token}`,
-                            },
-                        })
-                        .then(userGuilds => userGuilds.json())
-                        .then(guilds => {
-                            req.session.guilds = guilds;
-                            res.redirect('/');
-                        });
-                });
+                        //save session data for user authorization check on redirect
+                        req.session.username = data.username;
+                        req.session.avatar = data.avatar;
+                        req.session.userId = data.id;
+
+                    })
+                    .then(() => {
+                        fetch('https://discordapp.com/api/users/@me/guilds', {
+                                headers: {
+                                    authorization: `${token.token_type} ${token.access_token}`,
+                                },
+                            })
+                            .then(userGuilds => userGuilds.json())
+                            .then(guilds => {
+                                req.session.guilds = guilds;
+                                res.redirect('/');
+                            });
+                    });
+            }
+
+
 
         });
 
@@ -159,6 +165,9 @@ router.get('/oauth/redirect', function (req, res) {
         .then((result) => {
 
             console.log("bot request? " + result);
+            if (result === true) {
+
+            }
 
         });
 
@@ -254,58 +263,7 @@ router.get('/logout', function (req, res) {
     });
 
 });
-/*
-router.all('/discordRequest', function (req, res) {
 
-    let method = req.method;
-
-    if (method === "GET") {
-        console.log("login request");
-
-        let state = req.session.id + "loginRequest";
-
-        bcrypt.hash(state, saltRounds, (err, hash) => {
-            res.redirect('https://discordapp.com/api/oauth2/authorize?response_type=code&client_id=' + process.env.DISCORD_ID + '&scope=identify%20guilds%20guilds.join&state=' + hash + '&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect');
-        });
-    }
-
-    if (method === "POST") {
-        var jsonDoc = {
-            matchThumbnail: req.body.matchThumbnail,
-            gameName: req.body.gameName,
-            //guildId: guild.id,
-            matchOrganizer: req.session.username,
-            organizerAvatar: req.session.avatar,
-            organizerUserId: req.session.userId,
-            maxPlayers: req.body.maxPlayers,
-            playerCount: 0,
-            matchTitle: req.body.matchTitle,
-            matchDate: req.body.matchDate,
-            matchTime: req.body.matchTime,
-            discordServer: req.body.discordServerID,
-            botIsMember: false
-        };
-
-        //insert the record showing bot not yet member
-        //then redirect to discord for bot auth and code grant
-        mongoInterface.insertDocument('matchList', jsonDoc)
-            .then((result) => {
-
-                let guildID = result.ops[0].discordServer;
-
-                let state = req.session.id + "botAuth";
-
-                bcrypt.hash(state, saltRounds, (err, hash) => {
-                    res.redirect('https://discordapp.com/api/oauth2/authorize?response_type=code&client_id=' + process.env.DISCORD_ID + '&scope=bot&permissions=1&guild_id=' + guildID + '&state=' + hash + '&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect');
-                });
-
-
-            });
-        //});
-    }
-
-});
-*/
 router.get('/discordLogin', function (req, res) {
 
     console.log("login request");
@@ -323,6 +281,8 @@ router.get('/discordBotAuth', function (req, res) {
     //let guildID = req.query.discordServerID;
 
     let state = req.session.id + "botAuth";
+
+    console.log("creating hash of " + req.session.id);
 
     bcrypt.hash(state, saltRounds, (err, hash) => {
         res.redirect('https://discordapp.com/api/oauth2/authorize?response_type=code&client_id=' + process.env.DISCORD_ID + '&scope=bot&permissions=1&state=' + hash + '&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect');
@@ -370,21 +330,10 @@ router.post('/newMatch', upload.none(), function (req, res) {
         botIsMember: false
     };
 
-    //insert the record showing bot not yet member
-    //then redirect to discord for bot auth and code grant
     mongoInterface.insertDocument('matchList', jsonDoc)
         .then((result) => {
 
             res.send(result);
-            /*
-                let guildID = result.ops[0].discordServer;
-
-                let state = req.session.id + "botAuth";
-
-                bcrypt.hash(state, saltRounds, (err, hash) => {
-                    res.redirect('https://discordapp.com/api/oauth2/authorize?response_type=code&client_id=' + process.env.DISCORD_ID + '&scope=bot&permissions=1&guild_id=' + guildID + '&state=' + hash + '&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect');
-                });
-            */
 
         });
     //});
