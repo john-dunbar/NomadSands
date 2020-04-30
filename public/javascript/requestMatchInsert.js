@@ -1,4 +1,22 @@
 //create match code
+function botAuth() {
+
+    var targetElementID = "[id='" + discordServerName + "ID']";
+    var discordServerID = $(targetElementID).val();
+
+    $.ajax({
+        url: "/discordBotAuth",
+        method: "GET",
+        data: discordServerID, // request is the value of search input
+        success: function (data) {
+            // Map response values to fiedl label and value
+            console.log(data[0].box_art_url);
+            requestMatchInsert();
+
+        }
+    });
+}
+
 function requestMatchInsert() {
 
     var gameName = $('#gameName').val();
@@ -54,7 +72,7 @@ function requestMatchInsert() {
         formData.append("matchThumbnail", matchThumbnail);
 
         $.ajax({
-            url: "/discordRequest",
+            url: "/newMatch",
             method: "POST",
             data: formData,
             processData: false, // Important!
