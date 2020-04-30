@@ -2,10 +2,6 @@
 const express = require('express');
 require('dotenv').config();
 
-const cors = require('cors');
-
-
-
 const router = express.Router();
 const app = express();
 
@@ -47,10 +43,6 @@ app.use(session({
     })
 }));
 
-app.options('*', cors());
-
-app.use(cors());
-
 //path for public files
 const path = require('path');
 app.use(express.static(__dirname + '/public'));
@@ -72,13 +64,6 @@ var upload = multer({
 })
 const fetch = require('node-fetch');
 const FormData = require('form-data');
-
-app.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', req.headers.origin || "*");
-    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,HEAD,DELETE,OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'content-Type,x-requested-with');
-    next();
-});
 
 // Declare the redirect route
 router.get('/oauth/redirect', function (req, res) {
