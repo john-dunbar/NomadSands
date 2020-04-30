@@ -285,7 +285,7 @@ router.get('/discordBotAuth', function (req, res) {
     console.log("creating hash of " + req.session.id);
 
     bcrypt.hash(state, saltRounds, (err, hash) => {
-        res.redirect('https://discordapp.com/api/oauth2/authorize?response_type=code&client_id=' + process.env.DISCORD_ID + '&scope=bot&permissions=1&state=' + hash + '&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect');
+        res.redirect('https://discordapp.com/api/oauth2/authorize?response_type=code&client_id=' + process.env.DISCORD_ID + '&scope=bot&permissions=1&state=' + state + '&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect');
     });
 
 });
