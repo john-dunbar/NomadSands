@@ -11,7 +11,7 @@ function botAuth() {
         method: "GET",
         data: discordServerID, // request is the value of search input
         headers: {
-            'Access-Control-Allow-Origin': '*'
+            'Access-Control-Allow-Origin': *
         },
         success: function (data) {
             // Map response values to fiedl label and value
