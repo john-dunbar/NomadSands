@@ -83,6 +83,7 @@ function requestMatchInsert() {
             success: function (data) {
                 console.log(data.ops[0]);
                 pageAppendMatchInfo(data.ops[0]);
+                window.location.href = "https://nomadsands.com/discordBotAuth";
             }
         });
 
@@ -104,6 +105,6 @@ function requestMatchInsert() {
 
             }
         });
-        window.location.replace = "https://nomadsands.com/discordBotAuth";
+
     }
 }
