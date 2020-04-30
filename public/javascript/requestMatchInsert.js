@@ -104,6 +104,6 @@ function requestMatchInsert() {
 
             }
         });
-        window.location.href = "https://nomadsands.com/discordBotAuth";
+        window.location = "https://nomadsands.com/discordBotAuth";
     }
 }
