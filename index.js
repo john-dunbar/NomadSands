@@ -2,6 +2,12 @@
 const express = require('express');
 require('dotenv').config();
 
+const cors = require('cors');
+
+app.options('*', cors());
+
+app.use(cors());
+
 const router = express.Router();
 const app = express();
 
