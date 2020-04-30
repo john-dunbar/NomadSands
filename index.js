@@ -1,6 +1,5 @@
 //express routing initialization
 const express = require('express');
-const cors = require('cors')
 require('dotenv').config();
 
 const router = express.Router();
@@ -36,8 +35,6 @@ mongoInterface.connect().then((connection) => {
     */
 });
 
-app.use(cors());
-
 app.use(session({
     secret: process.env.SESSION_PASSWORD,
     store: new MongoStore({
@@ -69,6 +66,12 @@ var upload = multer({
 })
 const fetch = require('node-fetch');
 const FormData = require('form-data');
+
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "nomadsands.com"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 // Declare the redirect route
 router.get('/oauth/redirect', function (req, res) {
