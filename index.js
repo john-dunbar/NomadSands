@@ -72,11 +72,11 @@ router.get('/oauth/redirect', function (req, res) {
     // user has given permission, time to use the returned code
     // from Discord to get the auth token for the user
 
-    console.log("discord oauth redirect from: " + req.query);
+    console.log("discord oauth redirect from: " + req.query.url);
     console.log("state returned from discord: " + req.query.state);
 
     bcrypt.compare(req.session.id + "loginRequest", req.query.state)
-        .then((err, result) => {
+        .then((result) => {
 
             console.log("login request? " + result);
 
@@ -156,7 +156,7 @@ router.get('/oauth/redirect', function (req, res) {
         });
 
     bcrypt.compare(req.session.id + "botRequest", req.query.state)
-        .then((err, result) => {
+        .then((result) => {
 
             console.log("bot request? " + result);
 
