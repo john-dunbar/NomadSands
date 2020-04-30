@@ -321,6 +321,8 @@ router.get('/discordLogin', function (req, res) {
 router.get('/discordBotAuth', function (req, res) {
 
     //let guildID = req.query.discordServerID;
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
     let state = req.session.id + "botAuth";
 
