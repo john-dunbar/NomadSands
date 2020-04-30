@@ -83,7 +83,15 @@ function requestMatchInsert() {
             success: function (data) {
                 console.log(data.ops[0]);
                 pageAppendMatchInfo(data.ops[0]);
-                window.location.href = "https://nomadsands.com/discordBotAuth";
+                //window.location.href = "https://nomadsands.com/discordBotAuth";
+            }
+        });
+
+        $.ajax({
+            url: "/discordBotAuth",
+            method: "GET",
+            xhrFields: {
+                withCredentials: true
             }
         });
 
