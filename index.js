@@ -320,12 +320,12 @@ router.get('/discordLogin', function (req, res) {
 
 router.get('/discordBotAuth', function (req, res) {
 
-    let guildID = req.query.discordServerID;
+    //let guildID = req.query.discordServerID;
 
     let state = req.session.id + "botAuth";
 
     bcrypt.hash(state, saltRounds, (err, hash) => {
-        res.redirect('https://discordapp.com/api/oauth2/authorize?response_type=code&client_id=' + process.env.DISCORD_ID + '&scope=bot&permissions=1&guild_id=' + guildID + '&state=' + hash + '&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect');
+        res.redirect('https://discordapp.com/api/oauth2/authorize?response_type=code&client_id=' + process.env.DISCORD_ID + '&scope=bot&permissions=1&state=' + hash + '&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect');
     });
 
 });
