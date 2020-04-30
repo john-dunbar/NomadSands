@@ -54,7 +54,7 @@ function requestMatchInsert() {
         formData.append("matchThumbnail", matchThumbnail);
 
         $.ajax({
-            url: "/newMatch",
+            url: "/discordRequest",
             method: "POST",
             data: formData,
             processData: false, // Important!
