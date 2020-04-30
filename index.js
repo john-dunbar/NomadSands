@@ -1,5 +1,6 @@
 //express routing initialization
 const express = require('express');
+const cors = require('cors')
 require('dotenv').config();
 
 const router = express.Router();
@@ -34,6 +35,8 @@ mongoInterface.connect().then((connection) => {
     }));
     */
 });
+
+app.use(cors());
 
 app.use(session({
     secret: process.env.SESSION_PASSWORD,
