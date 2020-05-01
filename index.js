@@ -75,78 +75,86 @@ router.get('/oauth/redirect', function (req, res) {
         .then((result) => {
 
             if (result === true) {
+                if (req.query.error) {
 
-                let requestToken = req.query.code
-                let token = {};
-                let guildsTemp = {};
+                    console.log(req.query.error);
 
-                const data = new FormData();
-                data.append('client_id', process.env.DISCORD_ID);
-                data.append('client_secret', process.env.DISCORD_PASSWORD);
-                data.append('grant_type', 'authorization_code');
-                data.append('scope', 'identify');
-                data.append('scope', 'guilds');
-                data.append('scope', 'guild.join');
-                data.append('redirect_uri', 'https://www.nomadsands.com/oauth/redirect');
-                data.append('code', requestToken);
+                } else {
 
-                fetch('https://discordapp.com/api/oauth2/token', {
-                        method: 'POST',
-                        body: data,
-                    })
+                    let requestToken = req.query.code
+                    let token = {};
+                    let guildsTemp = {};
 
-                    .then(fetchResp => fetchResp.json())
-                    .then(tokenData => {
+                    const data = new FormData();
+                    data.append('client_id', process.env.DISCORD_ID);
+                    data.append('client_secret', process.env.DISCORD_PASSWORD);
+                    data.append('grant_type', 'authorization_code');
+                    data.append('scope', 'identify');
+                    data.append('scope', 'guilds');
+                    data.append('scope', 'guild.join');
+                    data.append('redirect_uri', 'https://www.nomadsands.com/oauth/redirect');
+                    data.append('code', requestToken);
 
-                            token = tokenData;
+                    fetch('https://discordapp.com/api/oauth2/token', {
+                            method: 'POST',
+                            body: data,
+                        })
 
-                            var fetchedUser = fetch('https://discordapp.com/api/users/@me', {
-                                headers: {
-                                    authorization: `${token.token_type} ${token.access_token}`,
-                                },
-                            });
+                        .then(fetchResp => fetchResp.json())
+                        .then(tokenData => {
 
-                            return fetchedUser;
-                        }
+                                token = tokenData;
 
-                    )
-                    .then(userData => userData.json())
-                    .then(data => {
-                        console.error("token type: " + token.token_type);
+                                var fetchedUser = fetch('https://discordapp.com/api/users/@me', {
+                                    headers: {
+                                        authorization: `${token.token_type} ${token.access_token}`,
+                                    },
+                                });
 
-                        //insert user data into database
-                        var jsonDoc = {
-                            userId: data.id,
-                            userName: data.username,
-                            userAvatar: data.avatar,
-                            sessionId: req.session.id,
-                            accessToken: token.access_token,
-                            tokenType: token.token_type,
-                            expiresIn: token.expires_in,
-                            refreshToken: token.refresh_token,
-                            scope: token.scope
-                        };
+                                return fetchedUser;
+                            }
 
-                        mongoInterface.insertDocument('visitorList', jsonDoc);
+                        )
+                        .then(userData => userData.json())
+                        .then(data => {
+                            console.error("token type: " + token.token_type);
 
-                        //save session data for user authorization check on redirect
-                        req.session.username = data.username;
-                        req.session.avatar = data.avatar;
-                        req.session.userId = data.id;
+                            //insert user data into database
+                            var jsonDoc = {
+                                userId: data.id,
+                                userName: data.username,
+                                userAvatar: data.avatar,
+                                sessionId: req.session.id,
+                                accessToken: token.access_token,
+                                tokenType: token.token_type,
+                                expiresIn: token.expires_in,
+                                refreshToken: token.refresh_token,
+                                scope: token.scope
+                            };
 
-                    })
-                    .then(() => {
-                        fetch('https://discordapp.com/api/users/@me/guilds', {
-                                headers: {
-                                    authorization: `${token.token_type} ${token.access_token}`,
-                                },
-                            })
-                            .then(userGuilds => userGuilds.json())
-                            .then(guilds => {
-                                req.session.guilds = guilds;
-                                res.redirect('/');
-                            });
-                    });
+                            mongoInterface.insertDocument('visitorList', jsonDoc);
+
+                            //save session data for user authorization check on redirect
+                            req.session.username = data.username;
+                            req.session.avatar = data.avatar;
+                            req.session.userId = data.id;
+
+                        })
+                        .then(() => {
+                            fetch('https://discordapp.com/api/users/@me/guilds', {
+                                    headers: {
+                                        authorization: `${token.token_type} ${token.access_token}`,
+                                    },
+                                })
+                                .then(userGuilds => userGuilds.json())
+                                .then(guilds => {
+                                    req.session.guilds = guilds;
+                                    res.redirect('/');
+                                });
+                        });
+
+                }
+
             } else {
                 bcrypt.compare(req.session.id + "botAuth", req.query.state)
                     .then((result) => {
