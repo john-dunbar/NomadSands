@@ -145,6 +145,8 @@ router.get('/oauth/redirect', function (req, res) {
                                 res.redirect('/');
                             });
                     });
+            } else {
+                res.redirect('/');
             }
 
 
@@ -176,16 +178,18 @@ router.get('/oauth/redirect', function (req, res) {
                     .then(tokenData => {
 
                             console.log(tokenData.guild);
+                            res.redirect('/');
                         }
 
-                    )
+                    );
 
+
+            } else {
                 res.redirect('/');
             }
 
         });
 
-    res.redirect('/');
 
 });
 
