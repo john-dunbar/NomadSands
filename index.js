@@ -170,7 +170,7 @@ router.get('/oauth/redirect', function (req, res) {
                                 .then(fetchResp => fetchResp.json())
                                 .then(tokenData => {
 
-                                        console.log(tokenData.guild);
+                                        console.log(tokenData);
                                         res.redirect('/');
                                     }
 
