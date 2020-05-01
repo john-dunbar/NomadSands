@@ -146,50 +146,45 @@ router.get('/oauth/redirect', function (req, res) {
                             });
                     });
             } else {
-                res.redirect('/');
-            }
+                bcrypt.compare(req.session.id + "botAuth", req.query.state)
+                    .then((result) => {
+
+                        if (result === true) {
+                            let requestToken = req.query.code
+
+                            console.log("guild permission granted to guild id: " + req.query.guild_id);
+                            console.log("bot permission value: " + req.query.permissions);
+
+                            const data = new FormData();
+                            data.append('client_id', process.env.DISCORD_ID);
+                            data.append('client_secret', process.env.DISCORD_PASSWORD);
+                            data.append('grant_type', 'authorization_code');
+                            data.append('scope', 'bot');
+                            data.append('redirect_uri', 'https://www.nomadsands.com/oauth/redirect');
+                            data.append('code', requestToken);
+
+                            fetch('https://discordapp.com/api/oauth2/token', {
+                                    method: 'POST',
+                                    body: data,
+                                })
+                                .then(fetchResp => fetchResp.json())
+                                .then(tokenData => {
+
+                                        console.log(tokenData.guild);
+                                        res.redirect('/');
+                                    }
+
+                                );
 
 
-
-        });
-
-    bcrypt.compare(req.session.id + "botAuth", req.query.state)
-        .then((result) => {
-
-            if (result === true) {
-                let requestToken = req.query.code
-
-                console.log("guild permission granted to guild id: " + req.query.guild_id);
-                console.log("bot permission value: " + req.query.permissions);
-
-                const data = new FormData();
-                data.append('client_id', process.env.DISCORD_ID);
-                data.append('client_secret', process.env.DISCORD_PASSWORD);
-                data.append('grant_type', 'authorization_code');
-                data.append('scope', 'bot');
-                data.append('redirect_uri', 'https://www.nomadsands.com/oauth/redirect');
-                data.append('code', requestToken);
-
-                fetch('https://discordapp.com/api/oauth2/token', {
-                        method: 'POST',
-                        body: data,
-                    })
-                    .then(fetchResp => fetchResp.json())
-                    .then(tokenData => {
-
-                            console.log(tokenData.guild);
+                        } else {
                             res.redirect('/');
                         }
 
-                    );
-
-
-            } else {
-                res.redirect('/');
+                    });
             }
 
         });
-
 
 });
 
