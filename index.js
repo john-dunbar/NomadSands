@@ -69,8 +69,6 @@ router.get('/oauth/redirect', function (req, res) {
     // user has given permission, time to use the returned code
     // from Discord to get the auth token for the user
 
-    console.log(req.body);
-
     bcrypt.compare(req.session.id + "loginRequest", req.query.state)
         .then((result) => {
 
@@ -194,22 +192,14 @@ router.get('/oauth/redirect', function (req, res) {
                                     .then(fetchResp => fetchResp.json())
                                     .then(tokenData => {
 
-                                            console.log(tokenData);
-                                            res.redirect('/');
-                                        }
-
-                                    );
-
-
+                                        console.log(tokenData);
+                                        res.redirect('/');
+                                    });
                             }
                         }
-
-
                     });
             }
-
         });
-
 });
 
 
