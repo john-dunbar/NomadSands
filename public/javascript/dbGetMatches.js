@@ -27,9 +27,9 @@ function pageAppendMatchInfo(user, matchRecord) {
     var joinButton ="";
 
     if(matchRecord.matchOrganizer == user){
-        joinButton = "<button type=\"button\" class=\"btn btn-danger btn-sm\" onclick=\"initiateDelete()\" id=\"deleteMatch\">Delete</button>"
+        joinButton = "<button type=\"button\" class=\"btn btn-danger btn-sm\" id=\"deleteMatch\">Delete</button>"
     }else{
-        joinButton = "<button type=\"button\" class=\"btn btn-primary btn-sm\" onclick=\"initiateJoin()\" id=\"joinMatch\">Join</button>";
+        joinButton = "<button type=\"button\" class=\"btn btn-primary btn-sm\" id=\"joinMatch\">Join</button>";
     }
     
     if (matchRecord.gameName) {

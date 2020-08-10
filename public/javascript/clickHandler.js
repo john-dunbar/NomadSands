@@ -40,13 +40,15 @@ $( document ).ready(function() {
         }
     
     }
-    
-    function initiateDelete() {
+
+    //deleteMatch and joinMatch use .on() because they are loaded those elements were injected into DOM
+
+    $(document).on('click','#deleteMatch',function () {
         console.log("delete button clicked!");
     
-    };
+    });
     
-    function initiateJoin() {
+    $(document).on('click','#joinMatch', function () {
         //later if it's possible to make an invite link, do all this in the requestMatchInsert flow
         //window.open("https://www.w3schools.com"); 
         //after clicking, check that user has been added to group before changing label to "leave"
@@ -66,7 +68,7 @@ $( document ).ready(function() {
             }
         });
         console.log("back from index.js");
-    };
+    });
 
 
 });
