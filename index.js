@@ -263,6 +263,16 @@ router.get('/allMatches', function (req, res) {
 
 });
 
+router.get('/joinMatch', function (req, res) {
+
+    discordInterface.createInvite(req.body.guildId).then(function (val) {
+
+        res.send(val);
+
+    });
+
+});
+
 router.get('/getUserGuilds', function (req, res) {
 
     let result = [];

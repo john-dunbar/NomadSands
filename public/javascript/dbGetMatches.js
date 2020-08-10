@@ -108,6 +108,8 @@ function pageAppendMatchInfo(user, matchRecord) {
 
             joinButton +
 
+            "<input type=\"text\" id= guildId value=" + matchRecord.discordServerID + " hidden>" +
+
             "</div>" +
             "</div>" +
 

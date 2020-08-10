@@ -38,3 +38,27 @@ function updateRedirect(event) {
     }
 
 }
+
+$("#deleteMatch").click(function (event) {
+
+
+});
+
+$("#joinMatch").click(function (event) {
+    //later if it's possible to make an invite link, do all this in the requestMatchInsert flow
+    //window.open("https://www.w3schools.com"); 
+    //after clicking, check that user has been added to group before changing label to "leave"
+    var guildId = $('#guildId').val();
+    var formData = new FormData();
+    formData.append("guildId", guildId);
+    $.ajax({
+        url: "/joinMatch",
+        method: "GET",
+        data: formData, // request is the value of search input
+        success: function (data) {
+            // Map response values to fiedl label and value
+            console.log(data);
+
+        }
+    });
+});

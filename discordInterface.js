@@ -44,6 +44,11 @@ class DiscordInterface {
 
     }
 
+    async createInvite(guildId) {
+        var currentGuild = discordClient.guilds.resolve(guildId);
+        return currentGuild.systemChannel.id;
+    }
+
 }
 
 module.exports = DiscordInterface;
