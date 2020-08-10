@@ -27,7 +27,7 @@ function pageAppendMatchInfo(user, matchRecord) {
     var joinButton ="";
 
     if(matchRecord.matchOrganizer == user){
-        joinButton = "<button type=\"button\" class=\"btn btn-danger btn-sm\" id=\"joinMatch\">Delete</button>"
+        joinButton = "<button type=\"button\" class=\"btn btn-danger btn-sm\" id=\"deleteMatch\">Delete</button>"
     }else{
         joinButton = "<button type=\"button\" class=\"btn btn-primary btn-sm\" id=\"joinMatch\">Join</button>";
     }
