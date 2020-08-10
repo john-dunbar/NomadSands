@@ -44,7 +44,7 @@ $( document ).ready(function() {
     function initiateDelete() {
         console.log("delete button clicked!");
     
-    });
+    };
     
     function initiateJoin() {
         //later if it's possible to make an invite link, do all this in the requestMatchInsert flow
@@ -66,7 +66,7 @@ $( document ).ready(function() {
             }
         });
         console.log("back from index.js");
-    });
+    };
 
 
 });
