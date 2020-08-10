@@ -42,7 +42,7 @@ $( document ).ready(function() {
     }
     
     $("#deleteMatch").click(function (event) {
-    
+        console.log("delete button clicked!");
     
     });
     
