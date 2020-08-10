@@ -44,7 +44,7 @@ $("#deleteMatch").click(function (event) {
 
 });
 
-$("#joinMatch").click(function (event) {
+document.getElementById("joinMatch").onclick(function () {
     //later if it's possible to make an invite link, do all this in the requestMatchInsert flow
     //window.open("https://www.w3schools.com"); 
     //after clicking, check that user has been added to group before changing label to "leave"
