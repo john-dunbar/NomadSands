@@ -125,7 +125,7 @@ router.get('/oauth/redirect', function (req, res) {
                             var jsonDoc = {
                                 userId: data.id,
                                 userName: data.username,
-                                userAvatar: data.avatar,
+                                userAvatar: data.avatar, //avatar should be retreived from discord as this will mismatch if user changes avatar later on discord
                                 sessionId: req.session.id,
                                 accessToken: token.access_token,
                                 tokenType: token.token_type,
@@ -257,7 +257,7 @@ router.get('/allMatches', function (req, res) {
 
     mongoInterface.findAllMatches(req.query.term).then(function (val) {
 
-        res.send(val);
+        res.send([req.session.username,val]);
 
     });
 

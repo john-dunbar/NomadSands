@@ -9,16 +9,29 @@ function getMatches() {
         url: "/allMatches",
         method: "GET",
         success: function (data) {
-            for (var key in data) {
-                var obj = data[key];
-                pageAppendMatchInfo(obj);
+
+            var userName = data[0];
+            var matches = data[1];
+
+            for (var key in matches) {
+                var obj = matches[key];
+                pageAppendMatchInfo(userName, obj);
             }
         }
     });
 }
 
-function pageAppendMatchInfo(matchRecord) {
+function pageAppendMatchInfo(user, matchRecord) {
     console.log("record found");
+
+    var joinButton ="";
+
+    if(matchRecord.matchOrganizer == user){
+        joinButton = "Nothing to see here"
+    }else{
+        joinButton = "<button type=\"button\" class=\"btn btn-primary btn-sm\" id=\"joinMatch\">Join</button>";
+    }
+    
     if (matchRecord.gameName) {
         var matchCard =
             "<div class=\"col-12 col-md-3\">" +
@@ -93,7 +106,7 @@ function pageAppendMatchInfo(matchRecord) {
             "</div>" +
             "<div class=\"col\">" +
 
-            "<button type=\"button\" class=\"btn btn-primary btn-sm\" id=\"joinMatch\">Join</button>" +
+            joinButton +
 
             "</div>" +
             "</div>" +
