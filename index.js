@@ -371,7 +371,7 @@ router.post('/newMatch', upload.none(), function (req, res) {
     mongoInterface.insertDocument('matchList', jsonDoc)
         .then((result) => {
 
-            res.send(result);
+            res.send([req.session.username,result]);
 
         });
     //});
