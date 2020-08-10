@@ -48,7 +48,9 @@ $("#joinMatch").click(function (event) {
     //later if it's possible to make an invite link, do all this in the requestMatchInsert flow
     //window.open("https://www.w3schools.com"); 
     //after clicking, check that user has been added to group before changing label to "leave"
+    console.log("join button clicked!");
     var guildId = $('#guildId').val();
+    console.log("guildId = "+guildId);
     var formData = new FormData();
     formData.append("guildId", guildId);
     $.ajax({
@@ -61,4 +63,5 @@ $("#joinMatch").click(function (event) {
 
         }
     });
+    console.log("back from index.js");
 });
