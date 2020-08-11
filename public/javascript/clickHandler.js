@@ -56,11 +56,11 @@ $( document ).ready(function() {
         var guildId = $('#guildId').val();
         console.log("guildId = "+guildId);
         var formData = new FormData();
-        formData.append("guildId", "kbsdfibds");
+        formData.append("guildId", guildId);
         $.ajax({
             url: "/joinMatch",
             method: "POST",
-            data: { guildId: "742533995795054592" }, // request is the value of search input
+            data: formData, // request is the value of search input
             success: function (data) {
                 // Map response values to fiedl label and value
                 console.log("we did it: "+data);
