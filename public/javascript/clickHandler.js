@@ -61,6 +61,9 @@ $( document ).ready(function() {
             url: "/joinMatch",
             method: "POST",
             data: formData, // request is the value of search input
+            processData: false, // Important!
+            contentType: false,
+            cache: false,
             success: function (data) {
                 // Map response values to fiedl label and value
                 console.log(data);
