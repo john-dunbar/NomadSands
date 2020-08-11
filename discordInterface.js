@@ -46,6 +46,7 @@ class DiscordInterface {
 
     async createInvite(guildId) {
         var currentGuild = discordClient.guilds.resolve(guildId);
+        console.log("here comes the invite: "+currentGuild.systemChannel.id);
         return currentGuild.systemChannel.id;
     }
 
