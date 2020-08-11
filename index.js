@@ -265,6 +265,8 @@ router.get('/allMatches', function (req, res) {
 
 router.post('/joinMatch', function (req, res) {
 
+    console.log("I have guildId: " + req.body.guildId + "from click handler");
+
     discordInterface.createInvite(req.body.guildId).then(function (val) {
         console.log("back from getting invite with: "+val);
 
