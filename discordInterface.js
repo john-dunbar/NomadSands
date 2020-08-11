@@ -72,7 +72,9 @@ class DiscordInterface {
       }
       console.log("channel " + channel.id);
     })
-    return await targetChannel.createInvite().url;
+    targetChannel.createInvite().then((invite)=>{
+        return invite.url;
+    });
   }
 }
 
