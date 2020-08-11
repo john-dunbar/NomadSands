@@ -45,39 +45,25 @@ class DiscordInterface {
   }
 
   async createInvite(guildId) {
-    console.log("guild id " + guildId);
+
     var currentGuild = discordClient.guilds.resolve(guildId);
-    //var url = "no invite url found";
+    
     var targetChannel;
 
     currentGuild.channels.cache.each((channel) => {
       if (channel.name == "general") {
-        console.log("found general name in " + channel.id);
         if (channel.type == "text") {
-          console.log("bingo! " + channel.id);
-
+          console.log("general text channel found! " + channel.id);
           targetChannel = channel;
-
-          //let invite = await channel.createInvite();
-
-          //url =invite.url;
-
-          //console.log("invite: "+invite.url);
-
-          //channel.createInvite().then((invite) =>{
-          //    console.log(`Created an invite with a url of ${invite.url}`);
-          //    return invite.url;
-          //  }).catch(console.error);
         }
       }
-      console.log("channel " + channel.id);
     });
 
     console.log("target: "+targetChannel.id);
 
-    let url = await targetChannel.createInvite().url;
-    console.log("url: "+url);
-    return url;
+    let invite = await targetChannel.createInvite();
+    console.log("url: "+invite.url);
+    return invite.url;
   }
 }
 
