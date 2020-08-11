@@ -1,5 +1,25 @@
 //create match code
-$("#createMatch").click(function (event) {
+function botAuth() {
+
+    var discordServerName = $('#dropdownMenu').text();
+
+    var targetElementID = "[id='" + discordServerName + "ID']";
+    var discordServerID = $(targetElementID).val();
+
+    $.ajax({
+        url: "/discordBotAuth",
+        method: "GET",
+        data: discordServerID, // request is the value of search input
+        success: function (data) {
+            // Map response values to fiedl label and value
+            console.log(data[0]);
+            requestMatchInsert();
+
+        }
+    });
+}
+
+function requestMatchInsert() {
 
     var gameName = $('#gameName').val();
     if (gameName == '') {
@@ -26,6 +46,15 @@ $("#createMatch").click(function (event) {
         matchTime = $('#matchTime').attr('placeholder');
     }
 
+    var discordServerName = $('#dropdownMenu').text();
+
+    //have to use jquery attribute slector due to white space in
+    //dynamically created id's
+    var targetElementID = "[id='" + discordServerName + "ID']";
+    var discordServerID = $(targetElementID).val();
+
+    console.log("attempted to jquery: " + targetElementID);
+    console.log("server id: " + discordServerID);
 
     var formData = new FormData();
 
@@ -35,6 +64,7 @@ $("#createMatch").click(function (event) {
     formData.append('matchTitle', matchTitle);
     formData.append('matchDate', matchDate);
     formData.append('matchTime', matchTime);
+    formData.append('discordServerID', discordServerID);
 
     var matchThumbnail = "";
 
@@ -51,8 +81,11 @@ $("#createMatch").click(function (event) {
             contentType: false,
             cache: false,
             success: function (data) {
-                console.log(data.ops[0]);
-                pageAppendMatchInfo(data.ops[0]);
+                var userName = data[0];
+                var match = data[1].ops[0];
+                console.log(match);
+                pageAppendMatchInfo(userName,match);
+                window.location.href = "/discordBotAuth?guildID=" + match.discordServer; //this needs to come before the db insert
             }
         });
 
@@ -71,9 +104,9 @@ $("#createMatch").click(function (event) {
             cache: false,
             success: function (data) {
                 insertMatchInfo(data.ops[0]);
+
             }
         });
+
     }
-
-
-});
+}
