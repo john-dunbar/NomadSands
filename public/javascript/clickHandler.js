@@ -60,8 +60,7 @@ $( document ).ready(function() {
         $.ajax({
             url: "/joinMatch",
             method: "POST",
-            data: formData, // request is the value of search input
-            processData: false, // Important!
+            data: { guildId: "12323414" }, // request is the value of search input
             success: function (data) {
                 // Map response values to fiedl label and value
                 console.log("we did it: "+data);
