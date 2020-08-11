@@ -47,6 +47,7 @@ class DiscordInterface {
   async createInvite(guildId) {
     console.log("guild id " + guildId);
     var currentGuild = discordClient.guilds.resolve(guildId);
+    var url = "no invite url found";
     currentGuild.channels.cache.each(async (channel) => {
       if (channel.name == "general") {
         console.log("found general name in " + channel.id);
@@ -54,6 +55,8 @@ class DiscordInterface {
           console.log("bingo! " + channel.id);
 
           let invite = await channel.createInvite();
+
+          url =invite.url;
 
           console.log("invite: "+invite.url);
 
@@ -65,7 +68,7 @@ class DiscordInterface {
       }
       console.log("channel " + channel.id);
     });
-    return invite.url;
+    return url;
   }
 }
 
