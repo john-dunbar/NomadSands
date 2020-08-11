@@ -60,13 +60,13 @@ $( document ).ready(function() {
         $.ajax({
             url: "/joinMatch",
             method: "POST",
-            data: {"guildId":"742533995795054592"}, // request is the value of search input
+            data: {"guildId":guildId}, // request is the value of search input
             success: function (inviteLink) {
 
                 window.open(inviteLink);
     
             },
-            async:false //to prevent popup blocker
+            async:false //to prevent popup blocker caused by window.open
         });
         console.log("back from index.js");
     });
