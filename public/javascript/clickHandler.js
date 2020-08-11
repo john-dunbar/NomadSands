@@ -66,7 +66,7 @@ $( document ).ready(function() {
             cache: false,
             success: function (data) {
                 // Map response values to fiedl label and value
-                console.log(data);
+                console.log("we did it: "+data);
     
             }
         });
