@@ -263,7 +263,7 @@ router.get('/allMatches', function (req, res) {
 
 });
 
-router.post('/joinMatch', function (req, res) {
+router.post('/joinMatch', async function (req, res) {
 
     console.log("I have guildId: " + req.body.guildId + "from click handler");
 
