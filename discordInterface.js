@@ -71,8 +71,12 @@ class DiscordInterface {
         }
       }
       console.log("channel " + channel.id);
-    })
+    });
+
+    console.log("target: "+targetChannel.id);
+
     targetChannel.createInvite().then((invite)=>{
+        console.log("url: "+invite.url);
         return invite.url;
     });
   }
