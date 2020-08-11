@@ -47,7 +47,7 @@ class DiscordInterface {
   async createInvite(guildId) {
     console.log("guild id " + guildId);
     var currentGuild = discordClient.guilds.resolve(guildId);
-    currentGuild.channels.cache.each((channel) => {
+    currentGuild.channels.cache.each(async (channel) => {
       if (channel.name == "general") {
         console.log("found general name in " + channel.id);
         if (channel.type == "text") {
