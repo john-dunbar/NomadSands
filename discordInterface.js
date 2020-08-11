@@ -75,10 +75,9 @@ class DiscordInterface {
 
     console.log("target: "+targetChannel.id);
 
-    targetChannel.createInvite().then((invite)=>{
-        console.log("url: "+invite.url);
-        return invite.url;
-    });
+    let url = await targetChannel.createInvite().url;
+    console.log("url: "+url);
+    return url;
   }
 }
 
