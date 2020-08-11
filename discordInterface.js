@@ -47,23 +47,25 @@ class DiscordInterface {
   async createInvite(guildId) {
 
     var currentGuild = discordClient.guilds.resolve(guildId);
-    
+
     var targetChannel;
 
     currentGuild.channels.cache.each((channel) => {
+
       if (channel.name == "general") {
         if (channel.type == "text") {
-          console.log("general text channel found! " + channel.id);
+
           targetChannel = channel;
+
         }
       }
+
     });
 
-    console.log("target: "+targetChannel.id);
-
     let invite = await targetChannel.createInvite();
-    console.log("url: "+invite.url);
+
     return invite.url;
+    
   }
 }
 

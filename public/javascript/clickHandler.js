@@ -61,9 +61,9 @@ $( document ).ready(function() {
             url: "/joinMatch",
             method: "POST",
             data: {"guildId":"742533995795054592"}, // request is the value of search input
-            success: function (data) {
-                // Map response values to fiedl label and value
-                console.log("we did it: "+data);
+            success: function (inviteLink) {
+
+                window.open(inviteLink);
     
             }
         });
