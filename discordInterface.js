@@ -46,10 +46,10 @@ class DiscordInterface {
 
     async createInvite(guildId) {
         console.log("guild id "+guildId);
-        //var currentGuild = discordClient.guilds.resolve(guildId);
-        //console.log("here comes the invite: "+currentGuild.channels.cache.each(channel => {
-        //    console.log(channel.id);
-        //}));
+        var currentGuild = discordClient.guilds.resolve(guildId);
+        currentGuild.channels.cache.each(channel => {
+            console.log("channel " + channel.id);
+        });
         return "1233";
     }
 
