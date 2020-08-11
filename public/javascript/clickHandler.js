@@ -56,7 +56,7 @@ $( document ).ready(function() {
         var guildId = $('#guildId').val();
         console.log("guildId = "+guildId);
         var formData = new FormData();
-        formData.append("guildId", guildId);
+        formData.append("guildId", "kbsdfibds");
         $.ajax({
             url: "/joinMatch",
             method: "POST",
