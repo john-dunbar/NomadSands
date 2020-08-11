@@ -52,18 +52,20 @@ class DiscordInterface {
         console.log("found general name in " + channel.id);
         if (channel.type == "text") {
           console.log("bingo! " + channel.id);
-          channel
-            .createInvite()
-            .then((invite) =>{
-                console.log(`Created an invite with a url of ${invite.url}`);
-              return invite.url;
-            })
-            .catch(console.error);
+
+          let invite = await channel.createInvite();
+
+          console.log("invite: "+invite.url);
+
+          //channel.createInvite().then((invite) =>{
+          //    console.log(`Created an invite with a url of ${invite.url}`);
+          //    return invite.url;
+          //  }).catch(console.error);
         }
       }
       console.log("channel " + channel.id);
     });
-    return "no invite found";
+    return invite.url;
   }
 }
 
