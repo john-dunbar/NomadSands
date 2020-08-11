@@ -65,7 +65,8 @@ $( document ).ready(function() {
 
                 window.open(inviteLink);
     
-            }
+            },
+            async:false //to prevent popup blocker
         });
         console.log("back from index.js");
     });
