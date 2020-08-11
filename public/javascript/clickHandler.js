@@ -59,7 +59,7 @@ $( document ).ready(function() {
         formData.append("guildId", guildId);
         $.ajax({
             url: "/joinMatch",
-            method: "GET",
+            method: "POST",
             data: formData, // request is the value of search input
             success: function (data) {
                 // Map response values to fiedl label and value

@@ -263,7 +263,7 @@ router.get('/allMatches', function (req, res) {
 
 });
 
-router.get('/joinMatch', function (req, res) {
+router.post('/joinMatch', function (req, res) {
 
     discordInterface.createInvite(req.body.guildId).then(function (val) {
 
