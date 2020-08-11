@@ -53,7 +53,7 @@ class DiscordInterface {
         console.log("found general name in " + channel.id);
         if (channel.type == "text") {
           console.log("bingo! " + channel.id);
-          channel
+          await channel
             .createInvite()
             .then((invite) =>{
                 console.log(`Created an invite with a url of ${invite.url}`);
