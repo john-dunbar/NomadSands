@@ -76,12 +76,12 @@ li {
     background-color: #777;
 }
 
-.dropdown a {
+/*.dropdown a {
     color: #aaa;
-}
+}*/
 
 /* Change color of dropdown links on hover */
-.dropdown a:hover {
+.dropdown-menu a:hover {
     background-color: #403347;
 }
 
