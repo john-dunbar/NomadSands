@@ -69,8 +69,11 @@ li {
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
     float: right;
-    background-color: #3b3a3a;
 
+}
+
+.dropdown-menu {
+    background-color: #777;
 }
 
 .dropdown a {
