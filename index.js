@@ -258,20 +258,14 @@ router.get('/allMatches', function (req, res) {
 
     mongoInterface.findAllMatches(req.query.term).then(function (val) {
 
-        console.log("all servers: ");
-        var avatars = [];
         for (var key in val) {
             var obj = val[key];
-            console.log(obj.discordServer);
-            avatars.push({
-                user: obj.organizerUserId,
-                avatar: discordInterface.getUser(obj.discordServer, obj.organizerUserId)
-            });
+            console.log(discordInterface.getUser(obj.discordServer, obj.organizerUserId));
             obj.organizerAvatar = discordInterface.getUser(obj.discordServer, obj.organizerUserId);
-            console.log(avatars);
+
         }
 
-        res.send([req.session.username, val, avatars]);
+        res.send([req.session.username, val]);
 
     });
 
