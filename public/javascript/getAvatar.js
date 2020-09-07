@@ -1,8 +1,4 @@
-$(window).on('load', function () {
-    getUserAvatar();
-});
-
-function getUser() {
+function getUserAvatar() {
 
     $.ajax({
         url: "/getUserAvatar",

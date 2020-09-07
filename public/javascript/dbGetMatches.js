@@ -1,9 +1,4 @@
 //load the matches from database
-$(window).on('load', function () {
-    console.log("loaded");
-    getMatches();
-});
-
 function getMatches() {
     $.ajax({
         url: "/allMatches",
@@ -24,14 +19,14 @@ function getMatches() {
 function pageAppendMatchInfo(user, matchRecord) {
     console.log("record found");
 
-    var joinButton ="";
+    var joinButton = "";
 
-    if(matchRecord.matchOrganizer == user){
+    if (matchRecord.matchOrganizer == user) {
         joinButton = "<button type=\"button\" class=\"btn btn-danger btn-sm\" id=\"deleteMatch\">Delete</button>"
-    }else{
+    } else {
         joinButton = "<button type=\"button\" class=\"btn btn-primary btn-sm\" id=\"joinMatch\">Join</button>";
     }
-    
+
     if (matchRecord.gameName) {
         var matchCard =
             "<div class=\"col-12 col-md-3\">" +

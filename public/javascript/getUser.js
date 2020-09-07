@@ -1,7 +1,3 @@
-$(window).on('load', function () {
-    getUser();
-});
-
 function getUser() {
 
     $.ajax({
