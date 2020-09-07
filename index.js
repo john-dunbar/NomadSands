@@ -216,6 +216,7 @@ app.use(['/createMatch', '/myMatches', '/logout'], function checkAuth(req, res, 
 })
 
 router.get('/', function (req, res) {
+    console.log(req.session.username);
 
     if (!req.session.username) {
 
