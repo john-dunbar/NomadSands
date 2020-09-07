@@ -27,7 +27,7 @@ function pageAppendMatchInfo(user, matchRecord) {
         joinButton = "<button type=\"button\" class=\"btn btn-primary btn-sm\" id=\"joinMatch\">Join</button>";
     }
     console.log("organizerAvatar " + matchRecord.organizerAvatar);
-    if (matchRecord.organizerAvatar == "") {
+    if (!matchRecord.organizerAvatar) {
         matchRecord.organizerAvatar = img / profileAvatar.svg;
         console.log("organizerAvatar " + matchRecord.organizerAvatar);
     }
