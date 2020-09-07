@@ -70,7 +70,7 @@ function pageAppendMatchInfo(user, matchRecord) {
             "</div>" +
             "<div class=\"col\">" +
 
-            "<img class=userImg src=" + profileImgURL + "style=\"margin-left:10px; margin-right:5px; width:32px; height:32px;\">" +
+            "<img class=userImg src=\"" + profileImgURL + "\"" + " style=\"margin-left:10px; margin-right:5px; width:32px; height:32px;\">" +
             matchRecord.matchOrganizer + "</p>" +
 
             "</div>" +
