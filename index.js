@@ -283,7 +283,7 @@ router.get('/getUser', function (req, res) {
 
 });
 
-router.get('/getUserAvater', function (req, res) {
+router.get('/getUserAvatar', function (req, res) {
 
     res.send('https://cdn.discordapp.com/avatars/' + req.session.username + '/' + req.session.avatar + '.png');
 
