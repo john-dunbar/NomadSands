@@ -80,9 +80,8 @@ li {
     color: #fff;
 }
 
-/* Change color of dropdown links on hover */
-.dropdown-menu a:hover {
-    background-color: #403347;
+.dropdown a:hover {
+    color: #aaa;
 }
 
 .ui-autocomplete {
