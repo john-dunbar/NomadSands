@@ -28,7 +28,7 @@ function pageAppendMatchInfo(user, matchRecord) {
     }
     console.log("organizerAvatar " + matchRecord.organizerAvatar);
     if (!matchRecord.organizerAvatar) {
-        matchRecord.organizerAvatar = img / profileAvatar.svg;
+        matchRecord.organizerAvatar = "img/profileAvatar.svg";
         console.log("organizerAvatar " + matchRecord.organizerAvatar);
     }
     if (matchRecord.gameName) {
