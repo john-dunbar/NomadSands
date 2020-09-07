@@ -7,7 +7,7 @@ function getUserAvatar() {
 
             if (data.length === 0) {
 
-                $('#userAvatar').attr('src', 'img / profileAvatar.svg');
+                $('#userAvatar').attr('src', 'img/profileAvatar.svg');
 
             } else {
 
