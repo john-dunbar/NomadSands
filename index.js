@@ -258,6 +258,12 @@ router.get('/allMatches', function (req, res) {
 
     mongoInterface.findAllMatches(req.query.term).then(function (val) {
 
+        console.log("all servers: ");
+        for (var key in val) {
+            var obj = matches[key];
+            conosle.log(obj.discordServer);
+        }
+
         res.send([req.session.username, val]);
 
     });
