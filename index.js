@@ -208,7 +208,7 @@ router.get('/oauth/redirect', function (req, res) {
 //check if users are logged in before routing
 
 app.use(['/createMatch', '/myMatches', '/logout'], function checkAuth(req, res, next) {
-    if (!req.session.user_id) {
+    if (!req.session.userId) {
         res.sendFile(path.join(__dirname, '/html/non-authenticated/home.html'));
     } else {
         next();
