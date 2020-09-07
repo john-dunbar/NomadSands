@@ -208,7 +208,7 @@ router.get('/oauth/redirect', function (req, res) {
 //check if users are logged in before routing
 
 app.use(['/createMatch', '/myMatches', '/logout'], function checkAuth(req, res, next) {
-    if (!req.session.user_id) {
+    if (!req.session.userId) {
         res.sendFile(path.join(__dirname, '/html/non-authenticated/home.html'));
     } else {
         next();
@@ -216,6 +216,7 @@ app.use(['/createMatch', '/myMatches', '/logout'], function checkAuth(req, res, 
 })
 
 router.get('/', function (req, res) {
+    console.log(req.session.username);
 
     if (!req.session.username) {
 
@@ -257,7 +258,7 @@ router.get('/allMatches', function (req, res) {
 
     mongoInterface.findAllMatches(req.query.term).then(function (val) {
 
-        res.send([req.session.username,val]);
+        res.send([req.session.username, val]);
 
     });
 
@@ -268,11 +269,23 @@ router.post('/joinMatch', function (req, res) {
     console.log("I have guildId: " + req.body.guildId + "from click handler");
 
     discordInterface.createInvite(req.body.guildId).then(function (val) {
-        console.log("back from getting invite with: "+val);
+        console.log("back from getting invite with: " + val);
 
         res.send(val);
 
     });
+
+});
+
+router.get('/getUser', function (req, res) {
+
+    res.send(req.session.username);
+
+});
+
+router.get('/getUserAvatar', function (req, res) {
+
+    res.send('https://cdn.discordapp.com/avatars/' + req.session.userId + '/' + req.session.avatar + '.png');
 
 });
 
@@ -303,7 +316,6 @@ router.get('/logout', function (req, res) {
         if (err) {
             return console.log(err);
         }
-        req.logout();
         res.redirect('/');
     });
 
@@ -374,7 +386,7 @@ router.post('/newMatch', upload.none(), function (req, res) {
     mongoInterface.insertDocument('matchList', jsonDoc)
         .then((result) => {
 
-            res.send([req.session.username,result]);
+            res.send([req.session.username, result]);
 
         });
     //});

@@ -17,8 +17,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-    <script type="text/javascript" src="javascript/menuClick.js"></script>
-
 </head>
 
 <body>
@@ -27,15 +25,25 @@
         <div class="row justify-content-center">
             <div class="col-12">
                 <header class="mt-3">
-                    <h1 class="textOnDark">Nomad Sands</h1>
-                    <div class="dropdown">
-                        <a href=# id="dropbtn" class="dropbtn">Menu</a>
-                        <div id="dropdown-content" class="dropdown-content">
-                            <a href="https://www.nomadsands.com/logout" id="dropdown-item-1">Logout</a>
-                            <a href="#" id="mainMenuCreateMatch" data-toggle="modal" data-target="#myForm">Create a Match</a>
-                            <a href="https://www.nomadsands.com/myMatches" id="dropdown-item-4">My Matches</a>
-                        </div>
-                    </div>
+                    <nav class="navbar navbar-dark">
+                        <a class="navbar-brand" href="#">
+                            <img src="img/nomadCamp.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+                            Nomad Sands
+                        </a>
+                        <ul class="nav nav-pills">
+                            <li class="nav-item">
+                                <img src="img/profileAvatar.svg" width="30" height="30" class="d-inline-block align-top userImg" alt="" id="userAvatar">
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" id="userName"> Dropdown </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="https://www.nomadsands.com/logout" id="dropdown-item-1">Logout</a>
+                                    <a class="dropdown-item" href="#" id="mainMenuCreateMatch" data-toggle="modal" data-target="#myForm">Create a Match</a>
+                                    <a class="dropdown-item" href="https://www.nomadsands.com/myMatches" id="dropdown-item-4">My Matches</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
                 </header>
                 <h2 class="textOnDark">Gellery View of Current Matches Below!</h2>
 
@@ -118,7 +126,10 @@
     </div>
 
     <script type="text/javascript" src="javascript/clickHandler.js"></script>
+    <script type="text/javascript" src="javascript/getUser.js"></script>
+    <script type="text/javascript" src="javascript/getAvatar.js"></script>
     <script type="text/javascript" src="javascript/dbGetMatches.js"></script>
+    <script type="text/javascript" src="javascript/pageLoad.js"></script>
     <script type="text/javascript" src="javascript/getUserOwnedGuilds.js"></script>
     <script type="text/javascript" src="javascript/formatDateTime.js"></script>
     <script type="text/javascript" src="javascript/modalReset.js"></script>
