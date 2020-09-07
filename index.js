@@ -257,7 +257,7 @@ router.get('/allMatches', function (req, res) {
 
     mongoInterface.findAllMatches(req.query.term).then(function (val) {
 
-        res.send([req.session.username,val]);
+        res.send([req.session.username, val]);
 
     });
 
@@ -268,11 +268,23 @@ router.post('/joinMatch', function (req, res) {
     console.log("I have guildId: " + req.body.guildId + "from click handler");
 
     discordInterface.createInvite(req.body.guildId).then(function (val) {
-        console.log("back from getting invite with: "+val);
+        console.log("back from getting invite with: " + val);
 
         res.send(val);
 
     });
+
+});
+
+router.get('/getUser', function (req, res) {
+
+    res.send(req.session.username);
+
+});
+
+router.get('/getUserAvater', function (req, res) {
+
+    res.send(req.session.avatar);
 
 });
 
@@ -374,7 +386,7 @@ router.post('/newMatch', upload.none(), function (req, res) {
     mongoInterface.insertDocument('matchList', jsonDoc)
         .then((result) => {
 
-            res.send([req.session.username,result]);
+            res.send([req.session.username, result]);
 
         });
     //});

@@ -34,8 +34,8 @@
                         </a>
                         <ul class="nav nav-pills">
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                                    <img src="img/profileAvatar.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" id="userName">
+                                    <img src="img/profileAvatar.svg" width="30" height="30" class="d-inline-block align-top" alt="" id="userAvatar">
                                     Dropdown</a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="https://www.nomadsands.com/logout" id="dropdown-item-1">Logout</a>
@@ -65,7 +65,7 @@
                             </div>
                             <div class="modal-body">
                                 <form id="formInputs">
-                                    <!-- <img src="https://static-cdn.jtvnw.net/ttv-boxart/Fortnite.jpg" class="img-thumbnail" style="width:104px;height:142px;" id="matchThumbnail">-->
+                                    <img src="https://static-cdn.jtvnw.net/ttv-boxart/Fortnite.jpg" class="img-thumbnail" style="width:104px;height:142px;" id="matchThumbnail">
                                     <br>
 
                                     <div class="form-group">
@@ -127,6 +127,8 @@
     </div>
 
     <script type="text/javascript" src="javascript/clickHandler.js"></script>
+    <script type="text/javascript" src="javascript/getUser.js"></script>
+    <script type="text/javascript" src="javascript/getAvatar.js"></script>
     <script type="text/javascript" src="javascript/dbGetMatches.js"></script>
     <script type="text/javascript" src="javascript/getUserOwnedGuilds.js"></script>
     <script type="text/javascript" src="javascript/formatDateTime.js"></script>
