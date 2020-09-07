@@ -26,11 +26,15 @@ function pageAppendMatchInfo(user, matchRecord) {
     } else {
         joinButton = "<button type=\"button\" class=\"btn btn-primary btn-sm\" id=\"joinMatch\">Join</button>";
     }
-    console.log("organizerAvatar " + matchRecord.organizerAvatar);
+
+    let profileImgURL = "";
+
     if (!matchRecord.organizerAvatar) {
-        matchRecord.organizerAvatar = "img/profileAvatar.svg";
-        console.log("organizerAvatar " + matchRecord.organizerAvatar);
+        profileImgURL = "img/profileAvatar.svg";
+    } else {
+        profileImgURL = "https://cdn.discordapp.com/avatars/" + matchRecord.organizerUserId + "/" + matchRecord.organizerAvatar + ".png";
     }
+
     if (matchRecord.gameName) {
         var matchCard =
             "<div class=\"col-12 col-md-3\">" +
@@ -66,7 +70,7 @@ function pageAppendMatchInfo(user, matchRecord) {
             "</div>" +
             "<div class=\"col\">" +
 
-            "<img class=userImg src=\"https://cdn.discordapp.com/avatars/" + matchRecord.organizerUserId + "/" + matchRecord.organizerAvatar + ".png\"style=\"margin-left:10px; margin-right:5px; width:32px; height:32px;\">" +
+            "<img class=userImg src=" + profileImgURL + "style=\"margin-left:10px; margin-right:5px; width:32px; height:32px;\">" +
             matchRecord.matchOrganizer + "</p>" +
 
             "</div>" +
