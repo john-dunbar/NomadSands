@@ -7,7 +7,7 @@ function getUser() {
 
             if (data.length === 0) {
 
-                $('#userName').text("User Name");
+                $('#userName').text("Menu");
 
             } else {
 

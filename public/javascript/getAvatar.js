@@ -5,7 +5,7 @@ function getUserAvatar() {
         method: "GET",
         success: function (data) {
             console.log("here's what i got " + data);
-            if (data.length === 0) {
+            if (data.includes("undefined")) {
 
                 $('#userAvatar').attr('src', 'img/profileAvatar.svg');
 
