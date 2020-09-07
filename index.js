@@ -263,11 +263,14 @@ router.get('/allMatches', function (req, res) {
         for (var key in val) {
             var obj = val[key];
             console.log(obj.discordServer);
-            avatars.push(discordInterface.getUser(obj.discordServer, obj.organizerUserId));
+            avatars.push({
+                user: obj.organizerUserId,
+                avatar: discordInterface.getUser(obj.discordServer, obj.organizerUserId)
+            });
             console.log(avatars);
         }
 
-        res.send([req.session.username, val]);
+        res.send([req.session.username, val, avatars]);
 
     });
 
