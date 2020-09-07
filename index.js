@@ -261,7 +261,7 @@ router.get('/allMatches', function (req, res) {
         console.log("all servers: ");
         for (var key in val) {
             var obj = val[key];
-            conosle.log(obj.discordServer);
+            conosle.log(obj);
         }
 
         res.send([req.session.username, val]);
