@@ -68,27 +68,21 @@ class DiscordInterface {
 
     }
 
-    async getUser(guildId) {
+    async getUser(guildId, userId) {
 
         var currentGuild = discordClient.guilds.resolve(guildId);
 
-        var targetChannel;
+        var targetUserAvatar;
 
-        currentGuild.channels.cache.each((channel) => {
+        currentGuild.members.cache.each((member) => {
 
-            if (channel.name == "general") {
-                if (channel.type == "text") {
-
-                    targetChannel = channel;
-
-                }
+            if (member.id == userId) {
+                targetUserAvatar = member.user.avatar;
             }
 
         });
 
-        let invite = await targetChannel.createInvite();
-
-        return invite.url;
+        return targetUserAvatar;
 
     }
 }
