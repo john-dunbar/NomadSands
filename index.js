@@ -267,6 +267,7 @@ router.get('/allMatches', function (req, res) {
                 user: obj.organizerUserId,
                 avatar: discordInterface.getUser(obj.discordServer, obj.organizerUserId)
             });
+            obj.organizerAvatar = discordInterface.getUser(obj.discordServer, obj.organizerUserId);
             console.log(avatars);
         }
 
