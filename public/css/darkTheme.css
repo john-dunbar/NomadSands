@@ -129,6 +129,10 @@ li {
     z-index: 5000;
 }
 
+.userImg {
+    border-radius: 50%;
+}
+
 .textOnDark {
     color: #aaa;
 }

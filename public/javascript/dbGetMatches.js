@@ -62,7 +62,7 @@ function pageAppendMatchInfo(user, matchRecord) {
             "</div>" +
             "<div class=\"col\">" +
 
-            "<img src=\"https://cdn.discordapp.com/avatars/" + matchRecord.organizerUserId + "/" + matchRecord.organizerAvatar + ".png\"style=\"margin-left:10px; margin-right:5px; width:32px; height:32px;\">" +
+            "<img class=userImg src=\"https://cdn.discordapp.com/avatars/" + matchRecord.organizerUserId + "/" + matchRecord.organizerAvatar + ".png\"style=\"margin-left:10px; margin-right:5px; width:32px; height:32px;\">" +
             matchRecord.matchOrganizer + "</p>" +
 
             "</div>" +
