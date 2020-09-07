@@ -12,8 +12,8 @@ body {
     background-color: #222;
 }
 
-nav {
-    background-color: #222 !important;
+.navbar-custom {
+    background-color: #222;
 }
 
 p {
