@@ -260,7 +260,7 @@ router.get('/allMatches', function (req, res) {
 
         console.log("all servers: ");
         for (var key in val) {
-            var obj = matches[key];
+            var obj = val[key];
             conosle.log(obj.discordServer);
         }
 
