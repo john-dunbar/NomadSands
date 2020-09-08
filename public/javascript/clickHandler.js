@@ -56,6 +56,7 @@ $(document).ready(function () {
             success: function (matchDeleted) {
 
                 if (matchDeleted) {
+                    console.log("success");
                     $(this).parent().parent().parent().parent().parent().parent().remove();
                 }
 
