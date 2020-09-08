@@ -45,7 +45,7 @@ $(document).ready(function () {
 
     $(document).on('click', '#deleteMatch', function () {
         console.log("delete button clicked!");
-        console.log($(this).text());
+        console.log($(this).parent().parent().parent().parent().parent().attr("id"));
 
     });
 
