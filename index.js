@@ -258,9 +258,9 @@ router.get('/allMatches', function (req, res) {
 
     mongoInterface.findAllMatches(req.query.term).then(function (val) {
 
-        updateAvatars(val).then(function (updatedMatchList) {
+        updateAvatars(val).then(function () {
 
-            res.send([req.session.username, updatedMatchList]);
+            res.send([req.session.username, val]);
 
         });
     });
@@ -275,11 +275,7 @@ async function updateAvatars(matchList) {
         obj = matchList[key];
         var avatar = await discordInterface.getUserAvatar(obj.discordServer, obj.organizerUserId);
         obj.organizerAvatar = avatar;
-
     }
-
-    return obj;
-
 }
 
 router.post('/joinMatch', function (req, res) {
