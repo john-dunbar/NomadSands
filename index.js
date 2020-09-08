@@ -258,7 +258,7 @@ router.get('/allMatches', function (req, res) {
 
     mongoInterface.findAllMatches(req.query.term).then(function (val) {
 
-        for (var key of val) {
+        for (var key in val) {
             var obj = val[key];
             discordInterface.getUserAvatar(obj.discordServer, obj.organizerUserId).then(function (avatar) {
                 console.log("original avatar: " + obj.organizerAvatar);
