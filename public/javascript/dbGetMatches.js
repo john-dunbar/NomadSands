@@ -7,7 +7,6 @@ function getMatches() {
 
             var userName = data[0];
             var matches = data[1];
-            var avatars = data[2];
 
             for (var key in matches) {
                 var obj = matches[key];
@@ -18,7 +17,7 @@ function getMatches() {
 }
 
 function pageAppendMatchInfo(user, matchRecord) {
-    console.log("record found");
+    console.log("record found. id is " + matchRecord._id);
 
     var joinButton = "";
 
