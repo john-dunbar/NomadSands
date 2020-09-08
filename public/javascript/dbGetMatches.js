@@ -37,7 +37,7 @@ function pageAppendMatchInfo(user, matchRecord) {
 
     if (matchRecord.gameName) {
         var matchCard =
-            "<div class=\"col-12 col-md-3\" id=\"" + matchRecord._id + ">" +
+            "<div class=\"col-12 col-md-3\" id=\"" + matchRecord._id + "\">" +
             "<div class=\"card pt-3 mt-3\">" +
 
             "<img src=\"" + matchRecord.matchThumbnail + "\" class=\"card-img-top\" alt=\"uploads/altImg.png\" style=\"width:104px;height:142px; margin:auto;\">" +
