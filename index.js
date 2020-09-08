@@ -291,6 +291,19 @@ router.post('/joinMatch', function (req, res) {
 
 });
 
+router.post('/deleteMatch', function (req, res) {
+
+    console.log("delete request for: " + req.body.matchId + " from click handler");
+
+    //discordInterface.createInvite(req.body.guildId).then(function (val) {
+    //    console.log("back from getting invite with: " + val);
+
+    //    res.send(val);
+
+    //});
+    res.send(true);
+});
+
 router.get('/getUser', function (req, res) {
 
     res.send(req.session.username);

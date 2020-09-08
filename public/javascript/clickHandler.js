@@ -45,7 +45,22 @@ $(document).ready(function () {
 
     $(document).on('click', '#deleteMatch', function () {
         console.log("delete button clicked!");
-        console.log($(this).parent().parent().parent().parent().parent().parent().attr("id"));
+        var matchId = $(this).parent().parent().parent().parent().parent().parent().attr("id");
+        console.log(matchId);
+        $.ajax({
+            url: "/deleteMatch",
+            method: "POST",
+            data: {
+                "matchId": matchId
+            }, // request is the value of search input
+            success: function (matchDeleted) {
+
+                if (matchDeleted) {
+                    $(this).parent().parent().parent().parent().parent().parent().remove();
+                }
+
+            },
+        });
 
     });
 
