@@ -258,14 +258,13 @@ router.get('/allMatches', function (req, res) {
 
     mongoInterface.findAllMatches(req.query.term).then(function (val) {
 
-        for (var key in val) {
-
+        for (var key of val) {
+            var obj = val[key];
             discordInterface.getUserAvatar(obj.discordServer, obj.organizerUserId).then(function (avatar) {
-                var obj = val[key];
                 console.log("original avatar: " + obj.organizerAvatar);
+
                 obj.organizerAvatar = "";
                 console.log("new avatar: " + obj.organizerAvatar);
-                val[key] = obj;
             });
         }
 
@@ -274,6 +273,10 @@ router.get('/allMatches', function (req, res) {
     });
 
 });
+
+async function updateAvatars() {
+
+}
 
 router.post('/joinMatch', function (req, res) {
 
