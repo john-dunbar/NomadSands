@@ -272,12 +272,11 @@ async function updateAvatars(matchList) {
     var obj;
     for (var key in matchList) {
         obj = matchList[key];
-        discordInterface.getUserAvatar(obj.discordServer, obj.organizerUserId).then(function (avatar) {
-            console.log("original avatar: " + obj.organizerAvatar);
+        var avatar = await discordInterface.getUserAvatar(obj.discordServer, obj.organizerUserId);
+        console.log("original avatar: " + obj.organizerAvatar);
 
-            obj.organizerAvatar = "";
-            console.log("new avatar: " + obj.organizerAvatar);
-        });
+        obj.organizerAvatar = "";
+        console.log("new avatar: " + obj.organizerAvatar);
     }
 
     console.log("end");
