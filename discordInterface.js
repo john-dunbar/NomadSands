@@ -68,7 +68,7 @@ class DiscordInterface {
 
     }
 
-    async getUser(guildId, userId) {
+    async getUserAvatar(guildId, userId) {
 
         var currentGuild = discordClient.guilds.resolve(guildId);
 

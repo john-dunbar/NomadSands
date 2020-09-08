@@ -260,10 +260,11 @@ router.get('/allMatches', function (req, res) {
 
         for (var key in val) {
             var obj = val[key];
-            discordInterface.getUser(obj.discordServer, obj.organizerUserId).then(function (avatar) {
+            discordInterface.getUserAvatar(obj.discordServer, obj.organizerUserId).then(function (avatar) {
                 console.log("original avatar: " + obj.organizerAvatar);
                 obj.organizerAvatar = "";
                 console.log("new avatar: " + obj.organizerAvatar);
+                val[key] = obj;
             });
         }
 
