@@ -257,30 +257,29 @@ router.get('/autocomplete', function (req, res) {
 router.get('/allMatches', function (req, res) {
 
     mongoInterface.findAllMatches(req.query.term).then(function (val) {
+
         updateAvatars(val).then(function (updatedMatchList) {
-            res.send([req.session.username, val]);
+
+            res.send([req.session.username, updatedMatchList]);
+
         });
-
-
-
     });
-
 });
 
 async function updateAvatars(matchList) {
-    console.log("start");
+
     var obj;
+
     for (var key in matchList) {
+
         obj = matchList[key];
         var avatar = await discordInterface.getUserAvatar(obj.discordServer, obj.organizerUserId);
-        console.log("original avatar: " + obj.organizerAvatar);
-
         obj.organizerAvatar = avatar;
-        console.log("new avatar: " + obj.organizerAvatar);
+
     }
 
-    console.log("end");
     return obj;
+
 }
 
 router.post('/joinMatch', function (req, res) {
