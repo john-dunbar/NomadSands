@@ -271,7 +271,7 @@ async function updateAvatars(matchList) {
     console.log("start");
     var obj;
     for (var key in matchList) {
-        obj = val[matchList];
+        obj = matchList[key];
         discordInterface.getUserAvatar(obj.discordServer, obj.organizerUserId).then(function (avatar) {
             console.log("original avatar: " + obj.organizerAvatar);
 
