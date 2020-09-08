@@ -257,25 +257,31 @@ router.get('/autocomplete', function (req, res) {
 router.get('/allMatches', function (req, res) {
 
     mongoInterface.findAllMatches(req.query.term).then(function (val) {
+        updateAvatars(val).then(function (updatedMatchList) {
+            res.send([req.session.username, val]);
+        });
 
-        for (var key in val) {
-            var obj = val[key];
-            discordInterface.getUserAvatar(obj.discordServer, obj.organizerUserId).then(function (avatar) {
-                console.log("original avatar: " + obj.organizerAvatar);
 
-                obj.organizerAvatar = "";
-                console.log("new avatar: " + obj.organizerAvatar);
-            });
-        }
-
-        res.send([req.session.username, val]);
 
     });
 
 });
 
-async function updateAvatars() {
+async function updateAvatars(matchList) {
+    console.log("start");
+    var obj;
+    for (var key in matchList) {
+        obj = val[matchList];
+        discordInterface.getUserAvatar(obj.discordServer, obj.organizerUserId).then(function (avatar) {
+            console.log("original avatar: " + obj.organizerAvatar);
 
+            obj.organizerAvatar = "";
+            console.log("new avatar: " + obj.organizerAvatar);
+        });
+    }
+
+    console.log("end");
+    return obj;
 }
 
 router.post('/joinMatch', function (req, res) {
