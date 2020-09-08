@@ -57,7 +57,7 @@ $(document).ready(function () {
 
                 if (matchDeleted) {
                     console.log("success");
-                    $(this).remove();
+                    $(this).parent().remove();
                 }
 
             },
