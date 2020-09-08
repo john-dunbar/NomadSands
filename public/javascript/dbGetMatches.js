@@ -7,6 +7,7 @@ function getMatches() {
 
             var userName = data[0];
             var matches = data[1];
+            var avatars = data[2];
 
             for (var key in matches) {
                 var obj = matches[key];

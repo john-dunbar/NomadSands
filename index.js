@@ -258,11 +258,25 @@ router.get('/allMatches', function (req, res) {
 
     mongoInterface.findAllMatches(req.query.term).then(function (val) {
 
-        res.send([req.session.username, val]);
+        updateAvatars(val).then(function () {
 
+            res.send([req.session.username, val]);
+
+        });
     });
-
 });
+
+async function updateAvatars(matchList) {
+
+    var obj;
+
+    for (var key in matchList) {
+
+        obj = matchList[key];
+        var avatar = await discordInterface.getUserAvatar(obj.discordServer, obj.organizerUserId);
+        obj.organizerAvatar = avatar;
+    }
+}
 
 router.post('/joinMatch', function (req, res) {
 

@@ -67,31 +67,24 @@ class DiscordInterface {
         return invite.url;
 
     }
-}
 
-async getUser(guildId) {
+    async getUserAvatar(guildId, userId) {
 
-    var currentGuild = discordClient.guilds.resolve(guildId);
+        var currentGuild = discordClient.guilds.resolve(guildId);
 
-    var targetChannel;
+        var targetUserAvatar;
 
-    currentGuild.channels.cache.each((channel) => {
+        currentGuild.members.cache.each((member) => {
 
-        if (channel.name == "general") {
-            if (channel.type == "text") {
-
-                targetChannel = channel;
-
+            if (member.id == userId) {
+                targetUserAvatar = member.user.avatar;
             }
-        }
 
-    });
+        });
 
-    let invite = await targetChannel.createInvite();
+        return targetUserAvatar;
 
-    return invite.url;
-
-}
+    }
 }
 
 module.exports = DiscordInterface;
