@@ -259,8 +259,9 @@ router.get('/allMatches', function (req, res) {
     mongoInterface.findAllMatches(req.query.term).then(function (val) {
 
         for (var key in val) {
-            var obj = val[key];
+
             discordInterface.getUserAvatar(obj.discordServer, obj.organizerUserId).then(function (avatar) {
+                var obj = val[key];
                 console.log("original avatar: " + obj.organizerAvatar);
                 obj.organizerAvatar = "";
                 console.log("new avatar: " + obj.organizerAvatar);
