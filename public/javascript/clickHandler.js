@@ -56,8 +56,8 @@ $(document).ready(function () {
             success: function (matchDeleted) {
 
                 if (matchDeleted) {
-                    console.log("success");
-                    $(this).parent().remove();
+                    console.log("success " + matchDeleted);
+                    $("#" + matchId).remove();
                 }
 
             },
