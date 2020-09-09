@@ -1,6 +1,7 @@
 "use strict";
 
 require('dotenv').config();
+const mongodb = require('mongodb');
 const mongo = require('mongodb').MongoClient;
 const url = 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@' + process.env.DB_HOST;
 
@@ -124,7 +125,7 @@ class MongoInterface {
     async deleteMatch(matchId) {
 
         var query = {
-            '_id': mongo.ObjectId(matchId)
+            '_id': mongodb.ObjectId(matchId)
         };
 
         try {
