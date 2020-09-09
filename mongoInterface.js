@@ -135,7 +135,7 @@ class MongoInterface {
 
             let res = await collection.deleteOne(query);
 
-            console.error("deleted " + matchId + "? " + res[0].accessToken);
+            console.error("deleted " + matchId + "? " + res[0]);
 
             return res[0];
 
