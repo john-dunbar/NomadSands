@@ -124,7 +124,7 @@ class MongoInterface {
     async deleteMatch(matchId) {
 
         var query = {
-            '_id': matchId
+            '_id': ObjectId("\"" + matchId + "\"")
         };
 
         try {
