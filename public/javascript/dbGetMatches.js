@@ -7,7 +7,6 @@ function getMatches() {
 
             var userName = data[0];
             var matches = data[1];
-            var avatars = data[2];
 
             for (var key in matches) {
                 var obj = matches[key];
@@ -18,7 +17,7 @@ function getMatches() {
 }
 
 function pageAppendMatchInfo(user, matchRecord) {
-    console.log("record found");
+    console.log("record found. id is " + matchRecord._id);
 
     var joinButton = "";
 
@@ -38,7 +37,7 @@ function pageAppendMatchInfo(user, matchRecord) {
 
     if (matchRecord.gameName) {
         var matchCard =
-            "<div class=\"col-12 col-md-3\">" +
+            "<div class=\"col-12 col-md-3\" id=\"" + matchRecord._id + "\">" +
             "<div class=\"card pt-3 mt-3\">" +
 
             "<img src=\"" + matchRecord.matchThumbnail + "\" class=\"card-img-top\" alt=\"uploads/altImg.png\" style=\"width:104px;height:142px; margin:auto;\">" +

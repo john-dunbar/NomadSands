@@ -1,6 +1,7 @@
 "use strict";
 
 require('dotenv').config();
+const mongodb = require('mongodb');
 const mongo = require('mongodb').MongoClient;
 const url = 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@' + process.env.DB_HOST;
 
@@ -113,6 +114,31 @@ class MongoInterface {
             console.error("result of userFind: " + res[0].accessToken);
 
             return res[0];
+
+        } catch (err) {
+
+            console.log(err);
+        }
+
+    }
+
+    async deleteMatch(matchId) {
+
+        var query = {
+            '_id': mongodb.ObjectId(matchId)
+        };
+
+        try {
+
+            const db = this.mongoConnection.db('nomadSands');
+
+            let collection = db.collection('matchList');
+
+            let res = await collection.deleteOne(query);
+
+            console.error("deleted " + matchId + "? " + res);
+
+            return res;
 
         } catch (err) {
 

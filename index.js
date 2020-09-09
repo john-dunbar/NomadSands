@@ -291,6 +291,16 @@ router.post('/joinMatch', function (req, res) {
 
 });
 
+router.post('/deleteMatch', function (req, res) {
+
+    console.log("delete request for: " + req.body.matchId + " from click handler");
+
+    mongoInterface.deleteMatch(req.body.matchId).then(function (val) {
+        res.send(val);
+    });
+
+});
+
 router.get('/getUser', function (req, res) {
 
     res.send(req.session.username);
