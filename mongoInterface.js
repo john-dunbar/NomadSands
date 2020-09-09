@@ -135,9 +135,9 @@ class MongoInterface {
 
             let res = await collection.deleteOne(query);
 
-            console.error("deleted " + matchId + "? " + res[0]);
+            console.error("deleted " + matchId + "? " + res);
 
-            return res[0];
+            return res;
 
         } catch (err) {
 
