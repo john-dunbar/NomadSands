@@ -133,7 +133,7 @@ class MongoInterface {
 
             let collection = db.collection('matchList');
 
-            let res = await collection.deleteOne(query).toArray();
+            let res = await collection.deleteOne(query);
 
             console.error("deleted " + matchId + "? " + res[0].accessToken);
 
