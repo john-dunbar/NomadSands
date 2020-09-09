@@ -299,7 +299,6 @@ router.post('/deleteMatch', function (req, res) {
         res.send(val);
     });
 
-    res.send(false);
 });
 
 router.get('/getUser', function (req, res) {
