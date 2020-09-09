@@ -295,13 +295,11 @@ router.post('/deleteMatch', function (req, res) {
 
     console.log("delete request for: " + req.body.matchId + " from click handler");
 
-    //discordInterface.createInvite(req.body.guildId).then(function (val) {
-    //    console.log("back from getting invite with: " + val);
+    mongoInterface.deleteMatch(req.body.matchId).then(function (val) {
+        res.send(val);
+    });
 
-    //    res.send(val);
-
-    //});
-    res.send(true);
+    res.send(false);
 });
 
 router.get('/getUser', function (req, res) {

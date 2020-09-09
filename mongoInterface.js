@@ -121,6 +121,31 @@ class MongoInterface {
 
     }
 
+    async deleteMatch(matchId) {
+
+        var query = {
+            '_id': matchId
+        };
+
+        try {
+
+            const db = this.mongoConnection.db('nomadSands');
+
+            let collection = db.collection('matchList');
+
+            let res = await collection.deleteOne(query).toArray();
+
+            console.error("deleted " + matchId + "? " + res[0].accessToken);
+
+            return res[0];
+
+        } catch (err) {
+
+            console.log(err);
+        }
+
+    }
+
 }
 
 module.exports = MongoInterface;
