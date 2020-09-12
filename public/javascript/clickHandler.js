@@ -81,7 +81,7 @@ $(document).ready(function () {
                 "guildId": guildId
             }, // request is the value of search input
             success: function (inviteLink) {
-
+                console.log("invite link is: " + inviteLink);
                 window.open(inviteLink);
 
             },
