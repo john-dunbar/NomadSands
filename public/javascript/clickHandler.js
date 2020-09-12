@@ -70,7 +70,7 @@ $(document).ready(function () {
         //window.open("https://www.w3schools.com"); 
         //after clicking, check that user has been added to group before changing label to "leave"
         console.log("join button clicked!");
-        var guildId = $('#guildId').val();
+        var guildId = $(this).next().val();
         console.log("guildId = " + guildId);
         var formData = new FormData();
         formData.append("guildId", guildId);
