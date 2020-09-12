@@ -103,15 +103,12 @@ function pageAppendMatchInfo(user, matchRecord) {
             "<div class=\"row justify-content-left\">" +
             "<div class=\"col\">" +
 
-            //activate this when logged in user is same as creator
-            //"<button type=\"button\" class=\"btn btn-danger btn-sm\" id=\"deleteMatch\">Delete</button>" +
-
             "</div>" +
             "<div class=\"col\">" +
 
             joinButton +
 
-            "<input type=\"text\" id= guildId value=" + matchRecord.discordServer + " hidden>" +
+            "<input type=\"text\" id=\"guildId\" value=" + matchRecord.discordServer + " hidden>" +
 
             "</div>" +
             "</div>" +
