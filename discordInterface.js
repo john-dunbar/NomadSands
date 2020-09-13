@@ -108,6 +108,9 @@ class DiscordInterface {
     }
 
     async isBotMember(guildId) {
+        discordClient.guilds.cache.each((guild) => {
+            console.log("Guild in cache: " + guild.name);
+        });
 
         return discordClient.guilds.cache.has(guildId);
 
