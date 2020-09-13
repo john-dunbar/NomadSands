@@ -157,8 +157,6 @@ router.get('/oauth/redirect', function (req, res) {
                                 .then(userGuilds => userGuilds.json())
                                 .then(guilds => {
                                     req.session.guilds = guilds;
-                                    console.log("guild " + guilds[0].name);
-                                    console.log("guild " + guilds[0].channels);
                                     res.redirect('/');
                                 });
                         })
@@ -327,11 +325,11 @@ router.get('/getUserGuilds', function (req, res) {
 
         for (let i = 0; i < req.session.guilds.length; i++) {
 
+            console.log("member guild id: " + discordInterface.getGuild(req.session.guilds[i].id).members);
+
             if (req.session.guilds[i].owner === true) {
 
                 result.push(req.session.guilds[i]);
-
-                console.log("channels " + req.session.guilds[i].channels);
 
             }
         }

@@ -106,6 +106,14 @@ class DiscordInterface {
         return channels;
 
     }
+
+    async getGuild(guildId) {
+
+        var currentGuild = discordClient.guilds.resolve(guildId);
+
+        return currentGuild;
+
+    }
 }
 
 module.exports = DiscordInterface;
