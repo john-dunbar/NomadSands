@@ -107,12 +107,15 @@ class DiscordInterface {
 
     }
 
-    async getGuild(guildId) {
+    async isBotMember(guildId) {
 
         var currentGuild = await discordClient.guilds.resolve(guildId);
-        console.log(currentGuild.available);
 
-        return currentGuild;
+        if (currentGuild) {
+            console.log(true);
+        } else {
+            console.log(false);
+        }
 
     }
 }
