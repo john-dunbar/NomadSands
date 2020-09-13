@@ -24,7 +24,7 @@ const discordInterface = new DiscordInterface();
 var discordClient = discordInterface.getClient();
 
 discordClient.on('guildMemberAdd', member => {
-    console.log("someone joined! " + member.user.username);
+    console.log(member.user.username + "just joined server" + member.guild.id);
 });
 
 mongoInterface.connect().then((connection) => {
