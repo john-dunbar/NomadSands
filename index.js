@@ -321,11 +321,15 @@ router.get('/getUserGuilds', function (req, res) {
 
     let result = [];
 
-    console.log(discordInterface.getAllBotGuilds());
+    //console.log(discordInterface.getAllBotGuilds());
 
     if (req.session.guilds) {
 
         for (let i = 0; i < req.session.guilds.length; i++) {
+
+            if (discordInterface.isBotMember(partialGuild.id)) {
+                console.log("Bot is in: " + partialGuild.name);
+            }
 
             let partialGuild = req.session.guilds[i];
 

@@ -109,13 +109,7 @@ class DiscordInterface {
 
     async isBotMember(guildId) {
 
-        var currentGuild = await discordClient.guilds.resolve(guildId);
-
-        if (currentGuild) {
-            return true;
-        } else {
-            return false;
-        }
+        return discordClient.guilds.cache.has(guildId);
 
     }
 
