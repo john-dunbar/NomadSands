@@ -157,7 +157,6 @@ router.get('/oauth/redirect', function (req, res) {
                                 .then(userGuilds => userGuilds.json())
                                 .then(guilds => {
                                     req.session.guilds = guilds;
-                                    res.redirect('/');
                                 });
                         })
                         .then(() => {
@@ -174,6 +173,7 @@ router.get('/oauth/redirect', function (req, res) {
                                 //        res.redirect('/');
                                 //    });
                             }
+                            res.redirect('/');
                         });
 
                 }
