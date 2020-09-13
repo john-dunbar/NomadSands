@@ -160,6 +160,7 @@ router.get('/oauth/redirect', function (req, res) {
                                 });
                         })
                         .then(() => {
+                            console.log("after guild get");
                             for (guild in req.session.guilds) {
                                 console.log("guilds " + guild.id);
                                 //fetch('https://discordapp.com/api/users/@me/guilds', {
