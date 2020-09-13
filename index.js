@@ -169,8 +169,7 @@ router.get('/oauth/redirect', function (req, res) {
                                             })
                                             //    .then(userChannels => userChannels.json())
                                             .then(channels => {
-                                                //        req.session.channels = channels;
-                                                //res.redirect('/');
+                                                guild.channels = channels;
                                                 console.log("im back");
                                             });
                                     })
