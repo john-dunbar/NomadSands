@@ -162,16 +162,16 @@ router.get('/oauth/redirect', function (req, res) {
                                     console.log("after guild get");
                                     req.session.guilds.forEach(async (guild) => {
                                         console.log("guilds " + guild.id);
-                                        await fetch('https://discordapp.com/api/users/@me/guilds/' + guild.id + '/channels', {
-                                                headers: {
-                                                    authorization: `${token.token_type} ${token.access_token}`,
-                                                },
-                                            })
-                                            .then(userChannels => userChannels.json())
-                                            .then(channels => {
-                                                req.session.channels = channels;
-                                                res.redirect('/');
-                                            });
+                                        //await fetch('https://discordapp.com/api/users/@me/guilds/' + guild.id + '/channels', {
+                                        //        headers: {
+                                        //            authorization: `${token.token_type} ${token.access_token}`,
+                                        //        },
+                                        //    })
+                                        //    .then(userChannels => userChannels.json())
+                                        //    .then(channels => {
+                                        //        req.session.channels = channels;
+                                        //        res.redirect('/');
+                                        //    });
                                     })
                                 });
                         })
