@@ -96,17 +96,17 @@ class DiscordInterface {
 
         console.log("resolved guild " + currentGuild.name);
 
-        var channels = [];
+        // var channels = [];
 
-        currentGuild.channels.cache.each((channel) => {
+        // currentGuild.channels.cache.each((channel) => {
 
-            console.log("channel found " + channel.name);
+        //     console.log("channel found " + channel.name);
 
-            channels.push(channel);
+        //     channels.push(channel);
 
-        });
+        // });
 
-        return channels;
+        // return channels;
 
     }
 }
