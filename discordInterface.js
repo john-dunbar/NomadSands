@@ -126,6 +126,16 @@ class DiscordInterface {
         return currentGuild;
 
     }
+
+    async getAllBotGuilds() {
+
+        discordClient.guilds.cache.each((guild) => {
+
+            console.log(guild.name);
+
+        });
+
+    }
 }
 
 module.exports = DiscordInterface;
