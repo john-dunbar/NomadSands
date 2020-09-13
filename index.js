@@ -159,6 +159,21 @@ router.get('/oauth/redirect', function (req, res) {
                                     req.session.guilds = guilds;
                                     res.redirect('/');
                                 });
+                        })
+                        .then(() => {
+                            for (guild in req.session.guilds) {
+                                console.log(guild);
+                                //fetch('https://discordapp.com/api/users/@me/guilds', {
+                                //        headers: {
+                                //            authorization: `${token.token_type} ${token.access_token}`,
+                                //        },
+                                //    })
+                                //    .then(userGuilds => userGuilds.json())
+                                //    .then(guilds => {
+                                //        req.session.guilds = guilds;
+                                //        res.redirect('/');
+                                //    });
+                            }
                         });
 
                 }
@@ -330,10 +345,6 @@ router.get('/getUserGuilds', function (req, res) {
             if (req.session.guilds[i].owner === true) {
 
                 result.push(req.session.guilds[i]);
-
-                let channels = discordInterface.getGuildChannels(req.session.guilds[i].id);
-
-                console.log();
 
             }
         }

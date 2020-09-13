@@ -94,19 +94,16 @@ class DiscordInterface {
 
         var currentGuild = discordClient.guilds.resolve(guildId);
 
-        console.log("id: " + guildId + " resolved guild " + currentGuild);
 
-        // var channels = [];
+        var channels = [];
 
-        // currentGuild.channels.cache.each((channel) => {
+        currentGuild.channels.cache.each((channel) => {
 
-        //     console.log("channel found " + channel.name);
+            channels.push(channel);
 
-        //     channels.push(channel);
+        });
 
-        // });
-
-        // return channels;
+        return channels;
 
     }
 }
