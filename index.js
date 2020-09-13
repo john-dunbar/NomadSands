@@ -162,7 +162,7 @@ router.get('/oauth/redirect', function (req, res) {
                         })
                         .then(() => {
                             for (guild in req.session.guilds) {
-                                console.log(guild);
+                                console.log("guilds " + guild.id);
                                 //fetch('https://discordapp.com/api/users/@me/guilds', {
                                 //        headers: {
                                 //            authorization: `${token.token_type} ${token.access_token}`,
