@@ -173,6 +173,8 @@ router.get('/oauth/redirect', function (req, res) {
                                                 //res.redirect('/');
                                                 console.log("im back");
                                             });
+                                    }).then(() => {
+                                        res.redirect('/');
                                     })
                                 });
                         })
