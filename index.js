@@ -160,21 +160,21 @@ router.get('/oauth/redirect', function (req, res) {
                                 })
                                 .then(() => {
                                     console.log("after guild get");
-                                    req.session.guilds.forEach(guild => {
+                                    req.session.guilds.forEach(async (guild) => {
                                         console.log("guilds " + guild.id);
-                                        //fetch('https://discordapp.com/api/users/@me/guilds', {
-                                        //        headers: {
-                                        //            authorization: `${token.token_type} ${token.access_token}`,
-                                        //        },
-                                        //    })
-                                        //    .then(userGuilds => userGuilds.json())
-                                        //    .then(guilds => {
-                                        //        req.session.guilds = guilds;
-                                        //        res.redirect('/');
-                                        //    });
+                                        await fetch('https://discordapp.com/api/users/@me/guilds/' + guild.id + '/channels', {
+                                                headers: {
+                                                    authorization: `${token.token_type} ${token.access_token}`,
+                                                },
+                                            })
+                                            .then(userChannels => userChannels.json())
+                                            .then(channels => {
+                                                req.session.channels = channels;
+                                                res.redirect('/');
+                                            });
                                     })
                                     res.redirect('/');
-                                });;
+                                });
                         })
 
 
@@ -224,9 +224,6 @@ router.get('/oauth/redirect', function (req, res) {
             }
         });
 });
-
-
-
 
 //check if users are logged in before routing
 
