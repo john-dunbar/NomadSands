@@ -129,11 +129,7 @@ class DiscordInterface {
 
     async getAllBotGuilds() {
 
-        discordClient.guilds.cache.each((guild) => {
-
-            console.log(guild.name);
-
-        });
+        return discordClient.guilds.cache;
 
     }
 }
