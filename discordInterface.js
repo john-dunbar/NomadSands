@@ -94,9 +94,13 @@ class DiscordInterface {
 
         var currentGuild = discordClient.guilds.resolve(guildId);
 
+        console.log("resolved guild " + currentGuild.name);
+
         var channels = [];
 
         currentGuild.channels.cache.each((channel) => {
+
+            console.log("channel found " + channel.name);
 
             channels.push(channel);
 
