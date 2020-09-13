@@ -89,6 +89,22 @@ class DiscordInterface {
         return targetUserAvatar;
 
     }
+
+    async getGuildChannels(guildId) {
+
+        var currentGuild = discordClient.guilds.resolve(guildId);
+
+        var channels = [];
+
+        currentGuild.channels.cache.each((channel) => {
+
+            channels.push(channel);
+
+        });
+
+        return channels;
+
+    }
 }
 
 module.exports = DiscordInterface;

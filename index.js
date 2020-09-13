@@ -331,6 +331,10 @@ router.get('/getUserGuilds', function (req, res) {
 
                 result.push(req.session.guilds[i]);
 
+                let channels = discordInterface.getGuildChannels(guilds[i]);
+
+                console.log(channels);
+
             }
         }
     } else {
