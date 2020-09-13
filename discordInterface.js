@@ -94,7 +94,7 @@ class DiscordInterface {
 
         var currentGuild = discordClient.guilds.resolve(guildId);
 
-        console.log("resolved guild " + currentGuild);
+        console.log("id: " + guildId + " resolved guild " + currentGuild);
 
         // var channels = [];
 
