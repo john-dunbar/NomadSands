@@ -327,7 +327,7 @@ router.get('/getUserGuilds', function (req, res) {
 
             let guild = discordInterface.getGuild(req.session.guilds[i].id);
 
-            console.log("member guild id: " + guild.id);
+            console.log("member guild id: " + req.session.guilds[i].id);
 
             if (req.session.guilds[i].owner === true) {
 
