@@ -157,25 +157,26 @@ router.get('/oauth/redirect', function (req, res) {
                                 .then(userGuilds => userGuilds.json())
                                 .then(guilds => {
                                     req.session.guilds = guilds;
-                                });
+                                })
+                                .then(() => {
+                                    console.log("after guild get");
+                                    req.session.guilds.forEach(guild => {
+                                        console.log("guilds " + guild.id);
+                                        //fetch('https://discordapp.com/api/users/@me/guilds', {
+                                        //        headers: {
+                                        //            authorization: `${token.token_type} ${token.access_token}`,
+                                        //        },
+                                        //    })
+                                        //    .then(userGuilds => userGuilds.json())
+                                        //    .then(guilds => {
+                                        //        req.session.guilds = guilds;
+                                        //        res.redirect('/');
+                                        //    });
+                                    })
+                                    res.redirect('/');
+                                });;
                         })
-                        .then(() => {
-                            console.log("after guild get");
-                            req.session.guilds.forEach(guild => {
-                                console.log("guilds " + guild.id);
-                                //fetch('https://discordapp.com/api/users/@me/guilds', {
-                                //        headers: {
-                                //            authorization: `${token.token_type} ${token.access_token}`,
-                                //        },
-                                //    })
-                                //    .then(userGuilds => userGuilds.json())
-                                //    .then(guilds => {
-                                //        req.session.guilds = guilds;
-                                //        res.redirect('/');
-                                //    });
-                            })
-                            res.redirect('/');
-                        });
+
 
                 }
 
