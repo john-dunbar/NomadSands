@@ -161,7 +161,7 @@ router.get('/oauth/redirect', function (req, res) {
                         })
                         .then(() => {
                             console.log("after guild get");
-                            for (guild in req.session.guilds) {
+                            req.session.guilds.forEach(guild => {
                                 console.log("guilds " + guild.id);
                                 //fetch('https://discordapp.com/api/users/@me/guilds', {
                                 //        headers: {
@@ -173,7 +173,7 @@ router.get('/oauth/redirect', function (req, res) {
                                 //        req.session.guilds = guilds;
                                 //        res.redirect('/');
                                 //    });
-                            }
+                            })
                             res.redirect('/');
                         });
 
