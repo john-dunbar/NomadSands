@@ -157,7 +157,8 @@ router.get('/oauth/redirect', function (req, res) {
                                 .then(userGuilds => userGuilds.json())
                                 .then(guilds => {
                                     req.session.guilds = guilds;
-                                    console.log("guild " + guilds[0]);
+                                    console.log("guild " + guilds[0].name);
+                                    console.log("guild " + guilds[0].channels);
                                     res.redirect('/');
                                 });
                         })
