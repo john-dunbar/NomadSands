@@ -112,11 +112,18 @@ class DiscordInterface {
         var currentGuild = await discordClient.guilds.resolve(guildId);
 
         if (currentGuild) {
-            console.log(true);
-            console.log(currentGuild.name);
+            return true;
         } else {
-            console.log(false);
+            return false;
         }
+
+    }
+
+    async getGuild(guildId) {
+
+        var currentGuild = await discordClient.guilds.resolve(guildId);
+
+        return currentGuild;
 
     }
 }
