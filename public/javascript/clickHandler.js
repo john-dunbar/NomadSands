@@ -46,13 +46,12 @@ $(document).ready(function () {
     $(document).on('click', '#deleteMatch', function () {
         console.log("delete button clicked!");
         var matchId = $(this).parent().parent().parent().parent().parent().parent().attr("id");
-        console.log(matchId);
         $.ajax({
             url: "/deleteMatch",
             method: "POST",
             data: {
                 "matchId": matchId
-            }, // request is the value of search input
+            },
             success: function (matchDeleted) {
 
                 if (matchDeleted) {
@@ -67,11 +66,8 @@ $(document).ready(function () {
 
     $(document).on('click', '#joinMatch', function () {
         //later if it's possible to make an invite link, do all this in the requestMatchInsert flow
-        //window.open("https://www.w3schools.com"); 
         //after clicking, check that user has been added to group before changing label to "leave"
-        console.log("join button clicked!");
-        var guildId = $('#guildId').val();
-        console.log("guildId = " + guildId);
+        var guildId = $(this).next().val();
         var formData = new FormData();
         formData.append("guildId", guildId);
         $.ajax({
@@ -79,15 +75,13 @@ $(document).ready(function () {
             method: "POST",
             data: {
                 "guildId": guildId
-            }, // request is the value of search input
+            },
             success: function (inviteLink) {
-
                 window.open(inviteLink);
 
             },
             async: false //to prevent popup blocker caused by window.open
         });
-        console.log("back from index.js");
     });
 
 

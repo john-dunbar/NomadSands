@@ -23,6 +23,10 @@ class DiscordInterface {
         });
     }
 
+    getClient() {
+        return discordClient;
+    }
+
     async createGuild(sessionId, matchName) {
         let user = await findUser(sessionId);
 

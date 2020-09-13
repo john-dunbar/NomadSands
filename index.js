@@ -21,6 +21,12 @@ const DiscordInterface = require('./discordInterface.js');
 
 const discordInterface = new DiscordInterface();
 
+var discordClient = discordInterface.getClient();
+
+discordClient.on('guildMemberAdd', member => {
+    console.log(member.user.username + "just joined server" + member.guild.id);
+});
+
 mongoInterface.connect().then((connection) => {
     //session undefined error with below code
     /*
