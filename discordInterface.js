@@ -113,6 +113,7 @@ class DiscordInterface {
 
         if (currentGuild) {
             console.log(true);
+            console.log(currentGuild.name);
         } else {
             console.log(false);
         }
