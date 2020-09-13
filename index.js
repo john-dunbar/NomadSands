@@ -321,11 +321,7 @@ router.get('/getUserGuilds', function (req, res) {
 
     let result = [];
 
-    discordInterface.getAllBotGuilds().each((guild) => {
-
-        console.log(guild.name);
-
-    });
+    console.log(discordInterface.getAllBotGuilds());
 
     if (req.session.guilds) {
 
