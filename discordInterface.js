@@ -109,7 +109,7 @@ class DiscordInterface {
 
     async getGuild(guildId) {
 
-        var currentGuild = discordClient.guilds.resolve(guildId);
+        var currentGuild = await discordClient.guilds.resolve(guildId);
 
         return currentGuild;
 
