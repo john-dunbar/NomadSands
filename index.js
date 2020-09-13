@@ -342,7 +342,7 @@ router.get('/getUserGuilds', function (req, res) {
 
                 result.push(req.session.guilds[i]);
 
-                console.log(req.session.guilds[i].channels);
+                console.log("channels " + req.session.guilds[i].channels);
 
             }
         }
