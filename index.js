@@ -277,6 +277,8 @@ router.get('/allMatches', async function (req, res) {
 
 router.get('/findMatches', async function (req, res) {
 
+    console.log(req.body.searchParm);
+
     res.send("hello");
 
 });
