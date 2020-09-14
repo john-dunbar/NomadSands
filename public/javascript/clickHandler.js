@@ -37,23 +37,13 @@ $(document).ready(function () {
 
             var discordServerName = $('#dropdownMenu').text();
 
-            discordServerName.replace("'", "\''");
-
-            discordServerName.replace('\"', '\""');
-
-            var targetElementID = "[id='" + discordServerName + "BotMember']";
-
-
+            var targetElementID = "id='" + discordServerName + "BotMember'";
 
             var botIsMember = $(targetElementID).val();
 
-            console.log(botIsMember + "bot val");
-
             if (botIsMember == "false") {
-                console.log("display bot button");
                 $("#addBot").removeClass('d-none');
             } else {
-                console.log("hide bot button");
                 $("#addBot").addClass('d-none');
             }
 
