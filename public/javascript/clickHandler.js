@@ -12,7 +12,7 @@ $(document).ready(function () {
             },
             success: function (matches) {
                 console.log("null?");
-                console.log(data[0]);
+                console.log(typeof data[0]);
 
                 var userName = "";
 
