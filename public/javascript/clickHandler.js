@@ -39,6 +39,10 @@ $(document).ready(function () {
 
             var targetElementID = "[id='" + discordServerName + "BotMember']";
 
+            targetElementID.replace("'", "\''");
+
+            targetElementID.replace('\"', '\""');
+
             var botIsMember = $(targetElementID).val();
 
             console.log(botIsMember + "bot val");
