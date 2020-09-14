@@ -4,6 +4,17 @@ $(document).ready(function () {
         event.preventDefault();
         $("#insertMatchesHere").empty();
 
+        $.ajax({
+            url: "/findMatches",
+            method: "POST",
+            data: {
+                "searchParm": $("#searchInput").val()
+            },
+            success: function (matches) {
+                console.log(matches);
+            },
+        });
+
     });
 
     $("#createMatch").click(function (event) {
