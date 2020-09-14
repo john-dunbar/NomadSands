@@ -39,7 +39,7 @@
                                 <div class="dropdown-menu dropdown-main-menu">
                                     <a class="dropdown-item dropdown-main-item" href="https://www.nomadsands.com/discordLogin" id="dropdown-item-1">Login with Discord</a>
                                     <a class="dropdown-item dropdown-main-item" href="#" id="mainMenuCreateMatch" data-toggle="modal" data-target="#myForm">Create a Match</a>
-                                    <a class="dropdown-item dropdown-main-item" data-dismiss="modal" data-toggle="modal" data-target="#authNotification" id="dropdown-item-4">My Matches</a>
+                                    <a class="dropdown-item dropdown-main-item" data-dismiss="modal" data-toggle="modal" data-target="#authNotificationMatches" id="dropdown-item-4">My Matches</a>
                                 </div>
                             </li>
                         </ul>
@@ -133,6 +133,24 @@
                             </div>
                             <div class="modal-body">
                                 Please log in to create a match.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="authNotificationMatches" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Login Required</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Please log in to view your matches.
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
