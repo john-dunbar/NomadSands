@@ -41,6 +41,8 @@ $(document).ready(function () {
 
             var botIsMember = $(targetElementID).val();
 
+            console.log(botIsMember + "bot val");
+
             if (botIsMember === false) {
                 console.log("display bot button");
                 $("#addBot").removeClass('d-none');
