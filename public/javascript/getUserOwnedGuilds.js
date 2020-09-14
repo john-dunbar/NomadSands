@@ -14,8 +14,6 @@ function getUserOwnedGuilds() {
             } else {
 
                 for (let i = 0; i < data.length; i++) {
-                    console.log("Bot is member of " + data[i].name + "? " + data[i]);
-                    console.log(data[i]);
 
                     let dropDownItem = "<button class=\"dropdown-item\" type=\"button\" id=\"userGuildSelect" + i + "\">" + data[i].name + "</button>";
 
@@ -23,7 +21,10 @@ function getUserOwnedGuilds() {
 
                     let hiddenDiscordID = "<input type=\"text\" id=\"" + data[i].name + "ID\"" + " value=" + data[i].id + " hidden>";
 
+                    let hiddenBotMember = "<input type=\"text\" id=\"" + data[i].name + "BotMember\"" + " value=" + data[i].botIsMember + " hidden>";
+
                     $('#userDiscordServers').append(hiddenDiscordID);
+                    $('#userDiscordServers').append(hiddenBotMember);
 
                 }
 

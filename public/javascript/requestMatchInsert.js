@@ -1,4 +1,5 @@
 //create match code
+/*
 function botAuth() {
 
     var discordServerName = $('#dropdownMenu').text();
@@ -18,7 +19,7 @@ function botAuth() {
         }
     });
 }
-
+*/
 function requestMatchInsert() {
 
     var gameName = $('#gameName').val();
@@ -84,7 +85,7 @@ function requestMatchInsert() {
                 var userName = data[0];
                 var match = data[1].ops[0];
                 console.log(match);
-                pageAppendMatchInfo(userName,match);
+                pageAppendMatchInfo(userName, match);
                 window.location.href = "/discordBotAuth?guildID=" + match.discordServer; //this needs to come before the db insert
             }
         });

@@ -35,13 +35,42 @@ $(document).ready(function () {
 
             $("#dropdownMenu").html(event.target.innerText);
 
+            var discordServerName = $('#dropdownMenu').text();
+
+            var targetElementID = "[id='" + discordServerName + "BotMember']";
+
+            var botIsMember = $(targetElementID).val();
+            if (!botIsMember) {
+                $("#addBot").removeClass('d-none');
+            } else {
+                $("#addBot").addClass('d-none');
+            }
+
             $("#selectDiscordServerAlert").collapse('hide');
 
         }
 
     }
 
-    //deleteMatch and joinMatch use .on() because they are loaded those elements were injected into DOM
+    //addBot, deleteMatch, and joinMatch use .on() because they are loaded those elements were injected into DOM
+
+    $(document).on('click', '#addBot', function () {
+        var guildId = $(this).next().val();
+        var formData = new FormData();
+        formData.append("guildId", guildId);
+        $.ajax({
+            url: "/joinMatch",
+            method: "POST",
+            data: {
+                "guildId": guildId
+            },
+            success: function (inviteLink) {
+                window.open(inviteLink);
+
+            },
+            async: false //to prevent popup blocker caused by window.open
+        });
+    });
 
     $(document).on('click', '#deleteMatch', function () {
         console.log("delete button clicked!");
