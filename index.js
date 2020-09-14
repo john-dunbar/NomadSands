@@ -293,7 +293,7 @@ router.get('/findMatches', async function (req, res) {
     }
 
 
-    res.send("hello");
+    res.send([req.session.username, matchList]);
 
 });
 

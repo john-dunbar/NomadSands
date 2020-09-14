@@ -72,6 +72,10 @@ class MongoInterface {
                     "gameName": {
                         "$regex": new RegExp(matchQuery, "i")
                     }
+                }, {
+                    "matchTitle": {
+                        "$regex": new RegExp(matchQuery, "i")
+                    }
                 }]
             }).toArray();
 

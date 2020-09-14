@@ -12,6 +12,13 @@ $(document).ready(function () {
             },
             success: function (matches) {
                 console.log(matches);
+                var userName = data[0];
+                var matches = data[1];
+
+                for (var key in matches) {
+                    var obj = matches[key];
+                    pageAppendMatchInfo(userName, obj);
+                }
             },
         });
 
