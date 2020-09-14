@@ -258,7 +258,7 @@ router.get('/autocomplete', function (req, res) {
 
 });
 
-router.get('/allMatches', function (req, res) {
+router.get('/allMatches', async function (req, res) {
 
     mongoInterface.findAllMatches(req.query.term).then(function (matchList) {
 
@@ -266,11 +266,13 @@ router.get('/allMatches', function (req, res) {
 
             let match = matchList[key];
 
-            discordInterface.getUserAvatar(match.discordServer, match.organizerUserId).then((avatar) => {
+            //discordInterface.getUserAvatar(match.discordServer, match.organizerUserId).then((avatar) => {
 
-                match.organizerAvatar = avatar;
+            //    match.organizerAvatar = avatar;
 
-            });
+            //});
+            var avatar = await discordInterface.getUserAvatar(match.discordServer, match.organizerUserId);
+            match.organizerAvatar = avatar;
         }
 
         res.send([req.session.username, matchList]);
@@ -325,10 +327,6 @@ router.get('/getUserGuilds', async function (req, res) {
 
             if (partialGuild.owner === true) {
 
-                //discordInterface.isBotMember(partialGuild.id).then((membership) => {
-                //    partialGuild["botIsMember"] = membership;
-                //    result.push(partialGuild);
-                //});
                 var membership = await discordInterface.isBotMember(partialGuild.id);
                 partialGuild["botIsMember"] = membership;
                 result.push(partialGuild);
