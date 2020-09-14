@@ -12,7 +12,15 @@ $(document).ready(function () {
             },
             success: function (matches) {
                 console.log(matches);
-                var userName = data[0];
+
+                var userName = "";
+
+                if (data[0]) {
+                    userName = data[0];
+                } else {
+                    console.log("user is guest");
+                }
+
                 var matches = data[1];
 
                 for (var key in matches) {
