@@ -62,7 +62,7 @@ $(document).ready(function () {
         //dynamically created id's
         var targetElementID = "[id='" + discordServerName.replace("'", "\\'") + "ID']";
         var discordServerID = $(targetElementID).val();
-        window.open("/discordBotAuth?guildID=" + discordServerID); //this needs to come before the db insert
+        window.location.href = "/discordBotAuth?guildID=" + discordServerID;
     });
 
     $(document).on('click', '#deleteMatch', function () {
