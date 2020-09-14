@@ -11,7 +11,8 @@ $(document).ready(function () {
                 "searchParm": $("#searchInput").val()
             },
             success: function (matches) {
-                console.log(matches);
+                console.log("null?");
+                console.log(data[0]);
 
                 var userName = "";
 
