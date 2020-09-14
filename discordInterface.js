@@ -115,7 +115,7 @@ class DiscordInterface {
         //     console.log("Guild in cache: " + guild.name);
         // });
 
-        return discordClient.guilds.cache.has(null);
+        return discordClient.guilds.cache.find(guild => guild.id === guildId);
 
     }
 
