@@ -19,6 +19,7 @@ $(document).ready(function () {
                     var obj = matches[key];
                     pageAppendMatchInfo(userName, obj);
                 }
+                $("#searchInput").val("");
             },
         });
 
