@@ -66,7 +66,8 @@ class MongoInterface {
             let res = await collection.find({
                 "matchOrganizer": {
                     "$regex": {
-                        new RegExp(matchQuery， 'i')
+                        "$regex": matchQuery,
+                        "$options": "i"
                     }
                 }
             }).toArray();
