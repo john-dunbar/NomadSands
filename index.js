@@ -328,8 +328,9 @@ router.get('/getUserGuilds', function (req, res) {
         for (let i = 0; i < req.session.guilds.length; i++) {
 
             let partialGuild = req.session.guilds[i];
+            let isMember = await discordInterface.isBotMember(partialGuild.id);
 
-            console.log("return value " + await discordInterface.isBotMember(partialGuild.id));
+            console.log("return value " + isMember);
 
             if (discordInterface.isBotMember(partialGuild.id) === false) {
                 console.log("Bot is in: " + partialGuild.name);
