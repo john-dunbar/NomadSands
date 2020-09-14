@@ -8,7 +8,7 @@ $(document).ready(function () {
             url: "/findMatches",
             method: "GET",
             data: {
-                "searchParm": $("#searchInput").val()
+                "searchParm": "testabc"
             },
             success: function (matches) {
                 console.log(matches);
