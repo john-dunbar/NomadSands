@@ -15,6 +15,7 @@ function getUserOwnedGuilds() {
 
                 for (let i = 0; i < data.length; i++) {
                     console.log("Bot is member of " + data[i].name + "? " + data[i]);
+                    console.log(data[i]);
 
                     let dropDownItem = "<button class=\"dropdown-item\" type=\"button\" id=\"userGuildSelect" + i + "\">" + data[i].name + "</button>";
 
