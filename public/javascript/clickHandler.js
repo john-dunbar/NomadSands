@@ -37,10 +37,6 @@ $(document).ready(function () {
 
             var discordServerName = $('#dropdownMenu').text();
 
-            console.log("before " + discordServerName);
-            console.log("after " + discordServerName.replace("'", "\\'"));
-
-
             var targetElementID = "[id='" + discordServerName.replace("'", "\\'") + "BotMember']";
 
             var botIsMember = $(targetElementID).val();
@@ -60,21 +56,13 @@ $(document).ready(function () {
     //addBot, deleteMatch, and joinMatch use .on() because they are loaded those elements were injected into DOM
 
     $(document).on('click', '#addBot', function () {
-        var guildId = $(this).next().val();
-        var formData = new FormData();
-        formData.append("guildId", guildId);
-        $.ajax({
-            url: "/joinMatch",
-            method: "POST",
-            data: {
-                "guildId": guildId
-            },
-            success: function (inviteLink) {
-                window.open(inviteLink);
+        var discordServerName = $('#dropdownMenu').text();
 
-            },
-            async: false //to prevent popup blocker caused by window.open
-        });
+        //have to use jquery attribute slector due to white space in
+        //dynamically created id's
+        var targetElementID = "[id='" + discordServerName.replace("'", "\\'") + "ID']";
+        var discordServerID = $(targetElementID).val();
+        window.location.href = "/discordBotAuth?guildID=" + discordServerID; //this needs to come before the db insert
     });
 
     $(document).on('click', '#deleteMatch', function () {
