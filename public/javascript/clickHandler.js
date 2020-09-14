@@ -40,10 +40,12 @@ $(document).ready(function () {
             var targetElementID = "[id='" + discordServerName + "BotMember']";
 
             var botIsMember = $(targetElementID).val();
-            console.log("memeber? " + botIsMember);
+
             if (!botIsMember) {
+                console.log("display bot button");
                 $("#addBot").removeClass('d-none');
             } else {
+                console.log("hide bot button");
                 $("#addBot").addClass('d-none');
             }
 
