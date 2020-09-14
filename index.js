@@ -313,7 +313,7 @@ router.get('/getUserAvatar', function (req, res) {
 
 });
 
-router.get('/getUserGuilds', function (req, res) {
+router.get('/getUserGuilds', async function (req, res) {
 
     let result = [];
 
@@ -325,10 +325,13 @@ router.get('/getUserGuilds', function (req, res) {
 
             if (partialGuild.owner === true) {
 
-                discordInterface.isBotMember(partialGuild.id).then((membership) => {
-                    partialGuild["botIsMember"] = membership;
-                    result.push(partialGuild);
-                });
+                //discordInterface.isBotMember(partialGuild.id).then((membership) => {
+                //    partialGuild["botIsMember"] = membership;
+                //    result.push(partialGuild);
+                //});
+                var membership = await discordInterface.isBotMember(partialGuild.id);
+                partialGuild["botIsMember"] = membership;
+                result.push(partialGuild);
             }
         }
     } else {
