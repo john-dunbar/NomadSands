@@ -6,7 +6,7 @@ $(document).ready(function () {
 
         $.ajax({
             url: "/findMatches",
-            method: "POST",
+            method: "GET",
             data: {
                 "searchParm": $("#searchInput").val()
             },
