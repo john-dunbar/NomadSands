@@ -181,9 +181,6 @@ router.get('/oauth/redirect', function (req, res) {
                             } else {
                                 let requestToken = req.query.code
 
-                                console.log("guild permission granted to guild id: " + req.query.guild_id);
-                                console.log("bot permission value: " + req.query.permissions);
-
                                 const data = new FormData();
                                 data.append('client_id', process.env.DISCORD_ID);
                                 data.append('client_secret', process.env.DISCORD_PASSWORD);
@@ -220,7 +217,6 @@ app.use(['/createMatch', '/myMatches', '/logout'], function checkAuth(req, res, 
 })
 
 router.get('/', function (req, res) {
-    console.log(req.session.username);
 
     if (!req.session.username) {
 
@@ -277,11 +273,8 @@ router.get('/allMatches', async function (req, res) {
 
 router.get('/findMatches', async function (req, res) {
 
-    console.log("search parm: " + req.query.searchParm);
-
     var matchList = await mongoInterface.searchMatches(req.query.searchParm);
 
-    console.log("matchlist " + matchList);
 
     for (var key in matchList) {
 
@@ -299,10 +292,7 @@ router.get('/findMatches', async function (req, res) {
 
 router.post('/joinMatch', function (req, res) {
 
-    console.log("I have guildId: " + req.body.guildId + "from click handler");
-
     discordInterface.createInvite(req.body.guildId).then(function (val) {
-        console.log("back from getting invite with: " + val);
 
         res.send(val);
 
@@ -311,8 +301,6 @@ router.post('/joinMatch', function (req, res) {
 });
 
 router.post('/deleteMatch', function (req, res) {
-
-    console.log("delete request for: " + req.body.matchId + " from click handler");
 
     mongoInterface.deleteMatch(req.body.matchId).then(function (val) {
         res.send(val);

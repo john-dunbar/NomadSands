@@ -91,7 +91,6 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '#deleteMatch', function () {
-        console.log("delete button clicked!");
         var matchId = $(this).parent().parent().parent().parent().parent().parent().attr("id");
         $.ajax({
             url: "/deleteMatch",
@@ -102,7 +101,6 @@ $(document).ready(function () {
             success: function (matchDeleted) {
 
                 if (matchDeleted) {
-                    console.log("success " + matchDeleted);
                     $("#" + matchId).remove();
                 }
 
