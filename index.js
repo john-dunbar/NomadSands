@@ -260,13 +260,21 @@ router.get('/autocomplete', function (req, res) {
 
 router.get('/allMatches', function (req, res) {
 
-    mongoInterface.findAllMatches(req.query.term).then(function (val) {
+    mongoInterface.findAllMatches(req.query.term).then(function (matchList) {
 
-        discordInterface.getUserAvatar(obj.discordServer, obj.organizerUserId).then((avatar) => {
+        for (var key in matchList) {
 
-            res.send([req.session.username, avatar]);
+            let match = matchList[key];
 
-        });
+            discordInterface.getUserAvatar(match.discordServer, match.organizerUserId).then((avatar) => {
+
+                match.organizerAvatar = avatar;
+
+                res.send([req.session.username, matchList]);
+
+            });
+        }
+
     });
 });
 
