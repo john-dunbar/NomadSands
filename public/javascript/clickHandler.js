@@ -40,7 +40,8 @@ $(document).ready(function () {
             console.log("before " + discordServerName);
             console.log("after " + discordServerName.replace("'", "\\'"));
 
-            var targetElementID = "[id='" + discordServerName + "BotMember']";
+
+            var targetElementID = "[id='" + discordServerName.replace("'", "\\'") + "BotMember']";
 
             var botIsMember = $(targetElementID).val();
 
