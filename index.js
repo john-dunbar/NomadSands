@@ -260,23 +260,6 @@ router.get('/autocomplete', function (req, res) {
 
 router.get('/allMatches', async function (req, res) {
 
-    //mongoInterface.findAllMatches(req.query.term).then(function (matchList) {
-
-    //    for (var key in matchList) {
-
-    //        let match = matchList[key];
-
-    //discordInterface.getUserAvatar(match.discordServer, match.organizerUserId).then((avatar) => {
-
-    //    match.organizerAvatar = avatar;
-
-    //});
-
-    //    }
-
-    //    res.send([req.session.username, matchList]);
-
-    //});
     var matchList = await mongoInterface.findAllMatches(req.query.term);
 
     for (var key in matchList) {
