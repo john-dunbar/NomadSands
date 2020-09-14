@@ -91,9 +91,12 @@
                                     <div class="collapse alert alert-info" role="alert" id="selectDiscordServerAlert">
                                         Please select a Discord Server to continue.
                                     </div>
-                                    <div class="form-group">
+                                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#playerLimitCollapse" aria-expanded="false" aria-controls="playerLimitCollapse">
+                                        Set Player Limit
+                                    </button>
+                                    <div class="form-group collapse mt-3" id="playerLimitCollapse">
                                         <label for="maxPLayers">Max Players</label>
-                                        <input type="text" class="form-control" id="maxPlayers" placeholder="10">
+                                        <input type="text" class="form-control" id="maxPlayers" placeholder="">
                                     </div>
                                     <div class="form-group">
                                         <label for="matchTitle">Match Title</label>
