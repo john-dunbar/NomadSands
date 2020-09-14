@@ -284,6 +284,7 @@ async function updateAvatars(matchList) {
 
 async function checkBotMembership(guildId) {
     let isMember = await discordInterface.isBotMember(guildId);
+    return isMember;
 }
 
 router.post('/joinMatch', function (req, res) {

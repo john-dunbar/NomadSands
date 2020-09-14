@@ -109,9 +109,9 @@ class DiscordInterface {
 
     async isBotMember(guildId) {
 
-        discordClient.guilds.cache.has(guildId).then((isMember) => {
-            return isMember;
-        });
+        let isMember = discordClient.guilds.cache.has(guildId);
+
+        return isMember;
 
     }
 
