@@ -270,25 +270,15 @@ router.get('/allMatches', function (req, res) {
 
                 match.organizerAvatar = avatar;
 
-                res.send([req.session.username, matchList]);
+
 
             });
         }
 
+        res.send([req.session.username, matchList]);
+
     });
 });
-
-async function updateAvatars(matchList) {
-
-    var obj;
-
-    for (var key in matchList) {
-
-        obj = matchList[key];
-        var avatar = await discordInterface.getUserAvatar(obj.discordServer, obj.organizerUserId);
-        obj.organizerAvatar = avatar;
-    }
-}
 
 router.post('/joinMatch', function (req, res) {
 
