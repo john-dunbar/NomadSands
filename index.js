@@ -283,7 +283,7 @@ async function updateAvatars(matchList) {
 }
 
 async function checkBotMembership(guildId) {
-    let isMember = await discordInterface.isBotMember(guildId);
+    var isMember = await discordInterface.isBotMember(guildId);
     return isMember;
 }
 
