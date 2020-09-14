@@ -37,11 +37,13 @@ $(document).ready(function () {
 
             var discordServerName = $('#dropdownMenu').text();
 
+            discordServerName.replace("'", "\''");
+
+            discordServerName.replace('\"', '\""');
+
             var targetElementID = "[id='" + discordServerName + "BotMember']";
 
-            targetElementID.replace("'", "\''");
 
-            targetElementID.replace('\"', '\""');
 
             var botIsMember = $(targetElementID).val();
 
