@@ -262,9 +262,9 @@ router.get('/allMatches', function (req, res) {
 
     mongoInterface.findAllMatches(req.query.term).then(function (val) {
 
-        updateAvatars(val).then(function () {
+        discordInterface.getUserAvatar(obj.discordServer, obj.organizerUserId).then((avatar) => {
 
-            res.send([req.session.username, val]);
+            res.send([req.session.username, avatar]);
 
         });
     });
@@ -280,11 +280,6 @@ async function updateAvatars(matchList) {
         var avatar = await discordInterface.getUserAvatar(obj.discordServer, obj.organizerUserId);
         obj.organizerAvatar = avatar;
     }
-}
-
-async function checkBotMembership(guildId) {
-    var isMember = await discordInterface.isBotMember(guildId);
-    return isMember;
 }
 
 router.post('/joinMatch', function (req, res) {
