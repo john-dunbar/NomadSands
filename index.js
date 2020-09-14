@@ -260,25 +260,36 @@ router.get('/autocomplete', function (req, res) {
 
 router.get('/allMatches', async function (req, res) {
 
-    mongoInterface.findAllMatches(req.query.term).then(function (matchList) {
+    //mongoInterface.findAllMatches(req.query.term).then(function (matchList) {
 
-        for (var key in matchList) {
+    //    for (var key in matchList) {
 
-            let match = matchList[key];
+    //        let match = matchList[key];
 
-            //discordInterface.getUserAvatar(match.discordServer, match.organizerUserId).then((avatar) => {
+    //discordInterface.getUserAvatar(match.discordServer, match.organizerUserId).then((avatar) => {
 
-            //    match.organizerAvatar = avatar;
+    //    match.organizerAvatar = avatar;
 
-            //});
-            //var avatar = await discordInterface.getUserAvatar(match.discordServer, match.organizerUserId);
-            //match.organizerAvatar = avatar;
-        }
-        var avatar = await discordInterface.getUserAvatar("match.discordServer", "match.organizerUserId");
+    //});
 
-        res.send([req.session.username, matchList]);
+    //    }
 
-    });
+    //    res.send([req.session.username, matchList]);
+
+    //});
+    var matchList = await mongoInterface.findAllMatches(req.query.term);
+
+    for (var key in matchList) {
+
+        let match = matchList[key];
+
+        var avatar = await discordInterface.getUserAvatar(match.discordServer, match.organizerUserId);
+
+        match.organizerAvatar = avatar;
+    }
+
+    res.send([req.session.username, matchList]);
+
 });
 
 router.post('/joinMatch', function (req, res) {
