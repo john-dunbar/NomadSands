@@ -270,8 +270,6 @@ router.get('/allMatches', function (req, res) {
 
                 match.organizerAvatar = avatar;
 
-
-
             });
         }
 
@@ -325,19 +323,12 @@ router.get('/getUserGuilds', function (req, res) {
 
             let partialGuild = req.session.guilds[i];
 
-            var tmpGuild = {
-                'name': partialGuild.name,
-                'id': partialGuild.id
-            };
-
             if (partialGuild.owner === true) {
 
                 discordInterface.isBotMember(partialGuild.id).then((membership) => {
-                    tmpGuild["botIsMember"] = membership;
+                    partialGuild["botIsMember"] = membership;
+                    result.push(partialGuild);
                 });
-                partialGuild["botIsMember"] = true;
-                result.push(partialGuild);
-
             }
         }
     } else {
