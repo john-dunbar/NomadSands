@@ -282,6 +282,10 @@ async function updateAvatars(matchList) {
     }
 }
 
+async function checkBotMembership(guildId) {
+    let isMember = await discordInterface.isBotMember(guildId);
+}
+
 router.post('/joinMatch', function (req, res) {
 
     console.log("I have guildId: " + req.body.guildId + "from click handler");
@@ -328,9 +332,9 @@ router.get('/getUserGuilds', function (req, res) {
         for (let i = 0; i < req.session.guilds.length; i++) {
 
             let partialGuild = req.session.guilds[i];
-            let isMember = await discordInterface.isBotMember(partialGuild.id);
 
-            console.log("return value " + isMember);
+
+            console.log("return value " + checkBotMembership(partialGuild.id));
 
             if (discordInterface.isBotMember(partialGuild.id) === false) {
                 console.log("Bot is in: " + partialGuild.name);
