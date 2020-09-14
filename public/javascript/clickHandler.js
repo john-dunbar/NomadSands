@@ -10,18 +10,9 @@ $(document).ready(function () {
             data: {
                 "searchParm": $("#searchInput").val()
             },
-            success: function (matches) {
-                console.log("null?");
-                console.log(typeof data[0]);
+            success: function (data) {
 
-                var userName = "";
-
-                if (typeof data[0] != 'undefined') {
-                    userName = data[0];
-                } else {
-                    console.log("user is guest");
-                }
-
+                var userName = data[0];
                 var matches = data[1];
 
                 for (var key in matches) {
