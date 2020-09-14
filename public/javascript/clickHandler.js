@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     $("#search").click(function (event) {
 
-        $("#insertMatchesHere").empty();
+        // $("#insertMatchesHere").empty();
 
     });
 
