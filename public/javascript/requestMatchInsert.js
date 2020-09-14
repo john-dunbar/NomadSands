@@ -1,4 +1,5 @@
 //create match code
+/*
 function botAuth() {
 
     var discordServerName = $('#dropdownMenu').text();
@@ -18,7 +19,7 @@ function botAuth() {
         }
     });
 }
-
+*/
 function requestMatchInsert() {
 
     var gameName = $('#gameName').val();
@@ -50,11 +51,8 @@ function requestMatchInsert() {
 
     //have to use jquery attribute slector due to white space in
     //dynamically created id's
-    var targetElementID = "[id='" + discordServerName + "ID']";
+    var targetElementID = "[id='" + discordServerName.replace("'", "\\'") + "ID']";
     var discordServerID = $(targetElementID).val();
-
-    console.log("attempted to jquery: " + targetElementID);
-    console.log("server id: " + discordServerID);
 
     var formData = new FormData();
 
@@ -84,8 +82,7 @@ function requestMatchInsert() {
                 var userName = data[0];
                 var match = data[1].ops[0];
                 console.log(match);
-                pageAppendMatchInfo(userName,match);
-                window.location.href = "/discordBotAuth?guildID=" + match.discordServer; //this needs to come before the db insert
+                pageAppendMatchInfo(userName, match);
             }
         });
 

@@ -21,7 +21,10 @@ function getUserOwnedGuilds() {
 
                     let hiddenDiscordID = "<input type=\"text\" id=\"" + data[i].name + "ID\"" + " value=" + data[i].id + " hidden>";
 
+                    let hiddenBotMember = "<input type=\"text\" id=\"" + data[i].name + "BotMember\"" + " value=" + data[i].botIsMember + " hidden>";
+
                     $('#userDiscordServers').append(hiddenDiscordID);
+                    $('#userDiscordServers').append(hiddenBotMember);
 
                 }
 

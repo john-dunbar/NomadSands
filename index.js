@@ -159,7 +159,8 @@ router.get('/oauth/redirect', function (req, res) {
                                     req.session.guilds = guilds;
                                     res.redirect('/');
                                 });
-                        });
+                        })
+
 
                 }
 
@@ -179,9 +180,6 @@ router.get('/oauth/redirect', function (req, res) {
 
                             } else {
                                 let requestToken = req.query.code
-
-                                console.log("guild permission granted to guild id: " + req.query.guild_id);
-                                console.log("bot permission value: " + req.query.permissions);
 
                                 const data = new FormData();
                                 data.append('client_id', process.env.DISCORD_ID);
@@ -208,9 +206,6 @@ router.get('/oauth/redirect', function (req, res) {
         });
 });
 
-
-
-
 //check if users are logged in before routing
 
 app.use(['/createMatch', '/myMatches', '/logout'], function checkAuth(req, res, next) {
@@ -222,7 +217,6 @@ app.use(['/createMatch', '/myMatches', '/logout'], function checkAuth(req, res, 
 })
 
 router.get('/', function (req, res) {
-    console.log(req.session.username);
 
     if (!req.session.username) {
 
@@ -260,36 +254,45 @@ router.get('/autocomplete', function (req, res) {
 
 });
 
-router.get('/allMatches', function (req, res) {
+router.get('/allMatches', async function (req, res) {
 
-    mongoInterface.findAllMatches(req.query.term).then(function (val) {
-
-        updateAvatars(val).then(function () {
-
-            res.send([req.session.username, val]);
-
-        });
-    });
-});
-
-async function updateAvatars(matchList) {
-
-    var obj;
+    var matchList = await mongoInterface.findAllMatches(req.query.term);
 
     for (var key in matchList) {
 
-        obj = matchList[key];
-        var avatar = await discordInterface.getUserAvatar(obj.discordServer, obj.organizerUserId);
-        obj.organizerAvatar = avatar;
+        let match = matchList[key];
+
+        var avatar = await discordInterface.getUserAvatar(match.discordServer, match.organizerUserId);
+
+        match.organizerAvatar = avatar;
     }
-}
+
+    res.send([req.session.username, matchList]);
+
+});
+
+router.get('/findMatches', async function (req, res) {
+
+    var matchList = await mongoInterface.searchMatches(req.query.searchParm);
+
+
+    for (var key in matchList) {
+
+        let match = matchList[key];
+
+        var avatar = await discordInterface.getUserAvatar(match.discordServer, match.organizerUserId);
+
+        match.organizerAvatar = avatar;
+    }
+
+
+    res.send([req.session.username, matchList]);
+
+});
 
 router.post('/joinMatch', function (req, res) {
 
-    console.log("I have guildId: " + req.body.guildId + "from click handler");
-
     discordInterface.createInvite(req.body.guildId).then(function (val) {
-        console.log("back from getting invite with: " + val);
 
         res.send(val);
 
@@ -298,8 +301,6 @@ router.post('/joinMatch', function (req, res) {
 });
 
 router.post('/deleteMatch', function (req, res) {
-
-    console.log("delete request for: " + req.body.matchId + " from click handler");
 
     mongoInterface.deleteMatch(req.body.matchId).then(function (val) {
         res.send(val);
@@ -319,7 +320,7 @@ router.get('/getUserAvatar', function (req, res) {
 
 });
 
-router.get('/getUserGuilds', function (req, res) {
+router.get('/getUserGuilds', async function (req, res) {
 
     let result = [];
 
@@ -327,10 +328,13 @@ router.get('/getUserGuilds', function (req, res) {
 
         for (let i = 0; i < req.session.guilds.length; i++) {
 
-            if (req.session.guilds[i].owner === true) {
+            let partialGuild = req.session.guilds[i];
 
-                result.push(req.session.guilds[i]);
+            if (partialGuild.owner === true) {
 
+                var membership = await discordInterface.isBotMember(partialGuild.id);
+                partialGuild["botIsMember"] = membership;
+                result.push(partialGuild);
             }
         }
     } else {
@@ -356,7 +360,7 @@ router.get('/discordLogin', function (req, res) {
     let state = req.session.id + "loginRequest";
 
     bcrypt.hash(state, saltRounds, (err, hash) => {
-        res.redirect('https://discordapp.com/api/oauth2/authorize?response_type=code&client_id=' + process.env.DISCORD_ID + '&scope=identify%20guilds%20guilds.join&state=' + hash + '&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect');
+        res.redirect('https://discordapp.com/api/oauth2/authorize?response_type=code&client_id=' + process.env.DISCORD_ID + '&scope=identify%20guilds&state=' + hash + '&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect');
     });
 
 });

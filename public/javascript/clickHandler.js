@@ -1,5 +1,30 @@
 $(document).ready(function () {
 
+    $("#searchForm").on('submit', function (event) {
+        event.preventDefault();
+        $("#insertMatchesHere").empty();
+
+        $.ajax({
+            url: "/findMatches",
+            method: "GET",
+            data: {
+                "searchParm": $("#searchInput").val()
+            },
+            success: function (data) {
+
+                var userName = data[0];
+                var matches = data[1];
+
+                for (var key in matches) {
+                    var obj = matches[key];
+                    pageAppendMatchInfo(userName, obj);
+                }
+                $("#searchInput").val("");
+            },
+        });
+
+    });
+
     $("#createMatch").click(function (event) {
 
         if ($('#dropdownMenu').text() === "Choose Discord Server") {
@@ -35,16 +60,37 @@ $(document).ready(function () {
 
             $("#dropdownMenu").html(event.target.innerText);
 
+            var discordServerName = $('#dropdownMenu').text();
+
+            var targetElementID = "[id='" + discordServerName.replace("'", "\\'") + "BotMember']";
+
+            var botIsMember = $(targetElementID).val();
+
+            if (botIsMember == "false") {
+                $("#addBot").removeClass('d-none');
+            } else {
+                $("#addBot").addClass('d-none');
+            }
+
             $("#selectDiscordServerAlert").collapse('hide');
 
         }
 
     }
 
-    //deleteMatch and joinMatch use .on() because they are loaded those elements were injected into DOM
+    //addBot, deleteMatch, and joinMatch use .on() because they are loaded those elements were injected into DOM
+
+    $(document).on('click', '#addBot', function () {
+        var discordServerName = $('#dropdownMenu').text();
+
+        //have to use jquery attribute slector due to white space in
+        //dynamically created id's
+        var targetElementID = "[id='" + discordServerName.replace("'", "\\'") + "ID']";
+        var discordServerID = $(targetElementID).val();
+        window.location.href = "/discordBotAuth?guildID=" + discordServerID;
+    });
 
     $(document).on('click', '#deleteMatch', function () {
-        console.log("delete button clicked!");
         var matchId = $(this).parent().parent().parent().parent().parent().parent().attr("id");
         $.ajax({
             url: "/deleteMatch",
@@ -55,7 +101,6 @@ $(document).ready(function () {
             success: function (matchDeleted) {
 
                 if (matchDeleted) {
-                    console.log("success " + matchDeleted);
                     $("#" + matchId).remove();
                 }
 
