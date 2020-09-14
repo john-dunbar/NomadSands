@@ -1,5 +1,11 @@
 $(document).ready(function () {
 
+    $("#search").click(function (event) {
+
+        $("#insertMatchesHere").empty();
+
+    });
+
     $("#createMatch").click(function (event) {
 
         if ($('#dropdownMenu').text() === "Choose Discord Server") {
