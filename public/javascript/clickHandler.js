@@ -15,7 +15,7 @@ $(document).ready(function () {
 
                 var userName = "";
 
-                if (data[0]) {
+                if (typeof (data[0]) != "undefined") {
                     userName = data[0];
                 } else {
                     console.log("user is guest");
