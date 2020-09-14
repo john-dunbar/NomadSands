@@ -1,8 +1,8 @@
 $(document).ready(function () {
 
-    $("#search").click(function (event) {
-
-        // $("#insertMatchesHere").empty();
+    $("#searchForm").on('submit', function (event) {
+        event.preventDefault();
+        $("#insertMatchesHere").empty();
 
     });
 
