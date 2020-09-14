@@ -114,8 +114,9 @@ class DiscordInterface {
         // discordClient.guilds.cache.each((guild) => {
         //     console.log("Guild in cache: " + guild.name);
         // });
+        var isMember = await discordClient.guilds.cache.has(guildId);
 
-        return await discordClient.guilds.cache.has(guildId);
+        return isMember;
 
     }
 
