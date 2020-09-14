@@ -3,4 +3,5 @@ $(window).on('load', function () {
     getUser();
     getUserAvatar();
     getMatches();
+    $('[data-toggle="tooltip"]').tooltip();
 });
