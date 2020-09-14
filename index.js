@@ -325,13 +325,18 @@ router.get('/getUserGuilds', function (req, res) {
 
             let partialGuild = req.session.guilds[i];
 
+            var tmpGuild = {
+                name: partialGuild.name,
+                id: partialGuild.id
+            }
+
             if (partialGuild.owner === true) {
 
                 discordInterface.isBotMember(partialGuild.id).then((membership) => {
-                    partialGuild["botIsMember"] = membership;
+                    tmpGuild["botIsMember"] = membership;
                 });
 
-                result.push(partialGuild);
+                result.push(tmpGuild);
 
             }
         }
