@@ -38,8 +38,6 @@ class MongoInterface {
 
     async findAllMatches(matchQuery) {
 
-        console.log("finding matches");
-
         try {
 
             const db = this.mongoConnection.db('nomadSands');
@@ -47,6 +45,29 @@ class MongoInterface {
             let collection = db.collection('matchList');
 
             let res = await collection.find().toArray();
+
+            return res;
+
+        } catch (err) {
+
+            console.log(err);
+        }
+
+    }
+
+    async searchMatches(matchQuery) {
+
+        try {
+
+            const db = this.mongoConnection.db('nomadSands');
+
+            let collection = db.collection('matchList');
+
+            let res = await collection.find({
+                $text: {
+                    $search: matchQuery
+                }
+            }).toArray();
 
             return res;
 

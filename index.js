@@ -279,6 +279,20 @@ router.get('/findMatches', async function (req, res) {
 
     console.log("search parm: " + req.query.searchParm);
 
+    var matchList = await mongoInterface.searchMatches(req.query.searchParm);
+
+    console.log("matchlist " + matchList);
+
+    for (var key in matchList) {
+
+        let match = matchList[key];
+
+        var avatar = await discordInterface.getUserAvatar(match.discordServer, match.organizerUserId);
+
+        match.organizerAvatar = avatar;
+    }
+
+
     res.send("hello");
 
 });
