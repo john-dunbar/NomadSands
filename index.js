@@ -271,7 +271,7 @@ router.get('/allMatches', async function (req, res) {
             //    match.organizerAvatar = avatar;
 
             //});
-            var avatar = discordInterface.getUserAvatar(match.discordServer, match.organizerUserId);
+            var avatar = await discordInterface.getUserAvatar(match.discordServer, match.organizerUserId);
             match.organizerAvatar = avatar;
         }
 

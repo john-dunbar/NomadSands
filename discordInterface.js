@@ -74,7 +74,7 @@ class DiscordInterface {
 
     async getUserAvatar(guildId, userId) {
 
-        var currentGuild = await discordClient.guilds.resolve(guildId);
+        var currentGuild = discordClient.guilds.resolve(guildId);
 
         var targetUserAvatar;
 
