@@ -43,7 +43,7 @@ $(document).ready(function () {
 
             console.log(botIsMember + "bot val");
 
-            if (botIsMember === true) {
+            if (botIsMember == "false") {
                 console.log("display bot button");
                 $("#addBot").removeClass('d-none');
             } else {
