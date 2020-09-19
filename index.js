@@ -179,7 +179,7 @@ app.use(['/createMatch', '/myMatches', '/logout'], (req, res, next) => {
     }
 });
 
-router.get('/', function (req, res) {
+router.get('/', (req, res) => {
     if (!req.session.username) {
         res.sendFile(path.join(__dirname, '/html/non-authenticated/home.html'));
     } else {
@@ -187,11 +187,11 @@ router.get('/', function (req, res) {
     }
 });
 
-router.get('/getUser', function (req, res) {
+router.get('/getUser', (req, res) => {
     res.send(req.session.username);
 });
 
-router.get('/getUserAvatar', function (req, res) {
+router.get('/getUserAvatar', (req, res) => {
     res.send('https://cdn.discordapp.com/avatars/' + req.session.userId + '/' + req.session.avatar + '.png');
 });
 
