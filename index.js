@@ -1,7 +1,6 @@
-//express routing initialization
-const express = require('express');
 require('dotenv').config();
 
+const express = require('express');
 const router = express.Router();
 const app = express();
 
@@ -10,16 +9,29 @@ const session = require("express-session");
 const bcrypt = require('bcrypt');
 const saltRounds = 2;
 
+const multer = require('multer');
+var upload = multer({
+    dest: 'public/uploads/'
+});
+
+const fetch = require('node-fetch');
+const FormData = require('form-data');
+
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+
+const path = require('path');
+app.use(express.static(__dirname + '/public'));
+
 const MongoStore = require('connect-mongo')(session);
-
 const MongoInterface = require('./mongoInterface.js');
-
 const mongoInterface = new MongoInterface();
 
 const DiscordInterface = require('./discordInterface.js');
-
 const discordInterface = new DiscordInterface();
-
 var discordClient = discordInterface.getClient();
 
 discordClient.on('guildMemberAdd', member => {
@@ -36,47 +48,17 @@ app.use(session({
     })
 }));
 
-//path for public files
-const path = require('path');
-app.use(express.static(__dirname + '/public'));
-
-//parser for requests/queries
-const bodyParser = require('body-parser');
-
-//support json encoded bodies
-app.use(bodyParser.json());
-
-//support url encoded bodies
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-
-const multer = require('multer');
-var upload = multer({
-    dest: 'public/uploads/'
-})
-const fetch = require('node-fetch');
-const FormData = require('form-data');
-
-// Declare the redirect route
 router.get('/oauth/redirect', function (req, res) {
     // user has given permission, time to use the returned code
     // from Discord to get the auth token for the user
-
     bcrypt.compare(req.session.id + "loginRequest", req.query.state)
         .then((result) => {
-
             if (result === true) {
                 if (req.query.error) {
-
                     console.log(req.query.error);
-
                     console.log(req.query.error_description);
-
                     res.redirect('/');
-
                 } else {
-
                     let requestToken = req.query.code
                     let token = {};
                     let guildsTemp = {};
@@ -95,22 +77,16 @@ router.get('/oauth/redirect', function (req, res) {
                             method: 'POST',
                             body: data,
                         })
-
                         .then(fetchResp => fetchResp.json())
                         .then(tokenData => {
-
-                                token = tokenData;
-
-                                var fetchedUser = fetch('https://discordapp.com/api/users/@me', {
-                                    headers: {
-                                        authorization: `${token.token_type} ${token.access_token}`,
-                                    },
-                                });
-
-                                return fetchedUser;
-                            }
-
-                        )
+                            token = tokenData;
+                            var fetchedUser = fetch('https://discordapp.com/api/users/@me', {
+                                headers: {
+                                    authorization: `${token.token_type} ${token.access_token}`,
+                                },
+                            });
+                            return fetchedUser;
+                        })
                         .then(userData => userData.json())
                         .then(data => {
                             console.error("token type: " + token.token_type);
@@ -129,12 +105,10 @@ router.get('/oauth/redirect', function (req, res) {
                             };
 
                             mongoInterface.insertDocument('visitorList', jsonDoc);
-
                             //save session data for user authorization check on redirect
                             req.session.username = data.username;
                             req.session.avatar = data.avatar;
                             req.session.userId = data.id;
-
                         })
                         .then(() => {
                             fetch('https://discordapp.com/api/users/@me/guilds', {
@@ -147,8 +121,7 @@ router.get('/oauth/redirect', function (req, res) {
                                     req.session.guilds = guilds;
                                     res.redirect('/');
                                 });
-                        })
-
+                        });
 
                 }
 
@@ -201,23 +174,16 @@ app.use(['/createMatch', '/myMatches', '/logout'], function checkAuth(req, res, 
 })
 
 router.get('/', function (req, res) {
-
     if (!req.session.username) {
-
         res.sendFile(path.join(__dirname, '/html/non-authenticated/home.html'));
-
     } else {
-
         res.sendFile(path.join(__dirname, '/html/authenticated/home_auth.html'));
-
     }
-
 });
 
 router.get('/viewMatches', function (req, res) {
     res.sendFile(path.join(__dirname, '/html/non-authenticated/matchList.html'));
 });
-
 
 router.get('/autocomplete', function (req, res) {
     mongoInterface.findGames(req.query.term).then(function (val) {
@@ -226,83 +192,52 @@ router.get('/autocomplete', function (req, res) {
 });
 
 router.get('/allMatches', async function (req, res) {
-
     var matchList = await mongoInterface.findAllMatches(req.query.term);
-
     for (var key in matchList) {
-
         let match = matchList[key];
-
         var avatar = await discordInterface.getUserAvatar(match.discordServer, match.organizerUserId);
-
         match.organizerAvatar = avatar;
     }
-
     res.send([req.session.username, matchList]);
-
 });
 
 router.get('/findMatches', async function (req, res) {
-
     var matchList = await mongoInterface.searchMatches(req.query.searchParm);
-
-
     for (var key in matchList) {
-
         let match = matchList[key];
-
         var avatar = await discordInterface.getUserAvatar(match.discordServer, match.organizerUserId);
-
         match.organizerAvatar = avatar;
     }
-
-
     res.send([req.session.username, matchList]);
-
 });
 
 router.post('/joinMatch', function (req, res) {
-
     discordInterface.createInvite(req.body.guildId).then(function (val) {
-
         res.send(val);
-
     });
-
 });
 
 router.post('/deleteMatch', function (req, res) {
-
-    mongoInterface.deleteMatch(req.body.matchId).then(function (val) {
-        res.send(val);
-    });
-
+    mongoInterface.deleteMatch(req.body.matchId)
+        .then(function (val) {
+            res.send(val);
+        });
 });
 
 router.get('/getUser', function (req, res) {
-
     res.send(req.session.username);
-
 });
 
 router.get('/getUserAvatar', function (req, res) {
-
     res.send('https://cdn.discordapp.com/avatars/' + req.session.userId + '/' + req.session.avatar + '.png');
-
 });
 
 router.get('/getUserGuilds', async function (req, res) {
-
     let result = [];
-
     if (req.session.guilds) {
-
         for (let i = 0; i < req.session.guilds.length; i++) {
-
             let partialGuild = req.session.guilds[i];
-
             if (partialGuild.owner === true) {
-
                 var membership = await discordInterface.isBotMember(partialGuild.id);
                 partialGuild["botIsMember"] = membership;
                 result.push(partialGuild);
@@ -311,9 +246,7 @@ router.get('/getUserGuilds', async function (req, res) {
     } else {
         console.log("no guilds exist");
     }
-
     res.send(result);
-
 });
 
 router.get('/logout', function (req, res) {
@@ -323,29 +256,21 @@ router.get('/logout', function (req, res) {
         }
         res.redirect('/');
     });
-
 });
 
 router.get('/discordLogin', function (req, res) {
-
     let state = req.session.id + "loginRequest";
-
     bcrypt.hash(state, saltRounds, (err, hash) => {
         res.redirect('https://discordapp.com/api/oauth2/authorize?response_type=code&client_id=' + process.env.DISCORD_ID + '&scope=identify%20guilds&state=' + hash + '&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect');
     });
-
 });
 
 router.get('/discordBotAuth', function (req, res) {
-
     let guildID = req.query.guildID;
-
     let state = req.session.id + "botAuth";
-
     bcrypt.hash(state, saltRounds, (err, hash) => {
         res.redirect('https://discordapp.com/api/oauth2/authorize?response_type=code&client_id=' + process.env.DISCORD_ID + '&scope=bot&permissions=1&state=' + hash + '&guild_id=' + guildID + '&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect');
     });
-
 });
 
 
@@ -371,7 +296,6 @@ router.post('/newMatchWithThumbnail', upload.single('matchThumbnail'), function 
 
 router.post('/newMatch', upload.none(), function (req, res) {
 
-    //discordInterface.createGuild(req.session.id, req.body.matchTitle).then(guild => {
     var jsonDoc = {
         matchThumbnail: req.body.matchThumbnail,
         gameName: req.body.gameName,
@@ -390,14 +314,9 @@ router.post('/newMatch', upload.none(), function (req, res) {
 
     mongoInterface.insertDocument('matchList', jsonDoc)
         .then((result) => {
-
             res.send([req.session.username, result]);
-
         });
-    //});
-
 });
 
-//add the router
 app.use('/', router);
 app.listen(3000, "localhost");
