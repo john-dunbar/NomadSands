@@ -195,11 +195,11 @@ router.get('/getUserAvatar', (req, res) => {
     res.send('https://cdn.discordapp.com/avatars/' + req.session.userId + '/' + req.session.avatar + '.png');
 });
 
-router.get('/viewMatches', function (req, res) {
+router.get('/viewMatches', (req, res) => {
     res.sendFile(path.join(__dirname, '/html/non-authenticated/matchList.html'));
 });
 
-router.get('/allMatches', async function (req, res) {
+router.get('/allMatches', async (req, res) => {
     var matchList = await mongoInterface.findAllMatches(req.query.term);
     for (var key in matchList) {
         let match = matchList[key];
