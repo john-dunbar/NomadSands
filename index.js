@@ -48,7 +48,7 @@ app.use(session({
     })
 }));
 
-router.get('/discordLogin', function (req, res) {
+router.get('/discordLogin', (req, res) => {
     let state = req.session.id + "loginRequest";
     bcrypt.hash(state, saltRounds, (err, hash) => {
         res.redirect('https://discordapp.com/api/oauth2/authorize?response_type=code&client_id=' + process.env.DISCORD_ID + '&scope=identify%20guilds&state=' + hash + '&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect');
