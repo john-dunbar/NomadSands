@@ -257,7 +257,7 @@ router.get('/discordBotAuth', (req, res) => {
     });
 });
 
-router.get('/autocomplete', function (req, res) {
+router.get('/autocomplete', (req, res) => {
     mongoInterface.findGames(req.query.term).then(function (val) {
         res.send(val);
     });
