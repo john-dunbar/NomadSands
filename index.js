@@ -164,7 +164,7 @@ router.get('/oauth/redirect', function (req, res) {
 });
 
 //check if users are logged in before routing
-app.use(['/', '/createMatch', '/myMatches', '/logout'], function checkAuth(req, res, next) {
+app.use(['/createMatch', '/myMatches', '/logout'], function checkAuth(req, res, next) {
     if (!req.session.userId) {
         res.sendFile(path.join(__dirname, '/html/non-authenticated/home.html'));
     } else {
@@ -173,7 +173,11 @@ app.use(['/', '/createMatch', '/myMatches', '/logout'], function checkAuth(req, 
 });
 
 router.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, '/html/authenticated/home_auth.html'));
+    if (!req.session.username) {
+        res.sendFile(path.join(__dirname, '/html/non-authenticated/home.html'));
+    } else {
+        res.sendFile(path.join(__dirname, '/html/authenticated/home_auth.html'));
+    }
 });
 
 router.get('/viewMatches', function (req, res) {
