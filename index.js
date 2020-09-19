@@ -232,7 +232,7 @@ router.post('/deleteMatch', (req, res) => {
         });
 });
 
-router.get('/getUserGuilds', async function (req, res) {
+router.get('/getUserGuilds', async (req, res) => {
     let result = [];
     if (req.session.guilds) {
         for (let i = 0; i < req.session.guilds.length; i++) {
@@ -249,7 +249,7 @@ router.get('/getUserGuilds', async function (req, res) {
     res.send(result);
 });
 
-router.get('/discordBotAuth', function (req, res) {
+router.get('/discordBotAuth', (req, res) => {
     let guildID = req.query.guildID;
     let state = req.session.id + "botAuth";
     bcrypt.hash(state, saltRounds, (err, hash) => {
