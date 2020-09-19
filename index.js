@@ -209,7 +209,7 @@ router.get('/allMatches', async (req, res) => {
     res.send([req.session.username, matchList]);
 });
 
-router.get('/findMatches', async function (req, res) {
+router.get('/findMatches', async (req, res) => {
     var matchList = await mongoInterface.searchMatches(req.query.searchParm);
     for (var key in matchList) {
         let match = matchList[key];
@@ -219,13 +219,13 @@ router.get('/findMatches', async function (req, res) {
     res.send([req.session.username, matchList]);
 });
 
-router.post('/joinMatch', function (req, res) {
+router.post('/joinMatch', (req, res) => {
     discordInterface.createInvite(req.body.guildId).then(function (val) {
         res.send(val);
     });
 });
 
-router.post('/deleteMatch', function (req, res) {
+router.post('/deleteMatch', (req, res) => {
     mongoInterface.deleteMatch(req.body.matchId)
         .then(function (val) {
             res.send(val);
