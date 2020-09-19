@@ -5,7 +5,6 @@ require('dotenv').config();
 const router = express.Router();
 const app = express();
 
-//session initialization
 const session = require("express-session");
 
 const bcrypt = require('bcrypt');
@@ -27,18 +26,7 @@ discordClient.on('guildMemberAdd', member => {
     console.log(member.user.username + "just joined server" + member.guild.id);
 });
 
-mongoInterface.connect().then((connection) => {
-    //session undefined error with below code
-    /*
-    app.use(session({
-        secret: process.env.SESSION_PASSWORD,
-        store: new MongoStore({
-            client: connection,
-            dbName: 'nomadSands'
-        })
-    }));
-    */
-});
+mongoInterface.connect();
 
 app.use(session({
     secret: process.env.SESSION_PASSWORD,
@@ -171,13 +159,9 @@ router.get('/oauth/redirect', function (req, res) {
                         if (result === true) {
 
                             if (req.query.error) {
-
                                 console.log(req.query.error);
-
                                 console.log(req.query.error_description);
-
                                 res.redirect('/');
-
                             } else {
                                 let requestToken = req.query.code
 
@@ -231,19 +215,7 @@ router.get('/', function (req, res) {
 });
 
 router.get('/viewMatches', function (req, res) {
-
-    //for some reason at this point after logging out, it still loads the authenticated version
-    /*
-    if (!req.session.username) {
-        console.log(req.session.username);
-        res.sendFile(path.join(__dirname, '/html/non-authenticated/matchList.html'));
-    } else {
-        console.log(req.session.user_id);
-        res.sendFile(path.join(__dirname, '/html/authenticated/home_auth.html'));
-    }*/
-
     res.sendFile(path.join(__dirname, '/html/non-authenticated/matchList.html'));
-
 });
 
 
@@ -251,7 +223,6 @@ router.get('/autocomplete', function (req, res) {
     mongoInterface.findGames(req.query.term).then(function (val) {
         res.send(val);
     });
-
 });
 
 router.get('/allMatches', async function (req, res) {
