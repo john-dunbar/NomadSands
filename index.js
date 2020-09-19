@@ -277,7 +277,7 @@ router.post('/newMatchWithThumbnail', upload.single('matchThumbnail'), (req, res
     };
 
     mongoInterface.insertDocument('matchList', jsonDoc)
-        .then(function (val) {
+        .then((val) => {
             res.send(val);
         });
 

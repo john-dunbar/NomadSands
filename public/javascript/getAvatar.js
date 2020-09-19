@@ -3,7 +3,7 @@ function getUserAvatar() {
     $.ajax({
         url: "/getUserAvatar",
         method: "GET",
-        success: function (data) {
+        success: (data) => {
             console.log("here's what i got " + data);
             if (data.includes("undefined")) {
 
