@@ -220,14 +220,14 @@ router.get('/findMatches', async (req, res) => {
 });
 
 router.post('/joinMatch', (req, res) => {
-    discordInterface.createInvite(req.body.guildId).then(function (val) {
+    discordInterface.createInvite(req.body.guildId).then((val) => {
         res.send(val);
     });
 });
 
 router.post('/deleteMatch', (req, res) => {
     mongoInterface.deleteMatch(req.body.matchId)
-        .then(function (val) {
+        .then((val) => {
             res.send(val);
         });
 });
@@ -258,7 +258,7 @@ router.get('/discordBotAuth', (req, res) => {
 });
 
 router.get('/autocomplete', (req, res) => {
-    mongoInterface.findGames(req.query.term).then(function (val) {
+    mongoInterface.findGames(req.query.term).then((val) => {
         res.send(val);
     });
 });
