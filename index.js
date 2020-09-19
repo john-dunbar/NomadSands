@@ -263,7 +263,7 @@ router.get('/autocomplete', (req, res) => {
     });
 });
 
-router.post('/newMatchWithThumbnail', upload.single('matchThumbnail'), function (req, res) {
+router.post('/newMatchWithThumbnail', upload.single('matchThumbnail'), (req, res) => {
 
     var jsonDoc = {
         matchThumbnail: "uploads/" + req.file.filename,
@@ -283,7 +283,7 @@ router.post('/newMatchWithThumbnail', upload.single('matchThumbnail'), function 
 
 });
 
-router.post('/newMatch', upload.none(), function (req, res) {
+router.post('/newMatch', upload.none(), (req, res) => {
 
     var jsonDoc = {
         matchThumbnail: req.body.matchThumbnail,
@@ -307,7 +307,7 @@ router.post('/newMatch', upload.none(), function (req, res) {
         });
 });
 
-router.get('/logout', function (req, res) {
+router.get('/logout', (req, res) => {
     req.session.destroy((err) => {
         if (err) {
             return console.log(err);
