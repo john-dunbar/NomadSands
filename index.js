@@ -48,6 +48,13 @@ app.use(session({
     })
 }));
 
+router.get('/discordLogin', function (req, res) {
+    let state = req.session.id + "loginRequest";
+    bcrypt.hash(state, saltRounds, (err, hash) => {
+        res.redirect('https://discordapp.com/api/oauth2/authorize?response_type=code&client_id=' + process.env.DISCORD_ID + '&scope=identify%20guilds&state=' + hash + '&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect');
+    });
+});
+
 router.get('/oauth/redirect', function (req, res) {
     // user has given permission, time to use the returned code
     // from Discord to get the auth token for the user
@@ -180,14 +187,16 @@ router.get('/', function (req, res) {
     }
 });
 
-router.get('/viewMatches', function (req, res) {
-    res.sendFile(path.join(__dirname, '/html/non-authenticated/matchList.html'));
+router.get('/getUser', function (req, res) {
+    res.send(req.session.username);
 });
 
-router.get('/autocomplete', function (req, res) {
-    mongoInterface.findGames(req.query.term).then(function (val) {
-        res.send(val);
-    });
+router.get('/getUserAvatar', function (req, res) {
+    res.send('https://cdn.discordapp.com/avatars/' + req.session.userId + '/' + req.session.avatar + '.png');
+});
+
+router.get('/viewMatches', function (req, res) {
+    res.sendFile(path.join(__dirname, '/html/non-authenticated/matchList.html'));
 });
 
 router.get('/allMatches', async function (req, res) {
@@ -223,14 +232,6 @@ router.post('/deleteMatch', function (req, res) {
         });
 });
 
-router.get('/getUser', function (req, res) {
-    res.send(req.session.username);
-});
-
-router.get('/getUserAvatar', function (req, res) {
-    res.send('https://cdn.discordapp.com/avatars/' + req.session.userId + '/' + req.session.avatar + '.png');
-});
-
 router.get('/getUserGuilds', async function (req, res) {
     let result = [];
     if (req.session.guilds) {
@@ -248,22 +249,6 @@ router.get('/getUserGuilds', async function (req, res) {
     res.send(result);
 });
 
-router.get('/logout', function (req, res) {
-    req.session.destroy((err) => {
-        if (err) {
-            return console.log(err);
-        }
-        res.redirect('/');
-    });
-});
-
-router.get('/discordLogin', function (req, res) {
-    let state = req.session.id + "loginRequest";
-    bcrypt.hash(state, saltRounds, (err, hash) => {
-        res.redirect('https://discordapp.com/api/oauth2/authorize?response_type=code&client_id=' + process.env.DISCORD_ID + '&scope=identify%20guilds&state=' + hash + '&redirect_uri=https%3A%2F%2Fwww.nomadsands.com%2Foauth%2Fredirect');
-    });
-});
-
 router.get('/discordBotAuth', function (req, res) {
     let guildID = req.query.guildID;
     let state = req.session.id + "botAuth";
@@ -272,6 +257,11 @@ router.get('/discordBotAuth', function (req, res) {
     });
 });
 
+router.get('/autocomplete', function (req, res) {
+    mongoInterface.findGames(req.query.term).then(function (val) {
+        res.send(val);
+    });
+});
 
 router.post('/newMatchWithThumbnail', upload.single('matchThumbnail'), function (req, res) {
 
@@ -315,6 +305,15 @@ router.post('/newMatch', upload.none(), function (req, res) {
         .then((result) => {
             res.send([req.session.username, result]);
         });
+});
+
+router.get('/logout', function (req, res) {
+    req.session.destroy((err) => {
+        if (err) {
+            return console.log(err);
+        }
+        res.redirect('/');
+    });
 });
 
 app.use('/', router);
