@@ -74,6 +74,7 @@ $(document).ready(() => {
     });
 
     $(document).on('click', '#deleteMatch', () => {
+        console.log("deleting match");
         var matchId = $(this).parent().parent().parent().parent().parent().parent().attr("id");
         $.ajax({
             url: "/deleteMatch",
@@ -91,6 +92,8 @@ $(document).ready(() => {
     });
 
     $(document).on('click', '#joinMatch', () => {
+
+        console.log("joining match");
 
         /*later if it's possible to make an invite link, do all this in the requestMatchInsert flow
         after clicking, check that user has been added to group before changing label to "leave"*/

@@ -288,7 +288,6 @@ router.post('/newMatch', upload.none(), (req, res) => {
     var jsonDoc = {
         matchThumbnail: req.body.matchThumbnail,
         gameName: req.body.gameName,
-        //guildId: guild.id,
         matchOrganizer: req.session.username,
         organizerAvatar: req.session.avatar,
         organizerUserId: req.session.userId,
