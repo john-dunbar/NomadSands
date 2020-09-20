@@ -76,6 +76,7 @@ $(document).ready(() => {
     $(document).on('click', '#deleteMatch', () => {
         console.log("deleting match");
         var matchId = $(this).parent().parent().parent().parent().parent().parent().attr("id");
+        console.log("deleting " + matchId);
         $.ajax({
             url: "/deleteMatch",
             method: "POST",
