@@ -73,7 +73,7 @@ $(document).ready(() => {
         window.location.href = "/discordBotAuth?guildID=" + discordServerID;
     });
 
-    $(document).on('click', '#deleteMatch', () => {
+    $(document).on('click', '#deleteMatch', function () {
         console.log("deleting match");
         var matchId = $(this).parent().parent().parent().parent().parent().parent().attr("id");
         console.log("deleting " + matchId);
