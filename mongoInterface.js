@@ -19,50 +19,31 @@ class MongoInterface {
     }
 
     async insertDocument(destination, document) {
-
         try {
-
             const db = this.mongoConnection.db('nomadSands');
-
             let collection = db.collection(destination);
-
             let res = await collection.insertOne(document);
-
             return res;
-
         } catch (err) {
             console.error(err);
         }
-
     }
 
     async findAllMatches(matchQuery) {
-
         try {
-
             const db = this.mongoConnection.db('nomadSands');
-
             let collection = db.collection('matchList');
-
             let res = await collection.find().toArray();
-
             return res;
-
         } catch (err) {
-
             console.log(err);
         }
-
     }
 
     async searchMatches(matchQuery) {
-
         try {
-
             const db = this.mongoConnection.db('nomadSands');
-
             let collection = db.collection('matchList');
-
             let res = await collection.find({
                 "$or": [{
                     "matchOrganizer": {
@@ -78,24 +59,16 @@ class MongoInterface {
                     }
                 }]
             }).toArray();
-
             return res;
-
         } catch (err) {
-
             console.log(err);
         }
-
     }
 
     async findGames(gameQuery) {
-
         try {
-
             const db = this.mongoConnection.db('nomadSands');
-
             let collection = db.collection('gameList');
-
             let res = await collection.aggregate(
             [
                     {
@@ -116,68 +89,42 @@ class MongoInterface {
             }
                                               ]
             ).toArray();
-
             return res;
-
         } catch (err) {
-
             console.log(err);
         }
-
     }
 
     async findUser(sessionId) {
-
         var query = {
             'sessionId': sessionId
         };
-
         try {
-
             const db = this.mongoConnection.db('nomadSands');
-
             let collection = db.collection('visitorList');
-
             let res = await collection.find({
                 'sessionId': sessionId
             }).toArray();
-
-            console.error("result of userFind: " + res[0].accessToken);
-
             return res[0];
-
         } catch (err) {
-
             console.log(err);
         }
-
     }
 
     async deleteMatch(matchId) {
-
         var query = {
             '_id': mongodb.ObjectId(matchId)
         };
-
         try {
-
             const db = this.mongoConnection.db('nomadSands');
-
             let collection = db.collection('matchList');
-
             let res = await collection.deleteOne(query);
-
             console.error("deleted " + matchId + "? " + res);
-
             return res;
-
         } catch (err) {
-
             console.log(err);
         }
-
     }
-
 }
 
 module.exports = MongoInterface;
