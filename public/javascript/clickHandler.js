@@ -1,6 +1,6 @@
-$(document).ready(function () {
+$(document).ready(() => {
 
-    $("#searchForm").on('submit', function (event) {
+    $("#searchForm").on('submit', (event) => {
         event.preventDefault();
         $("#insertMatchesHere").empty();
 
@@ -10,13 +10,11 @@ $(document).ready(function () {
             data: {
                 "searchParm": $("#searchInput").val()
             },
-            success: function (data) {
-
-                var userName = data[0];
-                var matches = data[1];
-
+            success: (data) => {
+                let userName = data[0];
+                let matches = data[1];
                 for (var key in matches) {
-                    var obj = matches[key];
+                    let obj = matches[key];
                     pageAppendMatchInfo(userName, obj);
                 }
                 $("#searchInput").val("");
@@ -25,28 +23,18 @@ $(document).ready(function () {
 
     });
 
-    $("#createMatch").click(function (event) {
-
+    $("#createMatch").click((event) => {
         if ($('#dropdownMenu').text() === "Choose Discord Server") {
-
             $("#selectDiscordServerAlert").collapse('show');
-
         } else {
-
             $("#myForm").modal('hide');
-
             requestMatchInsert();
-
         }
-
     });
 
-    $("#mainMenuCreateMatch").click(function (event) {
-
+    $("#mainMenuCreateMatch").click((event) => {
         formatDateTime();
-
         getUserOwnedGuilds();
-
     });
 
     //this part below took a few hours to figure out
@@ -57,21 +45,15 @@ $(document).ready(function () {
     function updateRedirect(event) {
 
         if (event.target.id.includes("userGuildSelect")) {
-
             $("#dropdownMenu").html(event.target.innerText);
-
-            var discordServerName = $('#dropdownMenu').text();
-
-            var targetElementID = "[id='" + discordServerName.replace("'", "\\'") + "BotMember']";
-
-            var botIsMember = $(targetElementID).val();
-
+            let discordServerName = $('#dropdownMenu').text();
+            let targetElementID = "[id='" + discordServerName.replace("'", "\\'") + "BotMember']";
+            let botIsMember = $(targetElementID).val();
             if (botIsMember == "false") {
                 $("#addBot").removeClass('d-none');
             } else {
                 $("#addBot").addClass('d-none');
             }
-
             $("#selectDiscordServerAlert").collapse('hide');
 
         }
@@ -80,17 +62,18 @@ $(document).ready(function () {
 
     //addBot, deleteMatch, and joinMatch use .on() because they are loaded those elements were injected into DOM
 
-    $(document).on('click', '#addBot', function () {
-        var discordServerName = $('#dropdownMenu').text();
+    $(document).on('click', '#addBot', () => {
+        let discordServerName = $('#dropdownMenu').text();
 
-        //have to use jquery attribute slector due to white space in
-        //dynamically created id's
-        var targetElementID = "[id='" + discordServerName.replace("'", "\\'") + "ID']";
-        var discordServerID = $(targetElementID).val();
+        /*have to use jquery attribute slector due to white space in
+        dynamically created id's*/
+
+        let targetElementID = "[id='" + discordServerName.replace("'", "\\'") + "ID']";
+        let discordServerID = $(targetElementID).val();
         window.location.href = "/discordBotAuth?guildID=" + discordServerID;
     });
 
-    $(document).on('click', '#deleteMatch', function () {
+    $(document).on('click', '#deleteMatch', () => {
         var matchId = $(this).parent().parent().parent().parent().parent().parent().attr("id");
         $.ajax({
             url: "/deleteMatch",
@@ -98,22 +81,22 @@ $(document).ready(function () {
             data: {
                 "matchId": matchId
             },
-            success: function (matchDeleted) {
-
+            success: (matchDeleted) => {
                 if (matchDeleted) {
                     $("#" + matchId).remove();
                 }
-
             },
         });
 
     });
 
-    $(document).on('click', '#joinMatch', function () {
-        //later if it's possible to make an invite link, do all this in the requestMatchInsert flow
-        //after clicking, check that user has been added to group before changing label to "leave"
-        var guildId = $(this).next().val();
-        var formData = new FormData();
+    $(document).on('click', '#joinMatch', () => {
+
+        /*later if it's possible to make an invite link, do all this in the requestMatchInsert flow
+        after clicking, check that user has been added to group before changing label to "leave"*/
+
+        let guildId = $(this).next().val();
+        let formData = new FormData();
         formData.append("guildId", guildId);
         $.ajax({
             url: "/joinMatch",
@@ -121,9 +104,8 @@ $(document).ready(function () {
             data: {
                 "guildId": guildId
             },
-            success: function (inviteLink) {
+            success: (inviteLink) => {
                 window.open(inviteLink);
-
             },
             async: false //to prevent popup blocker caused by window.open
         });
