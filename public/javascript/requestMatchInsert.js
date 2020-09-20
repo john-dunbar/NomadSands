@@ -1,25 +1,3 @@
-//create match code
-/*
-function botAuth() {
-
-    var discordServerName = $('#dropdownMenu').text();
-
-    var targetElementID = "[id='" + discordServerName + "ID']";
-    var discordServerID = $(targetElementID).val();
-
-    $.ajax({
-        url: "/discordBotAuth",
-        method: "GET",
-        data: discordServerID, // request is the value of search input
-        success: function (data) {
-            // Map response values to fiedl label and value
-            console.log(data[0]);
-            requestMatchInsert();
-
-        }
-    });
-}
-*/
 function requestMatchInsert() {
 
     var gameName = $('#gameName').val();
