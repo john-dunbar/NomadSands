@@ -203,6 +203,8 @@ router.get('/allMatches', async (req, res) => {
     var matchList = await mongoInterface.findAllMatches(req.query.term);
     for (var key in matchList) {
         let match = matchList[key];
+        console.log("discord server: "+match.discordServer);
+        console.log("organizer: "+match.organizerUserId);
         var avatar = await discordInterface.getUserAvatar(match.discordServer, match.organizerUserId);
         match.organizerAvatar = avatar;
     }

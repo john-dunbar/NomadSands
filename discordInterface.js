@@ -33,6 +33,7 @@ class DiscordInterface {
     }
 
     async getUserAvatar(guildId, userId) {
+        console.log("GuildID: "+ guildId);
         let currentGuild = discordClient.guilds.resolve(guildId);
         let targetUserAvatar;
         currentGuild.members.cache.each((member) => {
