@@ -33,7 +33,6 @@ class DiscordInterface {
   }
 
   async getUserAvatar(guildId, userId) {
-    console.log("GuildID: " + guildId);
     //if I delete a discord server this breaks. I need to go back into mongodb
     //and delete the match from the matchList if the server gets deleted from discord
     try {
